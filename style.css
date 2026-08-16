@@ -149,39 +149,37 @@ body, html {
 #hud { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
 
 /* Minimap */
-.minimap-container {
-  position: absolute; top: 15px; left: 15px;
-  width: 120px; height: 120px;
-  border-radius: 50%; /* Round map like RoV */
-  border: var(--panel-border);
-  background: var(--hud-bg);
+.minimap-container { 
+  position: absolute; top: 15px; left: 15px; 
+  width: 120px; height: 120px; 
+  border: 2px solid var(--primary-gold); 
+  border-radius: 10px; 
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
-.minimap-map {
-  width: 100%; height: 100%;
-  background: repeating-linear-gradient(45deg, #111, #111 10px, #222 10px, #222 20px);
-  opacity: 0.8;
-  position: relative;
+.minimap-map { 
+  width: 100%; height: 100%; 
+  background: repeating-linear-gradient(45deg, #111 0px, #111 10px, #222 10px, #222 20px); 
+  position: relative; 
 }
 .minimap-map::after {
-  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00;
+  content: 'ANTARIS';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.2); font-weight: 900; font-size: 1rem;
 }
 
 /* Top Stats */
-.top-stats {
-  position: absolute; top: 15px; right: 15px;
-  display: flex; gap: 10px;
-}
-.kda-box, .timer-box, .gold-box {
-  background: var(--hud-bg); border: var(--panel-border); border-radius: 20px;
-  padding: 5px 15px; font-weight: bold; font-size: 0.9rem; text-shadow: 1px 1px 2px #000;
-}
-.kda-box .kill { color: #00ff00; }
-.kda-box .death { color: #ff3333; }
-.kda-box .assist { color: #ccc; }
-.gold-box { color: var(--primary-gold); }
+.top-stats { position: absolute; top: 15px; right: 15px; display: flex; gap: 15px; align-items: center; }
+.kda-box { background: rgba(0,0,0,0.6); padding: 5px 10px; border-radius: 5px; font-weight: bold; border: 1px solid #555; }
+.kill { color: #00ff00; }
+.death { color: #ff3333; }
+.assist { color: #ffffaa; }
+
+.timer-box { font-size: 1.2rem; font-weight: 900; background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 5px; border: 1px solid #555; }
+
+.gold-box { background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 5px; font-weight: bold; color: var(--primary-gold); display: flex; align-items: center; gap: 5px; border: 1px solid #555; }
+.gold-icon { display: inline-block; width: 20px; height: 20px; background-color: var(--primary-gold); border-radius: 50%; box-shadow: inset 0 0 5px #000; }
 
 /* Tower HP Bar */
 #hp-container {
@@ -193,14 +191,13 @@ body, html {
 #hp-text { font-size: 0.8rem; font-weight: bold; text-shadow: 1px 1px 2px #000; letter-spacing: 1px; }
 
 /* Left Controls (Shop) */
-.left-controls { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); pointer-events: auto; }
-.hud-btn {
-  background: var(--hud-bg); border: var(--panel-border); border-radius: 50%;
-  width: 50px; height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: white; cursor: pointer;
+.left-controls { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; pointer-events: auto; }
+#shop-btn .icon {
+  display: block; width: 30px; height: 30px; margin: 0 auto;
+  background-image: url('/assets/items/holy.png');
+  background-size: cover; background-position: center;
+  border-radius: 5px;
 }
-.hud-btn .icon { font-size: 1.2rem; }
-.hud-btn .label { font-size: 0.6rem; font-family: 'Kanit'; margin-top: 2px; }
 
 /* Joystick (Decorative / Rotate) */
 .joystick-area {
@@ -272,13 +269,25 @@ body, html {
 .shop-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 15px; }
 .shop-header h2 { color: var(--primary-gold); }
 #close-shop { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: white; }
-.shop-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.shop-item { background: rgba(0,0,0,0.5); border: 1px solid #444; padding: 10px; text-align: center; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-.shop-item:hover { border-color: var(--primary-gold); background: rgba(255,215,0,0.1); }
-.shop-item .icon { font-size: 2rem; margin-bottom: 5px; }
-.shop-item .name { font-size: 0.9rem; font-weight: bold; }
-.shop-item .stats { font-size: 0.7rem; color: #aaa; margin-bottom: 5px; }
-.shop-item .price { color: var(--primary-gold); font-size: 0.8rem; font-weight: bold; }
+
+/* Shop Items */
+.shop-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; max-height: 250px; overflow-y: auto; padding-right: 10px; }
+.shop-item { 
+  background: rgba(30, 30, 40, 0.8); 
+  border: 1px solid #444; 
+  border-radius: 5px; 
+  padding: 10px; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+}
+.shop-item-icon { width: 50px; height: 50px; border-radius: 5px; object-fit: cover; border: 1px solid #777; }
+.shop-item-info { flex: 1; }
+.shop-item-name { font-weight: bold; color: var(--primary-gold); font-size: 0.9rem; }
+.shop-item-stat { font-size: 0.8rem; color: #aaa; }
+.shop-item-price { font-size: 0.9rem; color: #fff; margin-top: 5px; font-weight: 600; }
+.buy-btn { background: var(--primary-gold); color: #000; border: none; padding: 5px 15px; border-radius: 3px; font-weight: bold; cursor: pointer; }
+.buy-btn:active { background: #d4af37; transform: scale(0.95); }
 
 /* ==================== VICTORY SCREEN ==================== */
 #victory-screen {

@@ -40,12 +40,11 @@ const skills = {
 
 // Shop Items
 const shopItems = [
-  { id: 'item1', name: 'ดาบสั้น', icon: '🗡️', price: 250, stat: '+20 DMG', bonus: 20 },
-  { id: 'item2', name: 'ดาบใหญ่', icon: '⚔️', price: 800, stat: '+80 DMG', bonus: 80 },
-  { id: 'item3', name: 'ไม้คฑา', icon: '🪄', price: 400, stat: '+40 DMG', bonus: 40 },
-  { id: 'item4', name: 'มงกุฎเวทย์', icon: '👑', price: 1200, stat: '+150 DMG', bonus: 150 },
-  { id: 'item5', name: 'ธนูคริติคอล', icon: '🏹', price: 900, stat: '+100 DMG', bonus: 100 },
-  { id: 'item6', name: 'ดาบแดง', icon: '🩸', price: 2000, stat: '+300 DMG', bonus: 300 }
+  { id: 'item1', name: "Fenrir's Tooth", icon: '/assets/items/fenrir.png', price: 2950, stat: '+200 DMG', bonus: 200 },
+  { id: 'item2', name: "Claves Sancti", icon: '/assets/items/claves.png', price: 2120, stat: '+100 DMG', bonus: 100 },
+  { id: 'item3', name: "Hecate's Diadem", icon: '/assets/items/hecate.png', price: 2400, stat: '+240 DMG', bonus: 240 },
+  { id: 'item4', name: "Holy of Holies", icon: '/assets/items/holy.png', price: 2990, stat: '+400 DMG', bonus: 400 },
+  { id: 'item5', name: "Omni Arms", icon: '/assets/items/omni.png', price: 2150, stat: '+70 DMG', bonus: 70 }
 ];
 
 // Three.js instances
@@ -66,7 +65,7 @@ function init() {
   cacheDOM();
   bindEvents();
   initThreeJS();
-  initShop();
+  renderShop();
 }
 
 function cacheDOM() {
@@ -130,31 +129,34 @@ function bindEvents() {
 }
 
 function updateSkillIcons() {
-  if (heroClass === 'fighter') {
-    dom.attackBtn.querySelector('.icon').textContent = '⚔️';
-    dom.s1Btn.querySelector('.icon').textContent = '🏃';
-    dom.s2Btn.querySelector('.icon').textContent = '🌪️';
-    dom.ultBtn.querySelector('.icon').textContent = '💥';
-  } else {
-    dom.attackBtn.querySelector('.icon').textContent = '🪄';
-    dom.s1Btn.querySelector('.icon').textContent = '❄️';
-    dom.s2Btn.querySelector('.icon').textContent = '🔥';
-    dom.ultBtn.querySelector('.icon').textContent = '⚡';
-  }
+  const setIcon = (btn, url) => {
+    btn.querySelector('.icon').style.backgroundImage = `url('${url}')`;
+    btn.querySelector('.icon').style.backgroundSize = 'cover';
+    btn.querySelector('.icon').style.backgroundPosition = 'center';
+  };
+  
+  // Standard Attack & Skills (We use standard icons for both classes for now)
+  setIcon(dom.attackBtn, '/assets/skills/attack.png');
+  setIcon(dom.s1Btn, '/assets/skills/sprint.jpg');
+  setIcon(dom.s2Btn, '/assets/skills/heal.jpg');
+  setIcon(dom.ultBtn, '/assets/skills/flicker.jpg');
 }
 
-function initShop() {
+function renderShop() {
   const container = document.getElementById('shop-items-container');
+  container.innerHTML = '';
   shopItems.forEach(item => {
     const el = document.createElement('div');
     el.className = 'shop-item';
     el.innerHTML = `
-      <div class="icon">${item.icon}</div>
-      <div class="name">${item.name}</div>
-      <div class="stats">${item.stat}</div>
-      <div class="price">💰 ${item.price}</div>
+      <img class="shop-item-icon" src="${item.icon}" alt="${item.name}">
+      <div class="shop-item-info">
+        <div class="shop-item-name">${item.name}</div>
+        <div class="shop-item-stat">${item.stat}</div>
+        <div class="shop-item-price">🪙 ${item.price}</div>
+      </div>
+      <button class="buy-btn" onclick="buyItem('${item.id}')">ซื้อ</button>
     `;
-    el.addEventListener('click', () => buyItem(item));
     container.appendChild(el);
   });
 }
