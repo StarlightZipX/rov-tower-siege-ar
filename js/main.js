@@ -86,6 +86,14 @@ function bindEvents() {
   dom.startBtn.addEventListener('click', startGame);
   dom.replayBtn.addEventListener('click', replay);
 
+  // Hero Selection
+  document.querySelectorAll('.hero-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.hero-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+
   // Hotbar Selection
   dom.hotbarSlots.forEach(slot => {
     slot.addEventListener('click', () => {
