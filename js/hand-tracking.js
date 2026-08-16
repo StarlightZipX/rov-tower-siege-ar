@@ -4,20 +4,31 @@
  */
 
 export class HandTracker {
-  constructor(videoElement, canvasElement, heroClassCallback) {
+  constructor(videoElement, canvasElement) {
     this.videoElement = videoElement;
     this.canvasElement = canvasElement;
     this.canvasCtx = canvasElement.getContext('2d');
-    this.heroClassCallback = heroClassCallback; // 'fighter' or 'mage' to determine skeleton color
     
-    this.onGestureDetected = null; // Callback for when a gesture is recognized
-    this.lastGestureTime = 0;
-    this.gestureCooldown = 600; // ms between gestures
+    this.onSwingDetected = null;
+    this.lastSwingTime = 0;
+    this.swingCooldown = 400; // ms between swings
+    
+    // Weapon rendering
+    this.weaponImage = null; // HTMLImageElement
+    this.weaponScale = 1.0;
+
+    // Motion tracking
+    this.lastWristPos = null;
+    this.lastFrameTime = 0;
 
     this.statusDot = document.querySelector('.status-dot');
     this.statusText = document.querySelector('#ai-status').lastChild;
 
     this.initMediaPipe();
+  }
+
+  setWeapon(imageElement) {
+    this.weaponImage = imageElement;
   }
 
   initMediaPipe() {
@@ -26,8 +37,8 @@ export class HandTracker {
     });
 
     this.hands.setOptions({
-      maxNumHands: 2,
-      modelComplexity: 1, // 0 = fast, 1 = accurate
+      maxNumHands: 1, // Only need 1 hand for swinging
+      modelComplexity: 1,
       minDetectionConfidence: 0.6,
       minTrackingConfidence: 0.6
     });
@@ -47,7 +58,7 @@ export class HandTracker {
 
   start() {
     this.camera.start();
-    this.updateStatus(true, 'AI: พร้อมรบ! (เจอมือแล้วจะตี)');
+    this.updateStatus(true, 'AI: พร้อมรบ! (ถืออาวุธแล้วฟันเลย)');
   }
 
   stop() {
@@ -66,125 +77,87 @@ export class HandTracker {
   }
 
   onResults(results) {
-    // Resize canvas to match video dimensions for correct drawing
-    if (this.canvasElement.width !== this.videoElement.videoWidth) {
-      this.canvasElement.width = this.videoElement.videoWidth;
-      this.canvasElement.height = this.videoElement.videoHeight;
+    const w = this.videoElement.videoWidth;
+    const h = this.videoElement.videoHeight;
+    
+    if (this.canvasElement.width !== w) {
+      this.canvasElement.width = w;
+      this.canvasElement.height = h;
     }
 
     this.canvasCtx.save();
-    this.canvasCtx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+    this.canvasCtx.clearRect(0, 0, w, h);
 
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-      // Determine skeleton color based on hero class
-      const heroColor = this.heroClassCallback() === 'fighter' ? '#ff3300' : '#33ccff';
+      const landmarks = results.multiHandLandmarks[0];
+      
+      // Draw Skeleton lightly
+      window.drawConnectors(this.canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: 'rgba(255,215,0,0.5)', lineWidth: 2 });
+      window.drawLandmarks(this.canvasCtx, landmarks, { color: '#ffffff', lineWidth: 1, radius: 2 });
 
-      // Draw Skeleton
-      for (const landmarks of results.multiHandLandmarks) {
-        window.drawConnectors(this.canvasCtx, landmarks, window.HAND_CONNECTIONS, {
-          color: heroColor,
-          lineWidth: 4
-        });
-        window.drawLandmarks(this.canvasCtx, landmarks, {
-          color: '#ffffff',
-          lineWidth: 2,
-          radius: 3
-        });
+      // Analyze Motion
+      this.analyzeMotion(landmarks);
+
+      // Render Weapon
+      if (this.weaponImage) {
+        // Wrist is landmark 0, Index finger base is 5
+        const wrist = landmarks[0];
+        const indexBase = landmarks[5];
+        
+        const px = wrist.x * w;
+        const py = wrist.y * h;
+        
+        // Calculate angle between wrist and index finger to rotate weapon
+        const dx = (indexBase.x * w) - px;
+        const dy = (indexBase.y * h) - py;
+        const angle = Math.atan2(dy, dx);
+        
+        // Estimate depth for scaling (distance between wrist and index base)
+        const handSize = Math.hypot(dx, dy);
+        const scale = (handSize / 50) * 1.5; // adjust multiplier as needed
+
+        this.canvasCtx.translate(px, py);
+        this.canvasCtx.rotate(angle - Math.PI / 4); // Adjust rotation so weapon points up from hand
+        
+        const imgW = 200 * scale;
+        const imgH = 200 * scale;
+        
+        this.canvasCtx.drawImage(this.weaponImage, -imgW/2, -imgH, imgW, imgH);
       }
-
-      // Analyze Gestures
-      this.analyzeGestures(results.multiHandLandmarks);
+    } else {
+      this.lastWristPos = null; // Hand lost
     }
     this.canvasCtx.restore();
   }
 
-  analyzeGestures(hands) {
+  analyzeMotion(landmarks) {
     const now = performance.now();
-    if (now - this.lastGestureTime < this.gestureCooldown) return;
-
-    // If both hands are fully open -> Ultimate
-    if (hands.length === 2) {
-      if (this.isOpenHand(hands[0]) && this.isOpenHand(hands[1])) {
-        this.triggerGesture('ult');
-        this.lastGestureTime = now;
-        return;
-      }
-    }
-
-    // Check single hand gestures (just use the first detected hand)
-    const hand = hands[0];
-
-    if (this.isFist(hand)) {
-      this.triggerGesture('attack');
-      this.lastGestureTime = now;
-    } else if (this.isPeaceSign(hand)) {
-      this.triggerGesture('s1');
-      this.lastGestureTime = now;
-    } else if (this.isPinch(hand)) {
-      this.triggerGesture('s2');
-      this.lastGestureTime = now;
-    }
-  }
-
-  triggerGesture(skillKey) {
-    if (this.onGestureDetected) {
-      this.onGestureDetected(skillKey);
-    }
-  }
-
-  // --- Gesture Math Helpers ---
-
-  // Point 0 is wrist
-  // Points 4, 8, 12, 16, 20 are fingertips (Thumb, Index, Middle, Ring, Pinky)
-  // Points 3, 7, 11, 15, 19 are lower joints
-
-  isFist(landmarks) {
-    // Check if index, middle, ring, pinky are folded (fingertip is lower/closer to wrist than the joint)
-    const fingers = [8, 12, 16, 20];
-    let foldedCount = 0;
+    const wrist = landmarks[0];
     
-    const dist = (p1, p2) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
-    
-    for (let tip of fingers) {
-      let joint = tip - 2;
-      let distTipToWrist = dist(landmarks[tip], landmarks[0]);
-      let distJointToWrist = dist(landmarks[joint], landmarks[0]);
-      if (distTipToWrist < distJointToWrist) {
-        foldedCount++;
+    if (this.lastWristPos) {
+      const dt = now - this.lastFrameTime;
+      if (dt > 0) {
+        // Calculate velocity (distance in normalized coordinates per second)
+        const dx = wrist.x - this.lastWristPos.x;
+        const dy = wrist.y - this.lastWristPos.y;
+        const speed = Math.hypot(dx, dy) / (dt / 1000); // units per second
+        
+        // If hand moves fast enough (e.g. > 1.5 screen widths per second)
+        if (speed > 1.5 && now - this.lastSwingTime > this.swingCooldown) {
+          
+          // Check if hand is somewhat near the center (the tower)
+          // X: 0.2 to 0.8, Y: 0.2 to 0.8
+          if (wrist.x > 0.2 && wrist.x < 0.8 && wrist.y > 0.2 && wrist.y < 0.8) {
+            if (this.onSwingDetected) {
+              this.onSwingDetected();
+            }
+            this.lastSwingTime = now;
+          }
+        }
       }
     }
     
-    return foldedCount >= 3; // At least 3 fingers folded = fist
-  }
-
-  isOpenHand(landmarks) {
-    const fingers = [8, 12, 16, 20];
-    let openCount = 0;
-    const dist = (p1, p2) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
-    
-    for (let tip of fingers) {
-      let joint = tip - 2;
-      if (dist(landmarks[tip], landmarks[0]) > dist(landmarks[joint], landmarks[0])) {
-        openCount++;
-      }
-    }
-    return openCount >= 4;
-  }
-
-  isPeaceSign(landmarks) {
-    const dist = (p1, p2) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
-    
-    const indexOpen = dist(landmarks[8], landmarks[0]) > dist(landmarks[6], landmarks[0]);
-    const middleOpen = dist(landmarks[12], landmarks[0]) > dist(landmarks[10], landmarks[0]);
-    const ringFolded = dist(landmarks[16], landmarks[0]) < dist(landmarks[14], landmarks[0]);
-    const pinkyFolded = dist(landmarks[20], landmarks[0]) < dist(landmarks[18], landmarks[0]);
-
-    return indexOpen && middleOpen && ringFolded && pinkyFolded;
-  }
-
-  isPinch(landmarks) {
-    // Distance between thumb tip (4) and index tip (8) is very small
-    const dist = Math.hypot(landmarks[4].x - landmarks[8].x, landmarks[4].y - landmarks[8].y);
-    return dist < 0.05; // Coordinates are normalized 0-1
+    this.lastWristPos = { x: wrist.x, y: wrist.y };
+    this.lastFrameTime = now;
   }
 }

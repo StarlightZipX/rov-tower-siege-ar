@@ -97,67 +97,25 @@
         <div id="hp-text">5000 / 5000</div>
       </div>
 
-      <!-- Left: Shop & Chat -->
-      <div class="left-controls">
-        <button id="shop-btn" class="hud-btn">
-          <span class="icon"></span>
-          <span class="label">ร้านค้า</span>
-        </button>
-      </div>
-
-      <!-- Bottom Left: Joystick -->
-      <div class="joystick-area">
-        <div class="joystick-base">
-          <div class="joystick-stick"></div>
+      <!-- Bottom Hotbar -->
+      <div class="bottom-hotbar" id="equipment-bar">
+        <div class="hotbar-slot active" data-weapon="fenrir">
+          <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
         </div>
-      </div>
-
-      <!-- Bottom Right: Skills & Attack -->
-      <div class="action-area">
-        <div class="skill-group">
-          <!-- Skill 1 -->
-          <button class="skill-btn" id="skill1-btn">
-            <span class="icon"></span>
-            <div class="cooldown-overlay"></div>
-            <span class="cooldown-text"></span>
-          </button>
-          <!-- Skill 2 -->
-          <button class="skill-btn" id="skill2-btn">
-            <span class="icon"></span>
-            <div class="cooldown-overlay"></div>
-            <span class="cooldown-text"></span>
-          </button>
-          <!-- Ultimate -->
-          <button class="skill-btn ultimate-btn" id="ultimate-btn">
-            <span class="icon"></span>
-            <div class="cooldown-overlay"></div>
-            <span class="cooldown-text"></span>
-          </button>
+        <div class="hotbar-slot" data-weapon="claves">
+          <img src="/assets/items/claves.png" alt="Claves Sancti">
         </div>
-        <!-- Normal Attack -->
-        <button class="attack-btn-main" id="attack-btn">
-          <span class="icon"></span>
-        </button>
+        <div class="hotbar-slot" data-weapon="omni">
+          <img src="/assets/items/omni.png" alt="Omni Arms">
+        </div>
+        <div class="hotbar-slot" data-weapon="muramasa">
+          <img src="/assets/items/muramasa.png" alt="Muramasa">
+        </div>
       </div>
     </div>
 
     <!-- Floating Damage Numbers -->
     <div id="damage-container"></div>
-  </div>
-
-  <!-- ==================== SHOP MODAL ==================== -->
-  <div id="shop-modal" class="hidden">
-    <div class="shop-content">
-      <div class="shop-header">
-        <h2>ร้านค้าไอเท็ม</h2>
-        <button id="close-shop">X</button>
-      </div>
-      <div class="shop-body">
-        <div class="shop-items" id="shop-items-container">
-          <!-- Items injected via JS -->
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- ==================== VICTORY SCREEN ==================== -->
