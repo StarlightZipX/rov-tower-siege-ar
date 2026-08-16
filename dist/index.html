@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="RoV Tower Siege — AR Experience สำหรับงานแข่ง RoV วิทยาลัย">
+  <title>RoV Tower Siege AR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-DEdb_1a2.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-wMPUrE3p.css">
+</head>
+<body>
+
+  <!-- ==================== LANDING SCREEN ==================== -->
+  <div id="landing-screen">
+    <div class="landing-bg"></div>
+    <div class="landing-content">
+      <div class="landing-icon">🏰</div>
+      <h1 class="landing-title">ROV<br>TOWER SIEGE</h1>
+      <p class="landing-subtitle">⚔️ AR EXPERIENCE ⚔️</p>
+      <p class="landing-desc">เลือกอาวุธ สู้กับป้อม ทำลายมันให้ได้!</p>
+      <button id="start-btn" class="btn-primary">
+        <span>เริ่มเกม</span>
+      </button>
+      <p class="landing-note">* ระบบจะขอเข้าถึงกล้องเพื่อแสดงผล AR</p>
+    </div>
+  </div>
+
+  <!-- ==================== GAME SCREEN ==================== -->
+  <div id="game-screen">
+    <!-- Camera Background -->
+    <video id="camera-feed" autoplay playsinline muted></video>
+
+    <!-- Three.js Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- HUD: HP Bar -->
+    <div id="hud">
+      <div id="hp-container">
+        <div id="hp-label">🏰 TOWER HP</div>
+        <div id="hp-bar-bg">
+          <div id="hp-bar"></div>
+        </div>
+        <div id="hp-text">1000 / 1000</div>
+      </div>
+    </div>
+
+    <!-- Floating Damage Numbers -->
+    <div id="damage-container"></div>
+
+    <!-- Attack Button -->
+    <button id="attack-btn" disabled>
+      <span class="attack-icon">⚔️</span>
+      <span class="attack-text">โจมตี!</span>
+    </button>
+
+    <!-- Weapon Toolbar -->
+    <div id="weapon-toolbar">
+      <div id="weapon-list"></div>
+      <button id="shuffle-btn">🔀 สุ่มอาวุธใหม่</button>
+    </div>
+  </div>
+
+  <!-- ==================== VICTORY SCREEN ==================== -->
+  <div id="victory-screen">
+    <div class="victory-content">
+      <div class="victory-icon">🏆</div>
+      <h1 class="victory-title">VICTORY!</h1>
+      <p class="victory-subtitle">ป้อมถูกทำลายแล้ว!</p>
+      <div class="victory-stats">
+        <div class="stat-item">
+          <span class="stat-label">จำนวนการโจมตี</span>
+          <span class="stat-value" id="stat-attacks">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">เวลาที่ใช้</span>
+          <span class="stat-value" id="stat-time">0 วินาที</span>
+        </div>
+      </div>
+      <button id="replay-btn" class="btn-primary">
+        <span>🔄 เล่นอีกครั้ง</span>
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
