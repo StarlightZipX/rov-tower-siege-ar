@@ -29,29 +29,48 @@
   <div id="landing-screen">
     <div class="landing-bg"></div>
     <div class="landing-content">
+      <div class="landing-badge">ARENA OF VALOR • AR TOURNAMENT</div>
       <h1 class="landing-title">ROV TOWER SIEGE</h1>
-      <p class="landing-subtitle">AR EXPERIENCE</p>
+      <p class="landing-subtitle">BATTLE FOR ANTARIS</p>
       
       <div class="hero-selection">
-        <h3>เลือกสายฮีโร่ของคุณ</h3>
+        <h3>เลือกตัวแทนฮีโร่ของคุณ</h3>
         <div class="hero-cards">
+          <!-- Arthur Card -->
           <div class="hero-card active" data-hero="fighter">
-            <div class="hero-icon">⚔️</div>
-            <h4>ไฟต์เตอร์ / แครี่</h4>
-            <p>โจมตีเร็ว ดาเมจกายภาพ</p>
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/arthur.png" alt="Arthur">
+              <div class="hero-card-text">
+                <h4>ARTHUR</h4>
+                <p class="hero-role">ไฟต์เตอร์ / แครี่</p>
+                <span class="hero-stat-badge">พลังกายภาพ & ดาเมจคริติคอล</span>
+              </div>
+            </div>
           </div>
+          <!-- Krixi Card -->
           <div class="hero-card" data-hero="mage">
-            <div class="hero-icon">🔮</div>
-            <h4>เมจ</h4>
-            <p>สกิลรุนแรง ดาเมจเวท</p>
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/krixi_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/krixi.png" alt="Krixi">
+              <div class="hero-card-text">
+                <h4>KRIXI</h4>
+                <p class="hero-role">เมจ / พลังเวท</p>
+                <span class="hero-stat-badge">พลังเวทมนตร์ & สกิลรุนแรง</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <button id="start-btn" class="btn-primary">
-        <span>เข้าสู่สมรภูมิ</span>
-      </button>
-      <p class="landing-note">* ระบบจะขอเข้าถึงกล้องเพื่อแสดงผล AR</p>
+      <div class="landing-action-group">
+        <button id="start-btn" class="btn-primary rov-gold-btn">
+          <span class="btn-text">เข้าสู่สมรภูมิ</span>
+        </button>
+        <p class="landing-note">📹 ระบบใช้กล้อง AR ในการตรวจจับการฟาดฟันอาวุธ</p>
+      </div>
     </div>
   </div>
 
