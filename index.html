@@ -37,20 +37,20 @@
         <h3>เลือกตัวแทนฮีโร่ของคุณ</h3>
         <div class="hero-cards">
           <!-- Arthur Card -->
-          <div class="hero-card active" data-hero="fighter">
+          <div class="hero-card active" data-hero="arthur">
             <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
               <img class="hero-icon-img" src="/assets/heroes/arthur.png" alt="Arthur">
               <div class="hero-card-text">
                 <h4>ARTHUR</h4>
-                <p class="hero-role">ไฟต์เตอร์ / แครี่</p>
-                <span class="hero-stat-badge">พลังกายภาพ & ดาเมจคริติคอล</span>
+                <p class="hero-role">ไฟต์เตอร์ / แทงค์</p>
+                <span class="hero-stat-badge">ดาบศักดิ์สิทธิ์ & ผ่ามิติ</span>
               </div>
             </div>
           </div>
           <!-- Krixi Card -->
-          <div class="hero-card" data-hero="mage">
+          <div class="hero-card" data-hero="krixi">
             <div class="hero-card-banner" style="background-image: url('/assets/ui/krixi_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
@@ -58,7 +58,33 @@
               <div class="hero-card-text">
                 <h4>KRIXI</h4>
                 <p class="hero-role">เมจ / พลังเวท</p>
-                <span class="hero-stat-badge">พลังเวทมนตร์ & สกิลรุนแรง</span>
+                <span class="hero-stat-badge">คลื่นผีเสื้อ & ฝนดาวตก</span>
+              </div>
+            </div>
+          </div>
+          <!-- Butterfly Card -->
+          <div class="hero-card" data-hero="butterfly">
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/butterfly.png" alt="Butterfly">
+              <div class="hero-card-text">
+                <h4>BUTTERFLY</h4>
+                <p class="hero-role">แอสซาซิน / ล้วง</p>
+                <span class="hero-stat-badge">เพลงดาบหมุน & ลอบสังหาร</span>
+              </div>
+            </div>
+          </div>
+          <!-- Valhein Card -->
+          <div class="hero-card" data-hero="valhein">
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/valhein.png" alt="Valhein">
+              <div class="hero-card-text">
+                <h4>VALHEIN</h4>
+                <p class="hero-role">แครี่ / นักล่าปีศาจ</p>
+                <span class="hero-stat-badge">กงจักรเงิน & กระสุนเวท</span>
               </div>
             </div>
           </div>
@@ -143,22 +169,23 @@
           <img src="/assets/ui/gold.png" alt="Gold" class="gold-coin-img">
           <span id="current-gold">500</span>
         </div>
-      </div>
-    </div>
-
-      <!-- Bottom Hotbar -->
+      <!-- Bottom Hero & Skills Arsenal -->
       <div class="bottom-hotbar" id="equipment-bar">
-        <div class="hotbar-slot active" data-weapon="fenrir">
-          <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
+        <button id="random-hero-btn" class="random-roll-btn" type="button">
+          <span class="roll-icon">🎲</span>
+          <span class="roll-text">สุ่มฮีโร่</span>
+        </button>
+        <div class="hotbar-divider"></div>
+        <div class="active-hero-badge" id="hero-badge-box">
+          <img id="hero-badge-avatar" src="/assets/heroes/arthur.png" alt="Hero Avatar">
+          <div class="hero-badge-info">
+            <span id="hero-badge-name">ARTHUR</span>
+            <span class="hero-badge-type">ไฟต์เตอร์</span>
+          </div>
         </div>
-        <div class="hotbar-slot" data-weapon="claves">
-          <img src="/assets/items/claves.png" alt="Claves Sancti">
-        </div>
-        <div class="hotbar-slot" data-weapon="omni">
-          <img src="/assets/items/omni.png" alt="Omni Arms">
-        </div>
-        <div class="hotbar-slot" data-weapon="muramasa">
-          <img src="/assets/items/muramasa.png" alt="Muramasa">
+        <div class="hotbar-divider"></div>
+        <div class="hotbar-slots-container" id="hero-skills-container">
+          <!-- Skills will be dynamically populated according to the active hero -->
         </div>
       </div>
     </div>

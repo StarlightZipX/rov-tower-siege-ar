@@ -444,46 +444,166 @@ body, html {
 .gold-badge { border-color: rgba(255, 215, 0, 0.5); color: #ffd700; }
 .gold-coin-img { width: 20px; height: 20px; object-fit: contain; filter: drop-shadow(0 0 3px rgba(255, 200, 0, 0.6)); }
 
-/* ==================== BOTTOM HOTBAR ==================== */
+/* ==================== BOTTOM WEAPON ARSENAL & RANDOM ROLL ==================== */
 .bottom-hotbar {
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 15px;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 10px 20px;
-  border-radius: 15px;
-  border: 2px solid var(--primary-gold);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+  align-items: center;
+  gap: 16px;
+  background: rgba(10, 15, 30, 0.88);
+  padding: 8px 18px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 215, 0, 0.55);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.25);
   pointer-events: auto;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+}
+
+/* Random Roll Gacha Button */
+.random-roll-btn {
+  background: linear-gradient(135deg, #ff0055 0%, #ff5500 50%, #ffbb00 100%);
+  border: 2px solid #fff5cc;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 0, 85, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  animation: rollGlow 2s infinite ease-in-out;
+}
+.random-roll-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 22px rgba(255, 85, 0, 0.9), inset 0 1px 4px rgba(255, 255, 255, 0.8);
+}
+.random-roll-btn:active {
+  transform: translateY(1px) scale(0.95);
+}
+.roll-icon { font-size: 1.3rem; animation: diceSpin 3s infinite linear; }
+@keyframes rollGlow { 0%, 100% { box-shadow: 0 4px 15px rgba(255, 0, 85, 0.6); } 50% { box-shadow: 0 4px 22px rgba(255, 187, 0, 0.9); } }
+@keyframes diceSpin { 0% { transform: rotate(0deg); } 20% { transform: rotate(45deg); } 40% { transform: rotate(-45deg); } 60% { transform: rotate(0deg); } 100% { transform: rotate(0deg); } }
+
+.active-hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 22, 40, 0.95);
+  border: 1.5px solid var(--primary-gold);
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  transition: all 0.25s ease;
+}
+#hero-badge-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-gold);
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+.hero-badge-info {
+  display: flex;
+  flex-direction: column;
+}
+#hero-badge-name {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ffd700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.hero-badge-type {
+  font-size: 0.65rem;
+  color: #a0b0d0;
+  font-weight: 600;
+}
+
+.hotbar-divider {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 215, 0, 0.5), transparent);
+}
+
+.hotbar-slots-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .hotbar-slot {
-  width: 60px;
-  height: 60px;
-  background: rgba(30, 30, 40, 0.8);
-  border: 2px solid #555;
-  border-radius: 8px;
+  position: relative;
+  width: 58px;
+  height: 58px;
+  background: rgba(20, 25, 45, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
 }
 
 .hotbar-slot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.weapon-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffcc00;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1px 0;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+
+.hotbar-slot:hover {
+  border-color: rgba(255, 215, 0, 0.7);
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.35);
 }
 
 .hotbar-slot.active {
   border-color: var(--primary-gold);
-  transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+  background: rgba(40, 45, 75, 0.95);
+  transform: translateY(-4px) scale(1.14);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.75), 0 6px 15px rgba(0, 0, 0, 0.8);
+}
+.hotbar-slot.active .weapon-tag {
+  background: rgba(216, 92, 0, 0.85);
+  color: #ffffff;
+}
+
+/* Roulette roll animation */
+.hotbar-slot.rolling {
+  border-color: #00ffcc !important;
+  box-shadow: 0 0 25px #00ffcc !important;
+  transform: scale(1.18) !important;
 }
 
 /* ==================== FLOATING DAMAGE ==================== */
