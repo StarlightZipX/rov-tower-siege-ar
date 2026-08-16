@@ -143,22 +143,38 @@
           <img src="/assets/ui/gold.png" alt="Gold" class="gold-coin-img">
           <span id="current-gold">500</span>
         </div>
-      </div>
-    </div>
-
-      <!-- Bottom Hotbar -->
+      <!-- Bottom Weapon Arsenal & Random Roll System -->
       <div class="bottom-hotbar" id="equipment-bar">
-        <div class="hotbar-slot active" data-weapon="fenrir">
-          <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
-        </div>
-        <div class="hotbar-slot" data-weapon="claves">
-          <img src="/assets/items/claves.png" alt="Claves Sancti">
-        </div>
-        <div class="hotbar-slot" data-weapon="omni">
-          <img src="/assets/items/omni.png" alt="Omni Arms">
-        </div>
-        <div class="hotbar-slot" data-weapon="muramasa">
-          <img src="/assets/items/muramasa.png" alt="Muramasa">
+        <button id="random-weapon-btn" class="random-roll-btn" type="button">
+          <span class="roll-icon">🎲</span>
+          <span class="roll-text">สุ่มอาวุธ</span>
+        </button>
+        <div class="hotbar-divider"></div>
+        <div class="hotbar-slots-container">
+          <div class="hotbar-slot active" data-weapon="fenrir" title="Fenrir's Tooth">
+            <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
+            <span class="weapon-tag">ดาบฟัน</span>
+          </div>
+          <div class="hotbar-slot" data-weapon="claves" title="Claves Sancti">
+            <img src="/assets/items/claves.png" alt="Claves Sancti">
+            <span class="weapon-tag">คริติคอล</span>
+          </div>
+          <div class="hotbar-slot" data-weapon="muramasa" title="Muramasa">
+            <img src="/assets/items/muramasa.png" alt="Muramasa">
+            <span class="weapon-tag">เจาะเกราะ</span>
+          </div>
+          <div class="hotbar-slot" data-weapon="omni" title="Omni Arms">
+            <img src="/assets/items/omni.png" alt="Omni Arms">
+            <span class="weapon-tag">ออลไมตี้</span>
+          </div>
+          <div class="hotbar-slot" data-weapon="holy" title="Holy of Holies">
+            <img src="/assets/items/holy.png" alt="Holy of Holies">
+            <span class="weapon-tag">มหาเวท</span>
+          </div>
+          <div class="hotbar-slot" data-weapon="hecate" title="Hecate's Diadem">
+            <img src="/assets/items/hecate.png" alt="Hecate's Diadem">
+            <span class="weapon-tag">มงกุฎเวท</span>
+          </div>
         </div>
       </div>
     </div>

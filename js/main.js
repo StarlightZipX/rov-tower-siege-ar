@@ -67,6 +67,7 @@ function cacheDOM() {
   dom.hpText = document.getElementById('hp-text');
   dom.goldText = document.getElementById('current-gold');
   dom.timerBox = document.querySelector('.timer-box');
+  dom.randomWeaponBtn = document.getElementById('random-weapon-btn');
   dom.hitCount = document.getElementById('hit-count');
   dom.liveDamageText = document.getElementById('live-damage-text');
   dom.comboBadge = document.querySelector('.combo-badge');
@@ -77,9 +78,20 @@ function cacheDOM() {
   dom.handsCanvas = document.getElementById('hands-canvas');
 }
 
+const weaponConfig = {
+  fenrir:   { name: "Fenrir's Tooth",   baseDmg: 400, color: '#ff0055', desc: 'ปลิดชีพศัตรูเลือดน้อย' },
+  claves:   { name: "Claves Sancti",    baseDmg: 250, color: '#ffcc00', desc: 'โอกาสติดคริติคอล 40%' },
+  muramasa: { name: "Muramasa",         baseDmg: 350, color: '#ff3333', desc: 'เจาะเกราะทะลวงป้อม' },
+  omni:     { name: "Omni Arms",        baseDmg: 280, color: '#ff8800', desc: 'เสริมพลังการโจมตี' },
+  holy:     { name: "Holy of Holies",   baseDmg: 450, color: '#00ffff', desc: 'มหาเวททำลายล้างสูงสุด' },
+  hecate:   { name: "Hecate's Diadem",  baseDmg: 380, color: '#cc66ff', desc: 'ระเบิดพลังเวทมนตร์' }
+};
+
+let isRolling = false;
+
 function bindEvents() {
-  // Preload weapon images
-  const weapons = ['fenrir', 'claves', 'omni', 'muramasa'];
+  // Preload all 6 weapon images
+  const weapons = Object.keys(weaponConfig);
   weapons.forEach(w => {
     const img = new Image();
     img.src = `/assets/items/${w}.png`;
@@ -97,27 +109,97 @@ function bindEvents() {
     });
   });
 
-  // Hotbar Selection
+  // Hotbar Direct Slot Selection
   dom.hotbarSlots.forEach(slot => {
     slot.addEventListener('click', () => {
-      dom.hotbarSlots.forEach(s => s.classList.remove('active'));
-      slot.classList.add('active');
-      selectedWeapon = slot.dataset.weapon;
-
-      // Update AR weapon on hand
-      if (handTracker) {
-        handTracker.setWeapon(weaponImages[selectedWeapon]);
-      }
-
-      // Adjust damage based on weapon
-      if (selectedWeapon === 'fenrir') baseDamage = 400;
-      else if (selectedWeapon === 'claves') baseDamage = 250;
-      else if (selectedWeapon === 'omni') baseDamage = 200;
-      else if (selectedWeapon === 'muramasa') baseDamage = 300;
+      if (isRolling) return;
+      selectWeapon(slot.dataset.weapon);
     });
   });
 
+  // Random Weapon Roll Button
+  if (dom.randomWeaponBtn) {
+    dom.randomWeaponBtn.addEventListener('click', () => {
+      rollRandomWeapon();
+    });
+  }
+
   window.addEventListener('resize', onResize);
+}
+
+function selectWeapon(weaponKey) {
+  if (!weaponConfig[weaponKey]) return;
+  selectedWeapon = weaponKey;
+
+  // Update UI active slot
+  dom.hotbarSlots.forEach(s => {
+    if (s.dataset.weapon === weaponKey) s.classList.add('active');
+    else s.classList.remove('active');
+  });
+
+  // Update AR weapon on hand
+  if (handTracker && weaponImages[selectedWeapon]) {
+    handTracker.setWeapon(weaponImages[selectedWeapon]);
+  }
+
+  baseDamage = weaponConfig[weaponKey].baseDmg;
+}
+
+function rollRandomWeapon() {
+  if (isRolling) return;
+  isRolling = true;
+  initAudio();
+
+  const slots = Array.from(dom.hotbarSlots);
+  const keys = Object.keys(weaponConfig);
+  let currentIndex = 0;
+  let speed = 60;
+  let counter = 0;
+  const totalSteps = 15 + Math.floor(Math.random() * 8);
+
+  function step() {
+    // Remove rolling class from all
+    slots.forEach(s => s.classList.remove('rolling'));
+
+    // Highlight current slot
+    const currentSlot = slots[currentIndex % slots.length];
+    currentSlot.classList.add('rolling');
+    playSound('roll');
+
+    currentIndex++;
+    counter++;
+
+    if (counter < totalSteps) {
+      speed += 12; // Slow down gradually like a real gacha roulette
+      setTimeout(step, speed);
+    } else {
+      // Pick final weapon
+      slots.forEach(s => s.classList.remove('rolling'));
+      const chosenSlot = slots[(currentIndex - 1) % slots.length];
+      const chosenKey = chosenSlot.dataset.weapon;
+
+      selectWeapon(chosenKey);
+      playSound('win');
+      isRolling = false;
+
+      // Show notification
+      showFloatingRollNotice(weaponConfig[chosenKey]);
+    }
+  }
+
+  step();
+}
+
+function showFloatingRollNotice(weapon) {
+  const el = document.createElement('div');
+  el.className = 'dmg-text';
+  el.textContent = `🎲 สุ่มได้: ${weapon.name}!`;
+  el.style.color = weapon.color;
+  el.style.fontSize = '2.2rem';
+  el.style.left = '35%';
+  el.style.top = '60%';
+  dom.damageCont.appendChild(el);
+  el.addEventListener('animationend', () => el.remove());
 }
 
 function initThreeJS() {
@@ -191,6 +273,22 @@ function playSound(type) {
       vGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
       vOsc.start(); vOsc.stop(audioCtx.currentTime + 1.0);
     }, 500);
+  } else if (type === 'roll') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(600, now);
+    osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
+    gainNode.gain.setValueAtTime(0.15, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+    osc.start(now);
+    osc.stop(now + 0.05);
+  } else if (type === 'win') {
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(523.25, now);
+    osc.frequency.setValueAtTime(783.99, now + 0.1);
+    gainNode.gain.setValueAtTime(0.35, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+    osc.start(now);
+    osc.stop(now + 0.35);
   }
 }
 
