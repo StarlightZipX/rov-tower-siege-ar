@@ -66,6 +66,7 @@ function init() {
   bindEvents();
   initThreeJS();
   renderShop();
+  updateSkillIcons();
 }
 
 function cacheDOM() {
