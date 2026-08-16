@@ -487,22 +487,37 @@ function showFloatingNotice(text) {
 }
 
 /* ==========================================================
-   Three.js & Graphics
+   Three.js & Graphics (AAA RoV Lighting Setup)
    ========================================================== */
 function initThreeJS() {
   scene = new THREE.Scene();
-  camera3d = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera3d.position.set(0, 3.2, 7.5);
+  camera3d = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera3d.position.set(0, 2.5, 7.8);
   camera3d.lookAt(0, 1.2, 0);
 
   renderer = new THREE.WebGLRenderer({ canvas: dom.canvas, alpha: true, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
 
-  scene.add(new THREE.AmbientLight(0x404060, 1.8));
-  const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
-  dirLight.position.set(5, 10, 5);
-  scene.add(dirLight);
+  // 1. Ambient environmental base
+  scene.add(new THREE.AmbientLight(0x2a3352, 1.6));
+
+  // 2. Warm Key Light (Antaris Sun)
+  const keyLight = new THREE.DirectionalLight(0xffeedd, 2.4);
+  keyLight.position.set(6, 12, 6);
+  scene.add(keyLight);
+
+  // 3. Cool Blue Fill Light (Mystical Field)
+  const fillLight = new THREE.DirectionalLight(0x00c8ff, 1.5);
+  fillLight.position.set(-6, 4, 4);
+  scene.add(fillLight);
+
+  // 4. Gold Rim/Back Light (For high-spec metallic sheen)
+  const rimLight = new THREE.DirectionalLight(0xff9900, 2.2);
+  rimLight.position.set(0, 8, -6);
+  scene.add(rimLight);
 
   tower = new Tower(scene);
   tower.maxHP = 5000;
