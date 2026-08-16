@@ -136,11 +136,11 @@ function updateSkillIcons() {
     btn.querySelector('.icon').style.backgroundPosition = 'center';
   };
   
-  // Standard Attack & Skills (We use standard icons for both classes for now)
+  // Real Attack & Skills (Arthur's kit as default Fighter)
   setIcon(dom.attackBtn, '/assets/skills/attack.png');
-  setIcon(dom.s1Btn, '/assets/skills/sprint.jpg');
-  setIcon(dom.s2Btn, '/assets/skills/heal.jpg');
-  setIcon(dom.ultBtn, '/assets/skills/flicker.jpg');
+  setIcon(dom.s1Btn, '/assets/skills/s1.png');
+  setIcon(dom.s2Btn, '/assets/skills/s2.png');
+  setIcon(dom.ultBtn, '/assets/skills/ult.png');
 }
 
 function renderShop() {
