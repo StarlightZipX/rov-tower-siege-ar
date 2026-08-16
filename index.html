@@ -90,31 +90,61 @@
       <span class="status-dot"></span> AI: กำลังค้นหามือ...
     </div>
 
-    <!-- HUD Overlay -->
+    <!-- Professional RoV AR HUD Overlay -->
     <div id="hud">
-      <!-- Top Left: Minimap -->
-      <div class="minimap-container">
-        <div class="minimap-map"></div>
+      <!-- Top Left: AR Target Radar Scanner -->
+      <div class="ar-scanner-panel">
+        <div class="scanner-header">
+          <span class="scanner-badge">AR TARGET LOCK</span>
+        </div>
+        <div class="scanner-radar">
+          <div class="radar-grid"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-target-dot"></div>
+          <div class="radar-crosshair"></div>
+        </div>
+        <div class="scanner-info">
+          <div class="scanner-target-name">ANTARIS TOWER CORE</div>
+          <div class="scanner-status"><span class="status-indicator"></span> RANGE: 2.5M | READY</div>
+        </div>
       </div>
 
-      <!-- Top Right: Stats -->
-      <div class="top-stats">
-        <div class="kda-box">
-          <span class="kill">12</span> / <span class="death">0</span> / <span class="assist">5</span>
+      <!-- Top Center: RoV Boss Tower Health Bar -->
+      <div id="hp-container" class="rov-boss-hp-panel">
+        <div class="boss-title-row">
+          <span class="boss-skull-icon">🛡️</span>
+          <span class="boss-name">ป้อมปราการมนตรา • ANTARIS DEFENSE TOWER</span>
+          <span class="boss-level">LV.15</span>
         </div>
-        <div class="timer-box">10:45</div>
-        <div class="gold-box">
-          <span class="gold-icon"></span> <span id="current-gold">500</span>
+        <div id="hp-bar-bg" class="boss-bar-frame">
+          <div id="hp-bar" class="boss-bar-fill"></div>
+          <div class="hp-bar-segments"></div>
+        </div>
+        <div class="hp-text-row">
+          <span id="hp-text">5000 / 5000</span>
         </div>
       </div>
 
-      <!-- Enemy Tower HP (Top Center) -->
-      <div id="hp-container">
-        <div id="hp-bar-bg">
-          <div id="hp-bar"></div>
+      <!-- Top Right: Live Tournament Stats -->
+      <div class="top-stats rov-stats-panel">
+        <div class="stat-badge timer-badge">
+          <span class="stat-icon">⏱️</span>
+          <span class="timer-box">00:00</span>
         </div>
-        <div id="hp-text">5000 / 5000</div>
+        <div class="stat-badge combo-badge">
+          <span class="stat-icon">⚡</span>
+          <span id="combo-display"><span id="hit-count">0</span> HITS</span>
+        </div>
+        <div class="stat-badge dmg-badge">
+          <span class="stat-icon">💥</span>
+          <span id="live-damage-text">0 DMG</span>
+        </div>
+        <div class="stat-badge gold-badge">
+          <img src="/assets/ui/gold.png" alt="Gold" class="gold-coin-img">
+          <span id="current-gold">500</span>
+        </div>
       </div>
+    </div>
 
       <!-- Bottom Hotbar -->
       <div class="bottom-hotbar" id="equipment-bar">

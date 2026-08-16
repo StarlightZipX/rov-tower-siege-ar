@@ -67,6 +67,9 @@ function cacheDOM() {
   dom.hpText = document.getElementById('hp-text');
   dom.goldText = document.getElementById('current-gold');
   dom.timerBox = document.querySelector('.timer-box');
+  dom.hitCount = document.getElementById('hit-count');
+  dom.liveDamageText = document.getElementById('live-damage-text');
+  dom.comboBadge = document.querySelector('.combo-badge');
   dom.damageCont = document.getElementById('damage-container');
 
   dom.video = document.getElementById('camera-feed');
@@ -275,6 +278,12 @@ function performSwingAttack() {
 
   if (navigator.vibrate) navigator.vibrate(isCrit ? [80, 40, 80] : 50);
 
+  // Combo Badge bounce effect
+  if (dom.comboBadge) {
+    dom.comboBadge.classList.add('combo-active');
+    setTimeout(() => dom.comboBadge.classList.remove('combo-active'), 150);
+  }
+
   updateUI();
 
   if (tower.isDestroyed()) {
@@ -300,7 +309,9 @@ function updateUI() {
   const pct = tower.getHPPercent();
   dom.hpBar.style.width = `${pct * 100}%`;
   dom.hpText.textContent = `${Math.ceil(tower.currentHP)} / ${tower.maxHP}`;
-  dom.goldText.textContent = currentGold;
+  if (dom.goldText) dom.goldText.textContent = currentGold;
+  if (dom.hitCount) dom.hitCount.textContent = attackCount;
+  if (dom.liveDamageText) dom.liveDamageText.textContent = `${totalDamageDealt.toLocaleString()} DMG`;
 }
 
 function gameLoop(timestamp) {
