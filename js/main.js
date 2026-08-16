@@ -79,22 +79,22 @@ function cacheDOM() {
 }
 
 const weaponConfig = {
-  fenrir:   { name: "Fenrir's Tooth",   baseDmg: 400, color: '#ff0055', desc: 'ปลิดชีพศัตรูเลือดน้อย' },
-  claves:   { name: "Claves Sancti",    baseDmg: 250, color: '#ffcc00', desc: 'โอกาสติดคริติคอล 40%' },
-  muramasa: { name: "Muramasa",         baseDmg: 350, color: '#ff3333', desc: 'เจาะเกราะทะลวงป้อม' },
-  omni:     { name: "Omni Arms",        baseDmg: 280, color: '#ff8800', desc: 'เสริมพลังการโจมตี' },
-  holy:     { name: "Holy of Holies",   baseDmg: 450, color: '#00ffff', desc: 'มหาเวททำลายล้างสูงสุด' },
-  hecate:   { name: "Hecate's Diadem",  baseDmg: 380, color: '#cc66ff', desc: 'ระเบิดพลังเวทมนตร์' }
+  arthur_s1:     { name: "ดาบศักดิ์สิทธิ์ Arthur", path: "/assets/skills/arthur_s1.png", baseDmg: 400, color: '#ffd700', desc: 'ดาบกายภาพผสานพลังทองคำ' },
+  arthur_ult:    { name: "ดาบยักษ์ผ่ามิติ Arthur", path: "/assets/skills/arthur_ult.png", baseDmg: 650, color: '#ff5500', desc: 'อัลติเมตฟาดกระแทกป้อมรุนแรง' },
+  butterfly_s1:  { name: "เพลงดาบหมุน Butterfly", path: "/assets/skills/butterfly_s1.png", baseDmg: 350, color: '#ff0077', desc: 'หมุนฟันรวดเร็วต่อเนื่อง' },
+  butterfly_ult: { name: "ดาบลอบสังหาร Butterfly", path: "/assets/skills/butterfly_ult.png", baseDmg: 520, color: '#ff0033', desc: 'แทงจุดตายดาเมจคริติคอล x2' },
+  krixi_s1:      { name: "คลื่นเวทผีเสื้อ Krixi", path: "/assets/skills/krixi_s1.png", baseDmg: 450, color: '#33ccff', desc: 'ปล่อยพลังเวทผีเสื้อระเบิดใส่ป้อม' },
+  valhein_ult:   { name: "กงจักรกระสุนเงิน Valhein", path: "/assets/skills/valhein_ult.png", baseDmg: 480, color: '#ffbb00', desc: 'สาดกระสุนเงินเวทมนตร์ทะลวงเกราะ' }
 };
 
 let isRolling = false;
 
 function bindEvents() {
-  // Preload all 6 weapon images
+  // Preload all 6 hero skill images
   const weapons = Object.keys(weaponConfig);
   weapons.forEach(w => {
     const img = new Image();
-    img.src = `/assets/items/${w}.png`;
+    img.src = weaponConfig[w].path;
     weaponImages[w] = img;
   });
 
@@ -346,17 +346,19 @@ function performSwingAttack() {
   let color = '#ff3333';
   let dmgClass = 'dmg-text';
 
-  // Weapon specific effects
-  if (selectedWeapon === 'claves' && Math.random() < 0.4) {
+  // Hero skill specific effects
+  const cfg = weaponConfig[selectedWeapon] || { color: '#ff3333', baseDmg: 400 };
+  color = cfg.color;
+
+  if (selectedWeapon === 'butterfly_ult' && Math.random() < 0.5) {
     isCrit = true;
     dmg *= 2;
     dmgClass = 'dmg-crit';
-    color = '#ffcc00';
-  } else if (selectedWeapon === 'fenrir') {
-    if (tower.getHPPercent() < 0.5) {
-      dmg *= 1.3;
-      color = '#ff0055';
-    }
+  } else if (selectedWeapon === 'arthur_ult') {
+    isCrit = true;
+    dmgClass = 'dmg-ult';
+  } else if (selectedWeapon === 'krixi_s1') {
+    dmgClass = 'dmg-magic';
   }
 
   // Apply Damage
@@ -369,7 +371,7 @@ function performSwingAttack() {
 
   // Visual Effects & Sound
   const hitPos = new THREE.Vector3(0, Math.random() * 2, 0);
-  effects.createHitParticles(hitPos, color, isCrit ? 25 : 15);
+  effects.createHitParticles(hitPos, color, isCrit ? 30 : 15);
   showFloatingDamage(Math.floor(dmg), dmgClass, color);
 
   playSound('attack');
