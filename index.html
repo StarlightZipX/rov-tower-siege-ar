@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
   <meta name="description" content="RoV Tower Siege — AR Experience สำหรับงานแข่ง RoV วิทยาลัย">
   <title>RoV Tower Siege AR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,16 +12,38 @@
 </head>
 <body>
 
+  <!-- Portrait Warning -->
+  <div id="portrait-warning">
+    <div class="warning-icon">📱🔄</div>
+    <h2>กรุณาหมุนโทรศัพท์</h2>
+    <p>เกมนี้ต้องเล่นในแนวนอนเท่านั้น</p>
+  </div>
+
   <!-- ==================== LANDING SCREEN ==================== -->
   <div id="landing-screen">
     <div class="landing-bg"></div>
     <div class="landing-content">
-      <div class="landing-icon">🏰</div>
-      <h1 class="landing-title">ROV<br>TOWER SIEGE</h1>
-      <p class="landing-subtitle">⚔️ AR EXPERIENCE ⚔️</p>
-      <p class="landing-desc">เลือกอาวุธ สู้กับป้อม ทำลายมันให้ได้!</p>
+      <h1 class="landing-title">ROV TOWER SIEGE</h1>
+      <p class="landing-subtitle">AR EXPERIENCE</p>
+      
+      <div class="hero-selection">
+        <h3>เลือกสายฮีโร่ของคุณ</h3>
+        <div class="hero-cards">
+          <div class="hero-card active" data-hero="fighter">
+            <div class="hero-icon">⚔️</div>
+            <h4>ไฟต์เตอร์ / แครี่</h4>
+            <p>โจมตีเร็ว ดาเมจกายภาพ</p>
+          </div>
+          <div class="hero-card" data-hero="mage">
+            <div class="hero-icon">🔮</div>
+            <h4>เมจ</h4>
+            <p>สกิลรุนแรง ดาเมจเวท</p>
+          </div>
+        </div>
+      </div>
+
       <button id="start-btn" class="btn-primary">
-        <span>เริ่มเกม</span>
+        <span>เข้าสู่สมรภูมิ</span>
       </button>
       <p class="landing-note">* ระบบจะขอเข้าถึงกล้องเพื่อแสดงผล AR</p>
     </div>
@@ -35,51 +57,112 @@
     <!-- Three.js Canvas -->
     <canvas id="game-canvas"></canvas>
 
-    <!-- HUD: HP Bar -->
+    <!-- HUD Overlay -->
     <div id="hud">
+      <!-- Top Left: Minimap -->
+      <div class="minimap-container">
+        <div class="minimap-map"></div>
+      </div>
+
+      <!-- Top Right: Stats -->
+      <div class="top-stats">
+        <div class="kda-box">
+          <span class="kill">12</span> / <span class="death">0</span> / <span class="assist">5</span>
+        </div>
+        <div class="timer-box">10:45</div>
+        <div class="gold-box">
+          <span class="gold-icon">💰</span> <span id="current-gold">500</span>
+        </div>
+      </div>
+
+      <!-- Enemy Tower HP (Top Center) -->
       <div id="hp-container">
-        <div id="hp-label">🏰 TOWER HP</div>
         <div id="hp-bar-bg">
           <div id="hp-bar"></div>
         </div>
-        <div id="hp-text">1000 / 1000</div>
+        <div id="hp-text">5000 / 5000</div>
+      </div>
+
+      <!-- Left: Shop & Chat -->
+      <div class="left-controls">
+        <button id="shop-btn" class="hud-btn">
+          <span class="icon">🛒</span>
+          <span class="label">ร้านค้า</span>
+        </button>
+      </div>
+
+      <!-- Bottom Left: Joystick -->
+      <div class="joystick-area">
+        <div class="joystick-base">
+          <div class="joystick-stick"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Right: Skills & Attack -->
+      <div class="action-area">
+        <div class="skill-group">
+          <!-- Skill 1 -->
+          <button class="skill-btn" id="skill1-btn">
+            <span class="icon">✨</span>
+            <div class="cooldown-overlay"></div>
+            <span class="cooldown-text"></span>
+          </button>
+          <!-- Skill 2 -->
+          <button class="skill-btn" id="skill2-btn">
+            <span class="icon">🌪️</span>
+            <div class="cooldown-overlay"></div>
+            <span class="cooldown-text"></span>
+          </button>
+          <!-- Ultimate -->
+          <button class="skill-btn ultimate-btn" id="ultimate-btn">
+            <span class="icon">⚡</span>
+            <div class="cooldown-overlay"></div>
+            <span class="cooldown-text"></span>
+          </button>
+        </div>
+        <!-- Normal Attack -->
+        <button class="attack-btn-main" id="attack-btn">
+          <span class="icon">⚔️</span>
+        </button>
       </div>
     </div>
 
     <!-- Floating Damage Numbers -->
     <div id="damage-container"></div>
+  </div>
 
-    <!-- Attack Button -->
-    <button id="attack-btn" disabled>
-      <span class="attack-icon">⚔️</span>
-      <span class="attack-text">โจมตี!</span>
-    </button>
-
-    <!-- Weapon Toolbar -->
-    <div id="weapon-toolbar">
-      <div id="weapon-list"></div>
-      <button id="shuffle-btn">🔀 สุ่มอาวุธใหม่</button>
+  <!-- ==================== SHOP MODAL ==================== -->
+  <div id="shop-modal" class="hidden">
+    <div class="shop-content">
+      <div class="shop-header">
+        <h2>ร้านค้าไอเท็ม</h2>
+        <button id="close-shop">❌</button>
+      </div>
+      <div class="shop-body">
+        <div class="shop-items" id="shop-items-container">
+          <!-- Items injected via JS -->
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ==================== VICTORY SCREEN ==================== -->
   <div id="victory-screen">
     <div class="victory-content">
-      <div class="victory-icon">🏆</div>
-      <h1 class="victory-title">VICTORY!</h1>
-      <p class="victory-subtitle">ป้อมถูกทำลายแล้ว!</p>
+      <h1 class="victory-title">VICTORY</h1>
+      <p class="victory-subtitle">Your team has destroyed the enemy tower!</p>
       <div class="victory-stats">
         <div class="stat-item">
-          <span class="stat-label">จำนวนการโจมตี</span>
-          <span class="stat-value" id="stat-attacks">0</span>
+          <span class="stat-label">Total Damage</span>
+          <span class="stat-value" id="stat-damage">0</span>
         </div>
         <div class="stat-item">
-          <span class="stat-label">เวลาที่ใช้</span>
-          <span class="stat-value" id="stat-time">0 วินาที</span>
+          <span class="stat-label">Time Elapsed</span>
+          <span class="stat-value" id="stat-time">0s</span>
         </div>
       </div>
       <button id="replay-btn" class="btn-primary">
-        <span>🔄 เล่นอีกครั้ง</span>
+        <span>เล่นอีกครั้ง</span>
       </button>
     </div>
   </div>
