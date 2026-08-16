@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { Tower }          from './tower.js';
 import { EffectsManager } from './effects.js';
 import { initCamera, stopCamera } from './camera.js';
+import { HandTracker }    from './hand-tracking.js';
 
 /* ==========================================================
    State & Constants
@@ -50,6 +51,7 @@ const shopItems = [
 // Three.js instances
 let scene, camera3d, renderer, tower, effects;
 let cameraStream = null;
+let handTracker = null;
 
 // Web Audio API Context
 let audioCtx = null;
@@ -91,6 +93,7 @@ function cacheDOM() {
   
   dom.video = document.getElementById('camera-feed');
   dom.canvas = document.getElementById('game-canvas');
+  dom.handsCanvas = document.getElementById('hands-canvas');
 }
 
 function bindEvents() {
@@ -262,9 +265,26 @@ async function startGame() {
 
   try {
     cameraStream = await initCamera(dom.video);
+    
+    // Initialize Hand Tracking
+    if (!handTracker) {
+      handTracker = new HandTracker(dom.video, dom.handsCanvas, () => heroClass);
+      handTracker.onGestureDetected = (skillKey) => {
+        // Flash the UI button to show gesture was recognized
+        const btnMap = { 'attack': dom.attackBtn, 's1': dom.s1Btn, 's2': dom.s2Btn, 'ult': dom.ultBtn };
+        if (btnMap[skillKey]) {
+          btnMap[skillKey].style.transform = 'scale(1.2)';
+          setTimeout(() => btnMap[skillKey].style.transform = '', 150);
+        }
+        castSkill(skillKey);
+      };
+    }
+    handTracker.start();
+
   } catch (err) {
-    console.warn('Camera fallback used.');
+    console.warn('Camera fallback used. Hand tracking unavailable.');
     dom.video.style.display = 'none';
+    document.getElementById('ai-status').style.display = 'none';
   }
 
   state = GameState.PLAYING;
@@ -460,6 +480,8 @@ function showVictory() {
   document.getElementById('stat-damage').textContent = totalDamageDealt;
   document.getElementById('stat-time').textContent = elapsed + 's';
   dom.victory.style.display = 'flex';
+  
+  if (handTracker) handTracker.stop();
 }
 
 function replay() {
