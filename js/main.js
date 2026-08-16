@@ -1,5 +1,5 @@
 /**
- * main.js — AR Weapon Swing System
+ * main.js — RoV Hero Arsenal & Dedicated Skill Sets with Hero Gacha Roll
  */
 import * as THREE from 'three';
 import { Tower }          from './tower.js';
@@ -28,10 +28,63 @@ const SMOKE_INTERVAL = 0.28;
 let currentGold = 500;
 let bonusDamage = 0;
 
-// Weapon Hotbar State
-let selectedWeapon = 'fenrir';
-const weaponImages = {};
+/* ==========================================================
+   RoV Heroes & Signature Skill Sets
+   ========================================================== */
+const HEROES = {
+  arthur: {
+    name: "ARTHUR",
+    fullName: "Arthur (อาเธอร์)",
+    type: "ไฟต์เตอร์ / แทงค์",
+    avatar: "/assets/heroes/arthur.png",
+    skills: [
+      { id: 'arthur_atk', name: 'ดาบฟันปกติ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 320, color: '#ffd700', desc: 'ฟันดาบกายภาพ' },
+      { id: 'arthur_s1', name: 'Righteous Fervor', tag: 'ดาบศักดิ์สิทธิ์', icon: '/assets/skills/arthur_s1.png', dmg: 480, color: '#ffb700', desc: 'ดาบศักดิ์สิทธิ์เพิ่มความเร็ว' },
+      { id: 'arthur_s2', name: 'Holy Guard', tag: 'กงจักรดาบ', icon: '/assets/skills/arthur_s2.png', dmg: 400, color: '#ff9900', desc: 'กงจักรดาบหมุนวน' },
+      { id: 'arthur_ult', name: 'Deep Impact', tag: 'ดาบผ่ามิติ', icon: '/assets/skills/arthur_ult.png', dmg: 750, color: '#ff3300', isCrit: true, desc: 'อัลติเมตฟาดผ่ามิติ' }
+    ]
+  },
+  krixi: {
+    name: "KRIXI",
+    fullName: "Krixi (คริกซี่)",
+    type: "เมจ / พลังเวท",
+    avatar: "/assets/heroes/krixi.png",
+    skills: [
+      { id: 'krixi_atk', name: 'เวทมนตร์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 300, color: '#00ffff', desc: 'ยิงเวทมนตร์ระยะไกล' },
+      { id: 'krixi_s1', name: 'Mischief', tag: 'คลื่นผีเสื้อ', icon: '/assets/skills/krixi_s1.png', dmg: 500, color: '#33ccff', desc: 'ปล่อยฝูงผีเสื้อระเบิดใส่ป้อม' },
+      { id: 'krixi_s2', name: "Nature's Wrath", tag: 'พายุดอกไม้', icon: '/assets/skills/krixi_s2.png', dmg: 420, color: '#66ff66', desc: 'พายุบุปผายกเป้าหมาย' },
+      { id: 'krixi_ult', name: 'Moonfall', tag: 'ฝนดาวตก', icon: '/assets/skills/krixi_ult.png', dmg: 800, color: '#cc66ff', desc: 'ฝนดาวตกผีเสื้อถล่มป้อม' }
+    ]
+  },
+  butterfly: {
+    name: "BUTTERFLY",
+    fullName: "Butterfly (บัตเตอร์ฟลาย)",
+    type: "แอสซาซิน / ล้วง",
+    avatar: "/assets/heroes/butterfly.png",
+    skills: [
+      { id: 'bf_atk', name: 'ดาบสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 340, color: '#ff0077', desc: 'ฟันดาบสังหารรวดเร็ว' },
+      { id: 'bf_s1', name: 'Whirlwind', tag: 'เพลงดาบหมุน', icon: '/assets/skills/butterfly_s1.png', dmg: 460, color: '#ff3366', desc: 'เพลงดาบหมุนว่องไว' },
+      { id: 'bf_ult', name: 'Backstab', tag: 'ลอบสังหาร', icon: '/assets/skills/butterfly_ult.png', dmg: 780, color: '#ff0033', isCrit: true, desc: 'พุ่งแทงลอบสังหารคริติคอล' }
+    ]
+  },
+  valhein: {
+    name: "VALHEIN",
+    fullName: "Valhein (แวนเฮล)",
+    type: "แครี่ / นักล่าปีศาจ",
+    avatar: "/assets/heroes/valhein.png",
+    skills: [
+      { id: 'vh_atk', name: 'ปืนกงจักรเงิน', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 310, color: '#ffcc00', desc: 'สาดกระสุนกงจักรเงิน' },
+      { id: 'vh_s2', name: 'Curse of Death', tag: 'กงจักรทอง', icon: '/assets/skills/valhein_s2.png', dmg: 450, color: '#ffdd33', desc: 'กงจักรสีทองสตั๊นเป้าหมาย' },
+      { id: 'vh_ult', name: 'Bullet Storm', tag: 'พายุกระสุนเงิน', icon: '/assets/skills/valhein_ult.png', dmg: 720, color: '#ff8800', desc: 'พายุกระสุนเงินทะลวงเกราะ' }
+    ]
+  }
+};
+
+let activeHeroKey = 'arthur';
+let selectedSkill = null;
+const skillImages = {};
 let baseDamage = 400;
+let isRolling = false;
 
 // Three.js instances
 let scene, camera3d, renderer, tower, effects;
@@ -61,13 +114,18 @@ function cacheDOM() {
   dom.startBtn = document.getElementById('start-btn');
   dom.replayBtn = document.getElementById('replay-btn');
 
-  dom.hotbarSlots = document.querySelectorAll('.hotbar-slot');
+  dom.heroCards = document.querySelectorAll('.hero-card');
+  dom.randomHeroBtn = document.getElementById('random-hero-btn');
+  dom.heroBadgeBox = document.getElementById('hero-badge-box');
+  dom.heroBadgeAvatar = document.getElementById('hero-badge-avatar');
+  dom.heroBadgeName = document.getElementById('hero-badge-name');
+  dom.heroBadgeType = document.querySelector('.hero-badge-type');
+  dom.skillsContainer = document.getElementById('hero-skills-container');
 
   dom.hpBar = document.getElementById('hp-bar');
   dom.hpText = document.getElementById('hp-text');
   dom.goldText = document.getElementById('current-gold');
   dom.timerBox = document.querySelector('.timer-box');
-  dom.randomWeaponBtn = document.getElementById('random-weapon-btn');
   dom.hitCount = document.getElementById('hit-count');
   dom.liveDamageText = document.getElementById('live-damage-text');
   dom.comboBadge = document.querySelector('.combo-badge');
@@ -78,130 +136,163 @@ function cacheDOM() {
   dom.handsCanvas = document.getElementById('hands-canvas');
 }
 
-const weaponConfig = {
-  arthur_s1:     { name: "ดาบศักดิ์สิทธิ์ Arthur", path: "/assets/skills/arthur_s1.png", baseDmg: 400, color: '#ffd700', desc: 'ดาบกายภาพผสานพลังทองคำ' },
-  arthur_ult:    { name: "ดาบยักษ์ผ่ามิติ Arthur", path: "/assets/skills/arthur_ult.png", baseDmg: 650, color: '#ff5500', desc: 'อัลติเมตฟาดกระแทกป้อมรุนแรง' },
-  butterfly_s1:  { name: "เพลงดาบหมุน Butterfly", path: "/assets/skills/butterfly_s1.png", baseDmg: 350, color: '#ff0077', desc: 'หมุนฟันรวดเร็วต่อเนื่อง' },
-  butterfly_ult: { name: "ดาบลอบสังหาร Butterfly", path: "/assets/skills/butterfly_ult.png", baseDmg: 520, color: '#ff0033', desc: 'แทงจุดตายดาเมจคริติคอล x2' },
-  krixi_s1:      { name: "คลื่นเวทผีเสื้อ Krixi", path: "/assets/skills/krixi_s1.png", baseDmg: 450, color: '#33ccff', desc: 'ปล่อยพลังเวทผีเสื้อระเบิดใส่ป้อม' },
-  valhein_ult:   { name: "กงจักรกระสุนเงิน Valhein", path: "/assets/skills/valhein_ult.png", baseDmg: 480, color: '#ffbb00', desc: 'สาดกระสุนเงินเวทมนตร์ทะลวงเกราะ' }
-};
-
-let isRolling = false;
-
 function bindEvents() {
-  // Preload all 6 hero skill images
-  const weapons = Object.keys(weaponConfig);
-  weapons.forEach(w => {
-    const img = new Image();
-    img.src = weaponConfig[w].path;
-    weaponImages[w] = img;
+  // Preload all skill images for all heroes
+  Object.values(HEROES).forEach(hero => {
+    hero.skills.forEach(sk => {
+      if (!skillImages[sk.id]) {
+        const img = new Image();
+        img.src = sk.icon;
+        skillImages[sk.id] = img;
+      }
+    });
   });
 
   dom.startBtn.addEventListener('click', startGame);
   dom.replayBtn.addEventListener('click', replay);
 
-  // Hero Selection
-  document.querySelectorAll('.hero-card').forEach(card => {
+  // Hero Card Selection on Landing Screen
+  dom.heroCards.forEach(card => {
     card.addEventListener('click', () => {
-      document.querySelectorAll('.hero-card').forEach(c => c.classList.remove('active'));
+      dom.heroCards.forEach(c => c.classList.remove('active'));
       card.classList.add('active');
+      activeHeroKey = card.dataset.hero || 'arthur';
     });
   });
 
-  // Hotbar Direct Slot Selection
-  dom.hotbarSlots.forEach(slot => {
-    slot.addEventListener('click', () => {
-      if (isRolling) return;
-      selectWeapon(slot.dataset.weapon);
-    });
-  });
-
-  // Random Weapon Roll Button
-  if (dom.randomWeaponBtn) {
-    dom.randomWeaponBtn.addEventListener('click', () => {
-      rollRandomWeapon();
+  // Random Hero Roll Button in Gameplay
+  if (dom.randomHeroBtn) {
+    dom.randomHeroBtn.addEventListener('click', () => {
+      rollRandomHero();
     });
   }
 
   window.addEventListener('resize', onResize);
 }
 
-function selectWeapon(weaponKey) {
-  if (!weaponConfig[weaponKey]) return;
-  selectedWeapon = weaponKey;
+/* ==========================================================
+   Hero & Skill Assignment
+   ========================================================== */
+function setHero(heroKey) {
+  if (!HEROES[heroKey]) return;
+  activeHeroKey = heroKey;
+  const hero = HEROES[heroKey];
 
-  // Update UI active slot
-  dom.hotbarSlots.forEach(s => {
-    if (s.dataset.weapon === weaponKey) s.classList.add('active');
-    else s.classList.remove('active');
-  });
+  // Update Hero Badge in Hotbar
+  if (dom.heroBadgeAvatar) dom.heroBadgeAvatar.src = hero.avatar;
+  if (dom.heroBadgeName) dom.heroBadgeName.textContent = hero.name;
+  if (dom.heroBadgeType) dom.heroBadgeType.textContent = hero.type;
 
-  // Update AR weapon on hand
-  if (handTracker && weaponImages[selectedWeapon]) {
-    handTracker.setWeapon(weaponImages[selectedWeapon]);
-  }
-
-  baseDamage = weaponConfig[weaponKey].baseDmg;
+  // Render this hero's dedicated skills in the hotbar
+  renderHeroSkills(hero);
 }
 
-function rollRandomWeapon() {
+function renderHeroSkills(hero) {
+  if (!dom.skillsContainer) return;
+  dom.skillsContainer.innerHTML = '';
+
+  hero.skills.forEach((sk, idx) => {
+    const slot = document.createElement('div');
+    slot.className = `hotbar-slot ${idx === 0 ? 'active' : ''}`;
+    slot.dataset.skillId = sk.id;
+    slot.title = sk.name;
+
+    slot.innerHTML = `
+      <img src="${sk.icon}" alt="${sk.name}">
+      <span class="weapon-tag">${sk.tag}</span>
+    `;
+
+    slot.addEventListener('click', () => {
+      if (isRolling) return;
+      selectSkill(sk, slot);
+    });
+
+    dom.skillsContainer.appendChild(slot);
+  });
+
+  // Automatically select the first skill / weapon of this hero
+  selectSkill(hero.skills[0], dom.skillsContainer.firstChild);
+}
+
+function selectSkill(skill, slotEl) {
+  if (!skill) return;
+  selectedSkill = skill;
+  baseDamage = skill.dmg;
+
+  // Update active slot style
+  if (dom.skillsContainer) {
+    dom.skillsContainer.querySelectorAll('.hotbar-slot').forEach(s => s.classList.remove('active'));
+  }
+  if (slotEl) slotEl.classList.add('active');
+
+  // Update AR weapon sprite attached to the hand
+  if (handTracker && skillImages[skill.id]) {
+    handTracker.setWeapon(skillImages[skill.id]);
+  }
+}
+
+/* ==========================================================
+   Random Hero Roll Gacha
+   ========================================================== */
+function rollRandomHero() {
   if (isRolling) return;
   isRolling = true;
   initAudio();
 
-  const slots = Array.from(dom.hotbarSlots);
-  const keys = Object.keys(weaponConfig);
+  const heroKeys = Object.keys(HEROES);
   let currentIndex = 0;
   let speed = 60;
   let counter = 0;
-  const totalSteps = 15 + Math.floor(Math.random() * 8);
+  const totalSteps = 14 + Math.floor(Math.random() * 6);
+
+  if (dom.heroBadgeBox) dom.heroBadgeBox.style.transform = 'scale(1.15)';
 
   function step() {
-    // Remove rolling class from all
-    slots.forEach(s => s.classList.remove('rolling'));
+    const currentKey = heroKeys[currentIndex % heroKeys.length];
+    const currentHero = HEROES[currentKey];
 
-    // Highlight current slot
-    const currentSlot = slots[currentIndex % slots.length];
-    currentSlot.classList.add('rolling');
+    if (dom.heroBadgeAvatar) dom.heroBadgeAvatar.src = currentHero.avatar;
+    if (dom.heroBadgeName) dom.heroBadgeName.textContent = currentHero.name;
+    if (dom.heroBadgeType) dom.heroBadgeType.textContent = currentHero.type;
+
     playSound('roll');
-
     currentIndex++;
     counter++;
 
     if (counter < totalSteps) {
-      speed += 12; // Slow down gradually like a real gacha roulette
+      speed += 12;
       setTimeout(step, speed);
     } else {
-      // Pick final weapon
-      slots.forEach(s => s.classList.remove('rolling'));
-      const chosenSlot = slots[(currentIndex - 1) % slots.length];
-      const chosenKey = chosenSlot.dataset.weapon;
-
-      selectWeapon(chosenKey);
+      const chosenKey = heroKeys[(currentIndex - 1) % heroKeys.length];
+      setHero(chosenKey);
       playSound('win');
       isRolling = false;
 
-      // Show notification
-      showFloatingRollNotice(weaponConfig[chosenKey]);
+      if (dom.heroBadgeBox) dom.heroBadgeBox.style.transform = 'scale(1)';
+
+      // Show announcement
+      showFloatingRollNotice(HEROES[chosenKey]);
     }
   }
 
   step();
 }
 
-function showFloatingRollNotice(weapon) {
+function showFloatingRollNotice(hero) {
   const el = document.createElement('div');
   el.className = 'dmg-text';
-  el.textContent = `🎲 สุ่มได้: ${weapon.name}!`;
-  el.style.color = weapon.color;
+  el.textContent = `🎲 สุ่มได้ฮีโร่: ${hero.name}!`;
+  el.style.color = '#ffd700';
   el.style.fontSize = '2.2rem';
-  el.style.left = '35%';
+  el.style.left = '32%';
   el.style.top = '60%';
   dom.damageCont.appendChild(el);
   el.addEventListener('animationend', () => el.remove());
 }
 
+/* ==========================================================
+   Three.js & Graphics
+   ========================================================== */
 function initThreeJS() {
   scene = new THREE.Scene();
   camera3d = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -300,6 +391,9 @@ async function startGame() {
   dom.landing.style.display = 'none';
   dom.gameScreen.style.display = 'block';
 
+  // Apply selected hero and generate their skills
+  setHero(activeHeroKey);
+
   try {
     cameraStream = await initCamera(dom.video);
 
@@ -309,11 +403,9 @@ async function startGame() {
       handTracker.onSwingDetected = () => {
         performSwingAttack();
       };
-
-      // Load initial weapon
-      if (weaponImages[selectedWeapon]) {
-        handTracker.setWeapon(weaponImages[selectedWeapon]);
-      }
+    }
+    if (selectedSkill && skillImages[selectedSkill.id]) {
+      handTracker.setWeapon(skillImages[selectedSkill.id]);
     }
     handTracker.start();
 
@@ -339,26 +431,15 @@ async function startGame() {
    Combat Logic — Swing Attack
    ========================================================== */
 function performSwingAttack() {
-  if (state !== GameState.PLAYING) return;
+  if (state !== GameState.PLAYING || !selectedSkill) return;
 
   let dmg = baseDamage + bonusDamage;
-  let isCrit = false;
-  let color = '#ff3333';
-  let dmgClass = 'dmg-text';
+  let isCrit = selectedSkill.isCrit || false;
+  let color = selectedSkill.color || '#ffd700';
+  let dmgClass = isCrit ? 'dmg-crit' : (activeHeroKey === 'krixi' ? 'dmg-magic' : 'dmg-text');
 
-  // Hero skill specific effects
-  const cfg = weaponConfig[selectedWeapon] || { color: '#ff3333', baseDmg: 400 };
-  color = cfg.color;
-
-  if (selectedWeapon === 'butterfly_ult' && Math.random() < 0.5) {
-    isCrit = true;
-    dmg *= 2;
-    dmgClass = 'dmg-crit';
-  } else if (selectedWeapon === 'arthur_ult') {
-    isCrit = true;
-    dmgClass = 'dmg-ult';
-  } else if (selectedWeapon === 'krixi_s1') {
-    dmgClass = 'dmg-magic';
+  if (isCrit && Math.random() < 0.6) {
+    dmg = Math.floor(dmg * 1.5);
   }
 
   // Apply Damage
