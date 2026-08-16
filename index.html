@@ -34,57 +34,57 @@
       <p class="landing-subtitle">BATTLE FOR ANTARIS</p>
       
       <div class="hero-selection">
-        <h3>เลือกตัวแทนฮีโร่ของคุณ</h3>
+        <h3>เลือกสายคลาสที่คุณต้องการเล่น (CHOOSE CLASS)</h3>
         <div class="hero-cards">
-          <!-- Arthur Card -->
-          <div class="hero-card active" data-hero="arthur">
+          <!-- Fighter Class Card -->
+          <div class="hero-card active" data-class="fighter">
             <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
-              <img class="hero-icon-img" src="/assets/heroes/arthur.png" alt="Arthur">
+              <img class="hero-icon-img" src="/assets/heroes/arthur.png" alt="Fighter Class">
               <div class="hero-card-text">
-                <h4>ARTHUR</h4>
-                <p class="hero-role">ไฟต์เตอร์ / แทงค์</p>
-                <span class="hero-stat-badge">ดาบศักดิ์สิทธิ์ & ผ่ามิติ</span>
+                <h4>FIGHTER / TANK</h4>
+                <p class="hero-role">สายไฟต์เตอร์ / แทงค์</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Arthur, Lu Bu</span>
               </div>
             </div>
           </div>
-          <!-- Krixi Card -->
-          <div class="hero-card" data-hero="krixi">
+          <!-- Mage Class Card -->
+          <div class="hero-card" data-class="mage">
             <div class="hero-card-banner" style="background-image: url('/assets/ui/krixi_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
-              <img class="hero-icon-img" src="/assets/heroes/krixi.png" alt="Krixi">
+              <img class="hero-icon-img" src="/assets/heroes/krixi.png" alt="Mage Class">
               <div class="hero-card-text">
-                <h4>KRIXI</h4>
-                <p class="hero-role">เมจ / พลังเวท</p>
-                <span class="hero-stat-badge">คลื่นผีเสื้อ & ฝนดาวตก</span>
+                <h4>MAGE</h4>
+                <p class="hero-role">สายเมจ / พลังเวท</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Krixi, Veera</span>
               </div>
             </div>
           </div>
-          <!-- Butterfly Card -->
-          <div class="hero-card" data-hero="butterfly">
+          <!-- Assassin Class Card -->
+          <div class="hero-card" data-class="assassin">
             <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
-              <img class="hero-icon-img" src="/assets/heroes/butterfly.png" alt="Butterfly">
+              <img class="hero-icon-img" src="/assets/heroes/butterfly.png" alt="Assassin Class">
               <div class="hero-card-text">
-                <h4>BUTTERFLY</h4>
-                <p class="hero-role">แอสซาซิน / ล้วง</p>
-                <span class="hero-stat-badge">เพลงดาบหมุน & ลอบสังหาร</span>
+                <h4>ASSASSIN</h4>
+                <p class="hero-role">สายแอสซาซิน / ล้วง</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Butterfly, Nakroth</span>
               </div>
             </div>
           </div>
-          <!-- Valhein Card -->
-          <div class="hero-card" data-hero="valhein">
-            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+          <!-- Marksman Class Card -->
+          <div class="hero-card" data-class="marksman">
+            <div class="hero-card-banner" style="background-image: url('/assets/heroes/violet_card.jpg');"></div>
             <div class="hero-card-overlay"></div>
             <div class="hero-card-info">
-              <img class="hero-icon-img" src="/assets/heroes/valhein.png" alt="Valhein">
+              <img class="hero-icon-img" src="/assets/heroes/valhein.png" alt="Marksman Class">
               <div class="hero-card-text">
-                <h4>VALHEIN</h4>
-                <p class="hero-role">แครี่ / นักล่าปีศาจ</p>
-                <span class="hero-stat-badge">กงจักรเงิน & กระสุนเวท</span>
+                <h4>MARKSMAN</h4>
+                <p class="hero-role">สายแครี่ / ยิงไกล</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Valhein, Violet</span>
               </div>
             </div>
           </div>
@@ -93,9 +93,60 @@
 
       <div class="landing-action-group">
         <button id="start-btn" class="btn-primary rov-gold-btn">
-          <span class="btn-text">เข้าสู่สมรภูมิ</span>
+          <span class="btn-icon">🎲</span>
+          <span class="btn-text">สุ่มฮีโร่ในสาย & เข้าสู่สมรภูมิ</span>
         </button>
         <p class="landing-note">📹 ระบบใช้กล้อง AR ในการตรวจจับการฟาดฟันอาวุธ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AAA HERO SUMMONING GACHA SCREEN ==================== -->
+  <div id="summoning-screen" style="display: none;">
+    <div class="summon-bg-overlay"></div>
+    <div class="summon-rune-container">
+      <div class="summon-magic-circle"></div>
+      <div class="summon-magic-circle-inner"></div>
+      <div class="summon-light-pillar"></div>
+    </div>
+
+    <!-- Phase 1 & 2: Shuffling Roulette -->
+    <div id="summon-roulette-phase" class="summon-phase-content">
+      <div class="summon-title-badge">⚡ ANATARIS SUMMONING RITUAL ⚡</div>
+      <h2 id="summon-class-title" class="summon-heading">กำลังอัญเชิญฮีโร่สาย: FIGHTER</h2>
+      <div class="roulette-hero-preview-box">
+        <img id="roulette-hero-img" src="/assets/heroes/arthur.png" alt="Hero Rolling">
+        <div class="roulette-energy-glow"></div>
+      </div>
+      <p class="summon-status-text">กำลังสุ่มเลือกนักรบที่คู่ควรในสาย...</p>
+    </div>
+
+    <!-- Phase 3: AAA Golden Reveal -->
+    <div id="summon-reveal-phase" class="summon-phase-content" style="display: none;">
+      <div class="reveal-flash-effect"></div>
+      <div class="reveal-card-container">
+        <div class="reveal-hero-banner" id="reveal-hero-banner">
+          <div class="reveal-hero-gradient"></div>
+        </div>
+        <div class="reveal-content-box">
+          <div class="reveal-tier-tag">⭐ LEGENDARY HERO ⭐</div>
+          <div class="reveal-hero-header">
+            <img id="reveal-avatar" src="/assets/heroes/arthur.png" alt="Hero Avatar">
+            <div class="reveal-hero-titles">
+              <h2 id="reveal-name">ARTHUR</h2>
+              <span id="reveal-role" class="reveal-role-badge">ไฟต์เตอร์ / แทงค์</span>
+            </div>
+          </div>
+          <blockquote id="reveal-quote" class="reveal-hero-quote">"ดาบแห่งความยุติธรรมจะไม่ปรานีใคร!"</blockquote>
+          
+          <div class="reveal-skills-list" id="reveal-skills-list">
+            <!-- Dynamically populated skills -->
+          </div>
+
+          <button id="enter-battle-btn" class="btn-primary rov-gold-btn pulse-epic">
+            <span class="btn-text">⚔️ เข้าสู่สมรภูมิประจัญบาน! (ENTER BATTLE)</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
