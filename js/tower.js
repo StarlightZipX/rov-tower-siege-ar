@@ -447,6 +447,38 @@ export class Tower {
     }
   }
 
+  setTargeting(isTargeting) {
+    if (!this.crystal || !this.crystalLight) return;
+    if (isTargeting) {
+      this.crystal.material.color.set(0xff0044);
+      this.crystal.material.emissive.set(0xff0022);
+      this.crystalLight.color.set(0xff0033);
+      this.crystalLight.intensity = 18;
+    } else {
+      const pct = this.getHPPercent();
+      if (pct > 0.5) {
+        this.crystal.material.color.set(0x00f7ff);
+        this.crystal.material.emissive.set(0x0088ff);
+        this.crystalLight.color.set(0x00f0ff);
+      } else {
+        this.crystal.material.color.set(0xff7700);
+        this.crystal.material.emissive.set(0xff3300);
+        this.crystalLight.color.set(0xff5500);
+      }
+      this.crystalLight.intensity = 8;
+    }
+  }
+
+  getCrystalWorldPosition() {
+    const pos = new THREE.Vector3();
+    if (this.crystal) {
+      this.crystal.getWorldPosition(pos);
+    } else {
+      pos.set(this.group.position.x, this.group.position.y + 3.2, this.group.position.z);
+    }
+    return pos;
+  }
+
   getHPPercent() {
     return this.currentHP / this.maxHP;
   }

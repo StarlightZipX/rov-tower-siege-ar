@@ -13,6 +13,10 @@ export class EffectsManager {
     this.debris = [];
     /** @type {{ type: string, light?: THREE.PointLight, mesh?: THREE.Mesh, life: number, decay: number, scaleRate?: number }[]} */
     this.activeEffects = [];
+    /** @type {{ mesh: THREE.Group, startPos: THREE.Vector3, targetPos: THREE.Vector3, progress: number, speed: number, onHit: Function }[]} */
+    this.projectiles = [];
+    /** @type {{ mesh: THREE.Mesh, life: number, decay: number }[]} */
+    this.laserBeams = [];
   }
 
   /* -------------------------------------------------- */
@@ -291,6 +295,103 @@ export class EffectsManager {
   }
 
   /* -------------------------------------------------- */
+  /*  Tower Retaliation Laser & Projectiles             */
+  /* -------------------------------------------------- */
+  createTowerLaser(startPos, targetPos, duration = 1.5) {
+    const dist = startPos.distanceTo(targetPos);
+    const laserGeo = new THREE.CylinderGeometry(0.025, 0.04, dist, 8);
+    laserGeo.translate(0, dist / 2, 0);
+    laserGeo.rotateX(Math.PI / 2);
+
+    const laserMat = new THREE.MeshBasicMaterial({
+      color: 0xff0033,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending
+    });
+
+    const mesh = new THREE.Mesh(laserGeo, laserMat);
+    mesh.position.copy(startPos);
+    mesh.lookAt(targetPos);
+    this.scene.add(mesh);
+
+    this.laserBeams.push({
+      mesh,
+      life: 1.0,
+      decay: 1.0 / (duration * 60)
+    });
+  }
+
+  createTowerProjectile(startPos, targetPos, speed = 1.4, onHit = null) {
+    const group = new THREE.Group();
+
+    // 1. Glowing Core Orb
+    const coreGeo = new THREE.SphereGeometry(0.28, 12, 12);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xff1144,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    group.add(core);
+
+    // 2. Outer Corona Flare
+    const flareGeo = new THREE.SphereGeometry(0.42, 8, 8);
+    const flareMat = new THREE.MeshBasicMaterial({
+      color: 0xff5500,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending
+    });
+    const flare = new THREE.Mesh(flareGeo, flareMat);
+    group.add(flare);
+
+    // 3. Point Light
+    const light = new THREE.PointLight(0xff0044, 4.5, 6.0);
+    group.add(light);
+
+    group.position.copy(startPos);
+    this.scene.add(group);
+
+    this.projectiles.push({
+      mesh: group,
+      startPos: startPos.clone(),
+      targetPos: targetPos.clone(),
+      progress: 0,
+      speed,
+      onHit
+    });
+  }
+
+  createShieldBarrierFX(position) {
+    // 1. Expanding Hexagonal / Ring Barrier
+    const ringGeo = new THREE.RingGeometry(0.5, 1.8, 32);
+    const ringMat = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
+      transparent: true,
+      opacity: 0.95,
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending
+    });
+    const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+    ringMesh.position.copy(position);
+    ringMesh.position.z -= 0.6;
+    this.scene.add(ringMesh);
+
+    this.activeEffects.push({
+      type: 'shockwave',
+      mesh: ringMesh,
+      life: 1.0,
+      decay: 0.04,
+      scaleRate: 1.8
+    });
+
+    // 2. Cyan Barrier Deflect Sparks
+    this.createHitParticles(position, '#00e5ff', 35, true, 'magic');
+  }
+
+  /* -------------------------------------------------- */
   /*  Per-frame update                                   */
   /* -------------------------------------------------- */
   update(dt) {
@@ -339,7 +440,40 @@ export class EffectsManager {
       }
     }
 
-    // 3. Active effects
+    // 3. Laser Beams
+    for (let i = this.laserBeams.length - 1; i >= 0; i--) {
+      const b = this.laserBeams[i];
+      b.life -= b.decay;
+      b.mesh.material.opacity = Math.max(0, b.life * (0.6 + Math.random() * 0.4));
+      if (b.life <= 0) {
+        this.scene.remove(b.mesh);
+        b.mesh.geometry.dispose();
+        b.mesh.material.dispose();
+        this.laserBeams.splice(i, 1);
+      }
+    }
+
+    // 4. Projectiles
+    for (let i = this.projectiles.length - 1; i >= 0; i--) {
+      const proj = this.projectiles[i];
+      proj.progress += proj.speed * dt;
+      proj.mesh.position.lerpVectors(proj.startPos, proj.targetPos, Math.min(1, proj.progress));
+      proj.mesh.rotation.x += dt * 8;
+      proj.mesh.rotation.y += dt * 10;
+
+      // Trailing sparks
+      if (Math.random() < 0.6) {
+        this.createHitParticles(proj.mesh.position, '#ff2200', 2, false, 'fire');
+      }
+
+      if (proj.progress >= 1.0) {
+        if (proj.onHit) proj.onHit(proj.targetPos);
+        this.scene.remove(proj.mesh);
+        this.projectiles.splice(i, 1);
+      }
+    }
+
+    // 5. Active effects
     for (let i = this.activeEffects.length - 1; i >= 0; i--) {
       const e = this.activeEffects[i];
       e.life -= e.decay;
@@ -378,6 +512,14 @@ export class EffectsManager {
       d.mesh.geometry.dispose();
       d.mesh.material.dispose();
     }
+    for (const b of this.laserBeams) {
+      this.scene.remove(b.mesh);
+      b.mesh.geometry.dispose();
+      b.mesh.material.dispose();
+    }
+    for (const proj of this.projectiles) {
+      this.scene.remove(proj.mesh);
+    }
     for (const e of this.activeEffects) {
       if (e.light) this.scene.remove(e.light);
       if (e.mesh) {
@@ -388,6 +530,8 @@ export class EffectsManager {
     }
     this.particles = [];
     this.debris = [];
+    this.laserBeams = [];
+    this.projectiles = [];
     this.activeEffects = [];
   }
 }

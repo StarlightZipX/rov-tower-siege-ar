@@ -1586,5 +1586,342 @@ body, html {
   100% { transform: scale(1.4); opacity: 0; }
 }
 
+/* ==================== ACTION BUTTONS CLUSTER (SHIELD + ULTIMATE) ==================== */
+.action-buttons-cluster {
+  position: absolute;
+  bottom: 14px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+/* Override .ult-btn-wrapper position when inside cluster */
+.action-buttons-cluster .ult-btn-wrapper {
+  position: relative;
+  bottom: 0;
+  right: 0;
+}
+
+/* ==================== PLAYER HP BAR (HUD) ==================== */
+.player-hp-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 3px;
+  width: 110px;
+}
+
+.player-hp-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(0, 255, 128, 0.4);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.player-hp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff88 0%, #00cc66 50%, #77ff00 100%);
+  border-radius: 3px;
+  transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.3s;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.7);
+}
+
+.player-hp-bar-fill.low-hp {
+  background: linear-gradient(90deg, #ff0033 0%, #ff5500 100%);
+  box-shadow: 0 0 10px rgba(255, 0, 50, 0.9);
+}
+
+#player-hp-text {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #00ffaa;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.6);
+}
+
+/* ==================== CHALLENGER SKILL: SHIELD BUTTON ==================== */
+.shield-btn-wrapper {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.challenger-action-btn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #153055 0%, #081224 100%);
+  border: 2.5px solid #00d4ff;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(0, 180, 255, 0.5), 0 4px 10px rgba(0, 0, 0, 0.7);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  overflow: hidden;
+}
+
+.challenger-action-btn:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.8);
+  border-color: #70e4ff;
+}
+
+.challenger-action-btn:active {
+  transform: scale(0.92);
+}
+
+.shield-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px #00d4ff);
+}
+
+.shield-label {
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #a0e8ff;
+  margin-top: 1px;
+}
+
+/* Active Shield Glow */
+.challenger-action-btn.shield-active {
+  border-color: #00ffaa;
+  box-shadow: 0 0 30px #00ff88, inset 0 0 15px #00ffcc;
+  animation: shieldButtonPulse 0.5s ease-in-out infinite alternate;
+}
+
+.shield-cd-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 30, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+#shield-cd-text {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #66b2ff;
+}
+
+@keyframes shieldButtonPulse {
+  0% { transform: scale(1); box-shadow: 0 0 20px #00ffaa; }
+  100% { transform: scale(1.08); box-shadow: 0 0 35px #00ffcc; }
+}
+
+/* ==================== TOWER TARGETING WARNING BANNER ==================== */
+.tower-warning-banner {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 130;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: warningBannerPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.warning-banner-pulse {
+  position: absolute;
+  width: 480px;
+  height: 80px;
+  background: radial-gradient(ellipse at center, rgba(255, 0, 50, 0.85) 0%, rgba(255, 100, 0, 0.4) 50%, transparent 80%);
+  filter: blur(14px);
+  animation: warningGlowPulse 0.5s ease-in-out infinite alternate;
+}
+
+.warning-banner-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(90deg, rgba(20, 5, 10, 0.95) 0%, rgba(50, 10, 20, 0.98) 50%, rgba(20, 5, 10, 0.95) 100%);
+  border: 2px solid #ff0044;
+  border-radius: 12px;
+  padding: 8px 24px;
+  box-shadow: 0 0 30px rgba(255, 0, 50, 0.8), inset 0 0 15px rgba(255, 50, 80, 0.4);
+}
+
+.warning-hazard-icon {
+  font-size: 1.8rem;
+  animation: hazardShake 0.4s ease-in-out infinite alternate;
+}
+
+.warning-text-col h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ff3355;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 10px #ff0033;
+}
+
+.warning-text-col p {
+  font-size: 0.8rem;
+  color: #ffd0d5;
+  font-weight: 600;
+  margin: 2px 0 0 0;
+}
+
+@keyframes warningBannerPop {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes warningGlowPulse {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  100% { opacity: 1.0; transform: scale(1.15); }
+}
+
+@keyframes hazardShake {
+  0% { transform: rotate(-8deg); }
+  100% { transform: rotate(8deg); }
+}
+
+/* ==================== FULLSCREEN HIT FLASH & SHIELD BARRIER FX ==================== */
+.player-hit-flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(255, 0, 40, 0.6) 75%, rgba(180, 0, 20, 0.9) 100%);
+  z-index: 180;
+  pointer-events: none;
+  animation: hitVignette 0.6s ease-out forwards;
+}
+
+@keyframes hitVignette {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.player-shield-fx {
+  position: fixed;
+  inset: 0;
+  border: 8px solid rgba(0, 220, 255, 0.8);
+  box-shadow: inset 0 0 80px rgba(0, 200, 255, 0.6), 0 0 50px rgba(0, 220, 255, 0.8);
+  z-index: 175;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: barrierAura 1.4s ease-out forwards;
+}
+
+.shield-barrier-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 180, 255, 0.25) 100%);
+}
+
+.shield-barrier-text {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px #00e5ff, 0 0 40px #0088ff, 2px 2px 0 #000;
+  background: rgba(10, 25, 50, 0.85);
+  padding: 8px 30px;
+  border-radius: 30px;
+  border: 2px solid #00f0ff;
+  box-shadow: 0 0 30px rgba(0, 200, 255, 0.7);
+}
+
+@keyframes barrierAura {
+  0% { opacity: 1; transform: scale(1.03); }
+  75% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.98); }
+}
+
+/* ==================== DEFEAT SCREEN ==================== */
+#defeat-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.defeat-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #2b0c14 0%, #0a0204 100%);
+  opacity: 0.96;
+}
+
+.defeat-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  animation: defeatFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.defeat-emblem {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 25px rgba(255, 0, 50, 0.9));
+  margin-bottom: 8px;
+  animation: defeatSkullBounce 1.2s ease-in-out infinite alternate;
+}
+
+.defeat-title {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: #ff3344;
+  letter-spacing: 6px;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(255, 0, 60, 0.9), 0 0 60px rgba(180, 0, 30, 0.8), 3px 3px 0 #000;
+}
+
+.defeat-subtitle {
+  font-size: 1.1rem;
+  color: #e0b0b8;
+  font-weight: 600;
+  margin: 8px 0 24px 0;
+}
+
+.defeat-stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+@keyframes defeatFadeIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes defeatSkullBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.1); }
+}
+
+
 
 

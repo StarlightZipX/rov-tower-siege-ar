@@ -18,7 +18,8 @@ const GameState = Object.freeze({
   LOADING:   'loading',
   PLAYING:   'playing',
   EXPLODING: 'exploding',
-  VICTORY:   'victory'
+  VICTORY:   'victory',
+  DEFEAT:    'defeat'
 });
 
 let state = GameState.LANDING;
@@ -36,6 +37,17 @@ let ultimateCharge = 0; // 0 to 100
 const MAX_ULT_CHARGE = 100;
 const ULT_RING_CIRCUMFERENCE = 257.6;
 let isUltimateReady = false;
+
+// Player Health & Challenger Skill: Shield
+let playerHP = 1000;
+const maxPlayerHP = 1000;
+let isShieldActive = false;
+let shieldCooldownTimer = 0;
+const SHIELD_COOLDOWN = 6.0;
+
+// Tower Retaliation Loop
+let towerAttackTimer = 5.0;
+let isTowerLockingOn = false;
 
 /* ==========================================================
    RoV Hero Classes & Strict 10-Hero Pools (40 Heroes Total)
@@ -575,6 +587,22 @@ function cacheDOM() {
   dom.ultCutinHeroName = document.getElementById('ult-cutin-hero-name');
   dom.ultCutinSkillName = document.getElementById('ult-cutin-skill-name');
   dom.ultCutinQuote = document.getElementById('ult-cutin-quote');
+
+  // Player HP & Challenger Shield & Retaliation Elements
+  dom.playerHpBar = document.getElementById('player-hp-bar');
+  dom.playerHpText = document.getElementById('player-hp-text');
+  dom.shieldBtn = document.getElementById('challenger-shield-btn');
+  dom.shieldCdOverlay = document.getElementById('shield-cd-overlay');
+  dom.shieldCdText = document.getElementById('shield-cd-text');
+  dom.towerWarningBanner = document.getElementById('tower-warning-banner');
+  dom.playerHitFlash = document.getElementById('player-hit-flash');
+  dom.playerShieldFx = document.getElementById('player-shield-fx');
+
+  // Defeat Screen Elements
+  dom.defeatScreen = document.getElementById('defeat-screen');
+  dom.defeatStatDamage = document.getElementById('defeat-stat-damage');
+  dom.defeatStatTime = document.getElementById('defeat-stat-time');
+  dom.defeatRetryBtn = document.getElementById('defeat-retry-btn');
 }
 
 function bindEvents() {
@@ -617,6 +645,14 @@ function bindEvents() {
     });
   }
 
+  // Challenger Skill: Shield Button Trigger
+  if (dom.shieldBtn) {
+    dom.shieldBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activateShield();
+    });
+  }
+
   // Ultimate Skill Button Trigger
   if (dom.ultActionBtn) {
     dom.ultActionBtn.addEventListener('click', (e) => {
@@ -635,6 +671,9 @@ function bindEvents() {
   }
 
   dom.replayBtn.addEventListener('click', replay);
+  if (dom.defeatRetryBtn) {
+    dom.defeatRetryBtn.addEventListener('click', retryAfterDefeat);
+  }
   window.addEventListener('resize', onResize);
 }
 
@@ -1309,49 +1348,75 @@ function playSound(type, opts = {}) {
       g.connect(audioCtx.destination);
       s.start(burstDelay);
     }
-  }
-}
-
-/* ==========================================================
-   Game Flow
-   ========================================================== */
-async function startGame() {
-  initAudio();
-  dom.landing.style.display = 'none';
-  dom.gameScreen.style.display = 'block';
-
-  setHero(activeHero);
-
-  try {
-    cameraStream = await initCamera(dom.video);
-
-    if (!handTracker) {
-      handTracker = new HandTracker(dom.video, dom.handsCanvas);
-      handTracker.onSwingDetected = () => {
-        performSwingAttack();
-      };
+  } else if (type === 'shield_cast') {
+    // Arcane Barrier Activation
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(320, now);
+    osc.frequency.exponentialRampToValueAtTime(880, now + 0.3);
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  } else if (type === 'shield_block') {
+    // Metallic Shield Deflect Clang
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(1200, now);
+    osc.frequency.exponentialRampToValueAtTime(300, now + 0.25);
+    gain.gain.setValueAtTime(0.6, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.25);
+  } else if (type === 'tower_lock') {
+    // Threat Alarm Siren Beep
+    for (let i = 0; i < 3; i++) {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sawtooth';
+      const t = now + i * 0.15;
+      o.frequency.setValueAtTime(880, t);
+      o.frequency.setValueAtTime(1100, t + 0.07);
+      g.gain.setValueAtTime(0.2, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(t);
+      o.stop(t + 0.12);
     }
-    if (selectedSkill && skillImages[selectedSkill.id]) {
-      handTracker.setWeapon(skillImages[selectedSkill.id]);
-    }
-    handTracker.start();
-
-  } catch (err) {
-    console.warn('Camera fallback used. Hand tracking unavailable.');
-    dom.video.style.display = 'none';
-    document.getElementById('ai-status').style.display = 'none';
+  } else if (type === 'tower_fire') {
+    // Plasma Cannon Shot Release
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(450, now);
+    osc.frequency.exponentialRampToValueAtTime(60, now + 0.28);
+    gain.gain.setValueAtTime(0.5, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.28);
+  } else if (type === 'player_hit') {
+    // Heavy Flesh/Armor Hit Impact
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(130, now);
+    osc.frequency.exponentialRampToValueAtTime(20, now + 0.35);
+    gain.gain.setValueAtTime(0.8, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.35);
   }
-
-  state = GameState.PLAYING;
-  gameStartTime = performance.now();
-  lastTimestamp = performance.now();
-  currentGold = 500;
-  bonusDamage = 0;
-  totalDamageDealt = 0;
-  attackCount = 0;
-
-  updateUI();
-  requestAnimationFrame(gameLoop);
 }
 
 /* ==========================================================
@@ -1535,13 +1600,183 @@ function showFloatingDamage(amount, className, color) {
   el.style.color = color;
   el.style.left = `${45 + Math.random() * 10}%`;
   el.style.top  = `${30 + Math.random() * 10}%`;
-  dom.damageCont.appendChild(el);
+  if (dom.damageCont) dom.damageCont.appendChild(el);
   el.addEventListener('animationend', () => el.remove());
 }
 
 /* ==========================================================
-   Game Loop & UI Updates
+   RoV Challenger Skill: Shield & Tower Retaliation System
    ========================================================== */
+function activateShield() {
+  if (shieldCooldownTimer > 0 || state !== GameState.PLAYING) return;
+
+  isShieldActive = true;
+  shieldCooldownTimer = SHIELD_COOLDOWN;
+
+  if (dom.shieldBtn) dom.shieldBtn.classList.add('shield-active');
+  if (dom.playerShieldFx) {
+    dom.playerShieldFx.style.display = 'flex';
+    dom.playerShieldFx.classList.remove('player-shield-fx');
+    void dom.playerShieldFx.offsetWidth;
+    dom.playerShieldFx.classList.add('player-shield-fx');
+  }
+
+  playSound('shield_cast');
+  effects.createShieldBarrierFX(new THREE.Vector3(0, 1.0, 7.2));
+
+  // Shield barrier lasts 1.6 seconds
+  setTimeout(() => {
+    isShieldActive = false;
+    if (dom.shieldBtn) dom.shieldBtn.classList.remove('shield-active');
+    if (dom.playerShieldFx) dom.playerShieldFx.style.display = 'none';
+  }, 1600);
+}
+
+function startTowerLockOn() {
+  if (state !== GameState.PLAYING || tower.isDestroyed() || isTowerLockingOn) return;
+
+  isTowerLockingOn = true;
+  tower.setTargeting(true);
+
+  if (dom.towerWarningBanner) {
+    dom.towerWarningBanner.style.display = 'flex';
+  }
+
+  playSound('tower_lock');
+
+  const startPos = tower.getCrystalWorldPosition();
+  const targetPos = new THREE.Vector3(0, 1.0, 8.2);
+
+  effects.createTowerLaser(startPos, targetPos, 1.5);
+
+  // 1.5-second lock-on warning before firing plasma shot
+  setTimeout(() => {
+    if (state === GameState.PLAYING && !tower.isDestroyed()) {
+      fireTowerShot(startPos, targetPos);
+    }
+    isTowerLockingOn = false;
+    tower.setTargeting(false);
+    if (dom.towerWarningBanner) dom.towerWarningBanner.style.display = 'none';
+  }, 1500);
+}
+
+function fireTowerShot(startPos, targetPos) {
+  playSound('tower_fire');
+  effects.createTowerProjectile(startPos, targetPos, 1.5, () => {
+    handleTowerProjectileImpact();
+  });
+}
+
+function handleTowerProjectileImpact() {
+  if (state !== GameState.PLAYING) return;
+
+  if (isShieldActive) {
+    // Shield Block Success (0 DMG)
+    showFloatingDamage(0, 'dmg-text', '#00e5ff');
+    playSound('shield_block');
+    effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.5), '#00f0ff', 30, true, 'magic');
+    if (navigator.vibrate) navigator.vibrate([50, 40, 50]);
+  } else {
+    // Player Hit by Tower Plasma Shot
+    const dmg = 350;
+    playerHP = Math.max(0, playerHP - dmg);
+
+    playSound('player_hit');
+    effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.8), '#ff0033', 40, true, 'fire');
+
+    if (dom.playerHitFlash) {
+      dom.playerHitFlash.style.display = 'block';
+      dom.playerHitFlash.classList.remove('player-hit-flash');
+      void dom.playerHitFlash.offsetWidth;
+      dom.playerHitFlash.classList.add('player-hit-flash');
+      setTimeout(() => {
+        if (dom.playerHitFlash) dom.playerHitFlash.style.display = 'none';
+      }, 600);
+    }
+
+    showFloatingDamage(dmg, 'dmg-crit', '#ff0033');
+
+    if (navigator.vibrate) navigator.vibrate([180, 80, 250]);
+
+    updateUI();
+
+    if (playerHP <= 0) {
+      triggerDefeat();
+    }
+  }
+}
+
+function triggerDefeat() {
+  state = GameState.DEFEAT;
+  playAnnouncerVoice('defeat');
+
+  const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
+  if (dom.defeatStatDamage) dom.defeatStatDamage.textContent = totalDamageDealt.toLocaleString();
+  if (dom.defeatStatTime) dom.defeatStatTime.textContent = elapsed + 's';
+  if (dom.defeatScreen) dom.defeatScreen.style.display = 'flex';
+
+  if (handTracker) handTracker.stop();
+}
+
+function retryAfterDefeat() {
+  if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
+  replay();
+}
+
+/* ==========================================================
+   Game Flow & Loop
+   ========================================================== */
+async function startGame() {
+  initAudio();
+  dom.landing.style.display = 'none';
+  dom.gameScreen.style.display = 'block';
+
+  // Reset Player & Retaliation State
+  playerHP = maxPlayerHP;
+  isShieldActive = false;
+  shieldCooldownTimer = 0;
+  towerAttackTimer = 5.0;
+  isTowerLockingOn = false;
+
+  if (dom.towerWarningBanner) dom.towerWarningBanner.style.display = 'none';
+  if (dom.playerHitFlash) dom.playerHitFlash.style.display = 'none';
+  if (dom.playerShieldFx) dom.playerShieldFx.style.display = 'none';
+  if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
+
+  setHero(activeHero);
+
+  try {
+    cameraStream = await initCamera(dom.video);
+
+    if (!handTracker) {
+      handTracker = new HandTracker(dom.video, dom.handsCanvas);
+      handTracker.onSwingDetected = () => {
+        performSwingAttack();
+      };
+    }
+    if (selectedSkill && skillImages[selectedSkill.id]) {
+      handTracker.setWeapon(skillImages[selectedSkill.id]);
+    }
+    handTracker.start();
+
+  } catch (err) {
+    console.warn('Camera fallback used. Hand tracking unavailable.');
+    dom.video.style.display = 'none';
+    document.getElementById('ai-status').style.display = 'none';
+  }
+
+  state = GameState.PLAYING;
+  gameStartTime = performance.now();
+  lastTimestamp = performance.now();
+  currentGold = 500;
+  bonusDamage = 0;
+  totalDamageDealt = 0;
+  attackCount = 0;
+
+  updateUI();
+  requestAnimationFrame(gameLoop);
+}
+
 function updateUI() {
   const pct = tower.getHPPercent();
   dom.hpBar.style.width = `${pct * 100}%`;
@@ -1549,6 +1784,20 @@ function updateUI() {
   if (dom.goldText) dom.goldText.textContent = currentGold;
   if (dom.hitCount) dom.hitCount.textContent = attackCount;
   if (dom.liveDamageText) dom.liveDamageText.textContent = `${totalDamageDealt.toLocaleString()} DMG`;
+
+  // Player HP Update
+  const playerPct = Math.max(0, playerHP / maxPlayerHP);
+  if (dom.playerHpBar) {
+    dom.playerHpBar.style.width = `${playerPct * 100}%`;
+    if (playerPct < 0.35) {
+      dom.playerHpBar.classList.add('low-hp');
+    } else {
+      dom.playerHpBar.classList.remove('low-hp');
+    }
+  }
+  if (dom.playerHpText) {
+    dom.playerHpText.textContent = `${Math.ceil(playerHP)} / ${maxPlayerHP} HP`;
+  }
 }
 
 function gameLoop(timestamp) {
@@ -1562,6 +1811,28 @@ function gameLoop(timestamp) {
       const m = Math.floor(elapsedSecs / 60).toString().padStart(2, '0');
       const s = (elapsedSecs % 60).toString().padStart(2, '0');
       dom.timerBox.textContent = `${m}:${s}`;
+
+      // Update Shield Cooldown
+      if (shieldCooldownTimer > 0) {
+        shieldCooldownTimer -= dt;
+        if (dom.shieldCdOverlay && dom.shieldCdText) {
+          dom.shieldCdOverlay.style.display = 'flex';
+          dom.shieldCdText.textContent = `${Math.ceil(shieldCooldownTimer)}s`;
+        }
+      } else {
+        if (dom.shieldCdOverlay) {
+          dom.shieldCdOverlay.style.display = 'none';
+        }
+      }
+
+      // Tower Retaliation Attack Loop
+      if (!isTowerLockingOn && !tower.isDestroyed()) {
+        towerAttackTimer -= dt;
+        if (towerAttackTimer <= 0) {
+          towerAttackTimer = 6.0 + Math.random() * 2.0;
+          startTowerLockOn();
+        }
+      }
 
       lastSmokeTime += dt;
       if (lastSmokeTime >= SMOKE_INTERVAL) {
@@ -1609,6 +1880,7 @@ function showVictory() {
 
 function replay() {
   dom.victory.style.display = 'none';
+  if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
   triggeredAnnouncements = {
     firstBlood: false,
     doubleKill: false,

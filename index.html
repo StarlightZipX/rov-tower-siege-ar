@@ -303,6 +303,12 @@
           <div class="hero-badge-info">
             <span id="hero-badge-name">ARTHUR</span>
             <span class="hero-badge-type">ไฟต์เตอร์</span>
+            <div class="player-hp-bar-wrap">
+              <div class="player-hp-bar-bg">
+                <div id="player-hp-bar" class="player-hp-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span id="player-hp-text">1000 / 1000 HP</span>
+            </div>
           </div>
         </div>
         <div class="hotbar-divider"></div>
@@ -311,21 +317,54 @@
         </div>
       </div>
 
-      <!-- Bottom Right: RoV Ultimate Gauge & Button -->
-      <div id="ult-button-container" class="ult-btn-wrapper">
-        <div class="ult-aura-fx"></div>
-        <svg class="ult-progress-ring" width="94" height="94" viewBox="0 0 94 94">
-          <circle class="ult-ring-bg" cx="47" cy="47" r="41" />
-          <circle id="ult-ring-fill" class="ult-ring-fill" cx="47" cy="47" r="41" stroke-dasharray="257.6" stroke-dashoffset="257.6" />
-        </svg>
-        <button id="ult-action-btn" class="ult-action-btn" disabled>
-          <img id="ult-btn-icon" src="/assets/skills/arthur_ult.png" alt="Ultimate Skill">
-          <div class="ult-overlay-lock">
-            <span id="ult-percent-text">0%</span>
-          </div>
-          <div class="ult-ready-tag">ULT READY</div>
-        </button>
+      <!-- Bottom Right Controls: Challenger Shield & Ultimate -->
+      <div class="action-buttons-cluster">
+        <!-- Challenger Skill: Shield / Barrier -->
+        <div id="shield-button-container" class="shield-btn-wrapper">
+          <button id="challenger-shield-btn" class="challenger-action-btn" title="Challenger Skill: Shield (กดเพื่อบล็อกดาเมจป้อม 0 DMG)">
+            <span class="shield-icon">🛡️</span>
+            <span class="shield-label">SHIELD</span>
+            <div class="shield-cd-overlay" id="shield-cd-overlay" style="display: none;">
+              <span id="shield-cd-text">6s</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Ultimate Gauge & Button -->
+        <div id="ult-button-container" class="ult-btn-wrapper">
+          <div class="ult-aura-fx"></div>
+          <svg class="ult-progress-ring" width="94" height="94" viewBox="0 0 94 94">
+            <circle class="ult-ring-bg" cx="47" cy="47" r="41" />
+            <circle id="ult-ring-fill" class="ult-ring-fill" cx="47" cy="47" r="41" stroke-dasharray="257.6" stroke-dashoffset="257.6" />
+          </svg>
+          <button id="ult-action-btn" class="ult-action-btn" disabled>
+            <img id="ult-btn-icon" src="/assets/skills/arthur_ult.png" alt="Ultimate Skill">
+            <div class="ult-overlay-lock">
+              <span id="ult-percent-text">0%</span>
+            </div>
+            <div class="ult-ready-tag">ULT READY</div>
+          </button>
+        </div>
       </div>
+    </div>
+
+    <!-- Tower Targeting Warning Banner -->
+    <div id="tower-warning-banner" class="tower-warning-banner" style="display: none;">
+      <div class="warning-banner-pulse"></div>
+      <div class="warning-banner-box">
+        <span class="warning-hazard-icon">⚠️</span>
+        <div class="warning-text-col">
+          <h3>TOWER LOCKED ON!</h3>
+          <p>ป้อมกำลังเล็งยิงคุณ! กดปุ่ม 🛡️ SHIELD เพื่อป้องกัน!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fullscreen Player Damage Flash & Shield Barrier Effect -->
+    <div id="player-hit-flash" class="player-hit-flash" style="display: none;"></div>
+    <div id="player-shield-fx" class="player-shield-fx" style="display: none;">
+      <div class="shield-barrier-glow"></div>
+      <div class="shield-barrier-text">🛡️ BARRIER ACTIVE</div>
     </div>
 
     <!-- Ultimate Cinematic Anime / RoV Cut-in Overlay -->
@@ -376,6 +415,29 @@
       </div>
       <button id="replay-btn" class="btn-primary">
         <span>เล่นอีกครั้ง</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== DEFEAT SCREEN ==================== -->
+  <div id="defeat-screen" style="display: none;">
+    <div class="defeat-overlay"></div>
+    <div class="defeat-content">
+      <div class="defeat-emblem">💀</div>
+      <h1 class="defeat-title">DEFEAT</h1>
+      <p class="defeat-subtitle">คุณถูกป้อมปราการมนตรา Antaris สังหาร!</p>
+      <div class="defeat-stats">
+        <div class="stat-item">
+          <span class="stat-label">Total Damage Dealt</span>
+          <span class="stat-value" id="defeat-stat-damage">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Survival Time</span>
+          <span class="stat-value" id="defeat-stat-time">0s</span>
+        </div>
+      </div>
+      <button id="defeat-retry-btn" class="btn-primary rov-gold-btn pulse-epic">
+        <span>⚔️ ท้าประลองใหม่อีกครั้ง (RETRY)</span>
       </button>
     </div>
   </div>
