@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 import { Tower }          from './tower.js';
 import { EffectsManager } from './effects.js';
+import { MinionManager }  from './minions.js';
 import { initCamera, toggleCamera } from './camera.js';
 import { HandTracker }    from './hand-tracking.js';
 
@@ -517,7 +518,7 @@ const skillImages = {};
 let baseDamage = 400;
 
 // Three.js instances
-let scene, camera3d, renderer, tower, effects;
+let scene, camera3d, renderer, tower, effects, minionManager;
 let cameraStream = null;
 let handTracker = null;
 
@@ -1116,6 +1117,17 @@ function initThreeJS() {
   tower.currentHP = 5000;
 
   effects = new EffectsManager(scene);
+
+  minionManager = new MinionManager(scene, effects);
+  minionManager.onPlayerHit = (damage, type) => {
+    handleMinionDamageToPlayer(damage, type);
+  };
+  minionManager.onMinionKilled = (minion) => {
+    handleMinionKillReward(minion);
+  };
+  minionManager.onWaveSpawned = (waveNum, count) => {
+    playAnnouncerVoice('welcome', `WAVE ${waveNum}: กองทัพครีปบุก!`);
+  };
 }
 
 /* ==========================================================
@@ -1915,8 +1927,65 @@ function playSound(type, opts = {}) {
 }
 
 /* ==========================================================
-   Combat Logic — Swing Attack
+   Combat Logic — Swing Attack & Minion Targeting
    ========================================================== */
+function isSkillAOE(hero, skill) {
+  if (!skill || skill.tag === 'โจมตีปกติ') return false;
+  const desc = ((skill.name || '') + ' ' + (skill.tag || '') + ' ' + (skill.desc || '')).toLowerCase();
+  if (hero.classId === 'mage') return true;
+  if (desc.includes('หมุน') || desc.includes('กวาด') || desc.includes('พายุ') || desc.includes('คลื่น') || 
+      desc.includes('สายฟ้า') || desc.includes('ระเบิด') || desc.includes('กงจักร') || desc.includes('cleave') || 
+      desc.includes('spin') || desc.includes('nova') || desc.includes('whirlwind') || desc.includes('spirits') ||
+      desc.includes('ดาวตก') || desc.includes('มังกร') || desc.includes('ระเบิดปฐพี') || desc.includes('ฝูง')) {
+    return true;
+  }
+  return false;
+}
+
+function handleMinionDamageToPlayer(damage, type) {
+  if (state !== GameState.PLAYING) return;
+
+  if (isShieldActive) {
+    // Shield Block Success (0 DMG)
+    showFloatingDamage(0, 'dmg-text', '#00e5ff');
+    playSound('shield_block');
+    effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.5), '#00f0ff', 22, true, 'magic');
+    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
+  } else {
+    // Minion hits Player
+    playerHP = Math.max(0, playerHP - damage);
+    playSound('player_hit');
+    effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.8), '#ff0033', 28, true, 'fire');
+
+    if (dom.playerHitFlash) {
+      dom.playerHitFlash.style.display = 'block';
+      dom.playerHitFlash.classList.remove('player-hit-flash');
+      void dom.playerHitFlash.offsetWidth;
+      dom.playerHitFlash.classList.add('player-hit-flash');
+      setTimeout(() => {
+        if (dom.playerHitFlash) dom.playerHitFlash.style.display = 'none';
+      }, 500);
+    }
+
+    showFloatingDamage(damage, 'dmg-crit', '#ff3333');
+    if (navigator.vibrate) navigator.vibrate(120);
+
+    updateUI();
+
+    if (playerHP <= 0) {
+      triggerDefeat();
+    }
+  }
+}
+
+function handleMinionKillReward(minion) {
+  currentGold += minion.goldReward;
+  chargeUltimate(16);
+  attackCount++;
+  showFloatingDamage(`+${minion.goldReward}G`, 'dmg-text', '#ffd700');
+  updateUI();
+}
+
 function performSwingAttack() {
   if (state !== GameState.PLAYING || !selectedSkill) return;
 
@@ -1930,25 +1999,43 @@ function performSwingAttack() {
     dmg = Math.floor(dmg * 1.5);
   }
 
-  // Apply Damage
-  tower.takeDamage(dmg);
-  totalDamageDealt += dmg;
+  const isAOE = isSkillAOE(activeHero, selectedSkill);
+  const archetype = getSkillArchetype(activeHero, selectedSkill);
+  const activeMinionsCount = minionManager ? minionManager.getActiveCount() : 0;
+
+  let hitTower = true;
+
+  // 1. Minion Damage Handling
+  if (activeMinionsCount > 0 && minionManager) {
+    const minionResult = minionManager.damageMinions(dmg, isAOE);
+    if (minionResult.hitMinions.length > 0) {
+      totalDamageDealt += minionResult.totalDamage;
+      minionResult.hitMinions.forEach(m => {
+        const mPos = m.getWorldPosition();
+        mPos.y += 0.8;
+        effects.createHitParticles(mPos, color, isCrit ? 30 : 18, isCrit, archetype);
+      });
+
+      if (!isAOE) {
+        // Single target attacks focus exclusively on the frontline minion
+        hitTower = false;
+      }
+    }
+  }
+
+  // 2. Tower Damage Handling
+  if (hitTower) {
+    tower.takeDamage(dmg);
+    totalDamageDealt += dmg;
+    const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
+    effects.createHitParticles(hitPos, color, isCrit ? 36 : 20, isCrit, archetype);
+  }
+
   attackCount++;
-
-  // Rewards
   currentGold += Math.floor(dmg / 10);
-
-  // Charge Ultimate Gauge (+18% per hit)
   chargeUltimate(18);
 
-  // Determine RoV 2026 Skill Archetype (Sound + Visual FX)
-  const archetype = getSkillArchetype(activeHero, selectedSkill);
-
-  // Visual Effects & Sound
-  const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
-  effects.createHitParticles(hitPos, color, isCrit ? 36 : 20, isCrit, archetype);
   showFloatingDamage(Math.floor(dmg), dmgClass, color);
-
   playSound('attack', { isCrit, isMagic, soundType: archetype, color });
 
   // Authentic RoV In-Game Announcer Killstreaks
@@ -1982,7 +2069,7 @@ function performSwingAttack() {
 }
 
 /* ==========================================================
-   RoV Ultimate Skill System — Energy Gauge & Cinematic Cast
+   RoV Ultimate Skill System — Energy Gauge & Hero Signature Burst
    ========================================================== */
 function chargeUltimate(amount) {
   if (ultimateCharge >= MAX_ULT_CHARGE) return;
@@ -2019,7 +2106,7 @@ function castUltimateSkill() {
   const ultSkill = (activeHero.skills && activeHero.skills[3]) ? activeHero.skills[3] : selectedSkill;
   const ultColor = ultSkill.color || '#ffcc00';
 
-  // 1. Cinematic Anime / RoV Cut-in Overlay
+  // 1. Cinematic Anime / RoV Cut-in Overlay with Hero Signature Artwork & Quote
   if (dom.ultCinematicOverlay) {
     if (dom.ultCutinAvatar) dom.ultCutinAvatar.src = activeHero.avatar;
     if (dom.ultCutinHeroName) dom.ultCutinHeroName.textContent = activeHero.name;
@@ -2052,14 +2139,26 @@ function castUltimateSkill() {
     }
   } catch (e) {}
 
-  // 3. Huge Ultimate Burst Damage & 3D Particle Storm
+  // 3. Huge Ultimate Burst Damage across Minions and Tower
   const ultDmg = Math.floor(ultSkill.dmg * 3.4 + Math.random() * 600);
+  const archetype = getSkillArchetype(activeHero, ultSkill);
+
+  // Screen Wipe: Damage all active Minions with the Hero's Signature Ultimate
+  if (minionManager) {
+    const ultMinionResult = minionManager.damageAllMinions(ultDmg);
+    totalDamageDealt += ultMinionResult.totalDamage;
+    ultMinionResult.hitMinions.forEach(m => {
+      const mPos = m.getWorldPosition();
+      mPos.y += 0.8;
+      effects.createHitParticles(mPos, ultColor, 32, true, archetype);
+    });
+  }
+
   tower.takeDamage(ultDmg);
   totalDamageDealt += ultDmg;
   attackCount += 5;
   currentGold += Math.floor(ultDmg / 8);
 
-  const archetype = getSkillArchetype(activeHero, ultSkill);
   effects.createUltimateImpact(new THREE.Vector3(0, 0.2, 0), ultColor, archetype);
   showFloatingDamage(ultDmg, 'dmg-ult', '#ffea00');
 
@@ -2091,7 +2190,7 @@ function castUltimateSkill() {
 function showFloatingDamage(amount, className, color) {
   const el = document.createElement('div');
   el.className = className;
-  el.textContent = `-${amount}`;
+  el.textContent = typeof amount === 'number' ? `-${amount}` : amount;
   el.style.color = color;
   el.style.left = `${45 + Math.random() * 10}%`;
   el.style.top  = `${30 + Math.random() * 10}%`;
@@ -2251,6 +2350,8 @@ async function startGame() {
   if (dom.playerShieldFx) dom.playerShieldFx.style.display = 'none';
   if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
 
+  if (minionManager) minionManager.clearAll();
+
   setHero(activeHero);
 
   try {
@@ -2337,6 +2438,11 @@ function gameLoop(timestamp) {
         }
       }
 
+      // Update Minion System
+      if (minionManager) {
+        minionManager.update(dt, camera3d.position);
+      }
+
       // Tower Retaliation Attack Loop
       if (!isTowerLockingOn && !tower.isDestroyed()) {
         towerAttackTimer -= dt;
@@ -2379,6 +2485,7 @@ function triggerExplosion() {
   const debrisPieces = tower.getExplosionParts();
   effects.createExplosion(new THREE.Vector3(0, -0.5, 0), debrisPieces);
   tower.hide();
+  if (minionManager) minionManager.clearAll();
 
   playSound('explode');
 
@@ -2414,6 +2521,7 @@ function replay() {
   };
   tower.reset();
   effects.clear();
+  if (minionManager) minionManager.clearAll();
   startGame();
 }
 
