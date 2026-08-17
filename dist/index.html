@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, orientation=landscape">
+  <meta name="description" content="RoV Tower Siege — AR Experience สำหรับงานแข่ง RoV วิทยาลัย">
+  <title>RoV Tower Siege AR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- MediaPipe Hands & Camera Utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script type="module" crossorigin src="/assets/index-Bqvugd7q.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-C0BXXzNV.css">
+</head>
+<body>
+
+  <!-- Portrait Warning -->
+  <div id="portrait-warning">
+    <div class="warning-icon">📱🔄</div>
+    <h2>กรุณาหมุนโทรศัพท์</h2>
+    <p>เกมนี้ต้องเล่นในแนวนอนเท่านั้น</p>
+  </div>
+
+  <!-- ==================== LANDING SCREEN ==================== -->
+  <div id="landing-screen">
+    <div class="landing-bg"></div>
+    <div class="landing-content">
+      <h1 class="landing-title">ROV TOWER SIEGE</h1>
+      <p class="landing-subtitle">AR EXPERIENCE</p>
+      
+      <div class="hero-selection">
+        <h3>เลือกสายฮีโร่ของคุณ</h3>
+        <div class="hero-cards">
+          <div class="hero-card active" data-hero="fighter">
+            <div class="hero-icon">⚔️</div>
+            <h4>ไฟต์เตอร์ / แครี่</h4>
+            <p>โจมตีเร็ว ดาเมจกายภาพ</p>
+          </div>
+          <div class="hero-card" data-hero="mage">
+            <div class="hero-icon">🔮</div>
+            <h4>เมจ</h4>
+            <p>สกิลรุนแรง ดาเมจเวท</p>
+          </div>
+        </div>
+      </div>
+
+      <button id="start-btn" class="btn-primary">
+        <span>เข้าสู่สมรภูมิ</span>
+      </button>
+      <p class="landing-note">* ระบบจะขอเข้าถึงกล้องเพื่อแสดงผล AR</p>
+    </div>
+  </div>
+
+  <!-- ==================== GAME SCREEN ==================== -->
+  <div id="game-screen">
+    <!-- Camera Background -->
+    <video id="camera-feed" autoplay playsinline muted></video>
+
+    <!-- MediaPipe Hand Tracking Canvas -->
+    <canvas id="hands-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1.5; pointer-events: none; transform: scaleX(-1);"></canvas>
+
+    <!-- Three.js Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- AI Status Indicator -->
+    <div id="ai-status">
+      <span class="status-dot"></span> AI: กำลังค้นหามือ...
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hud">
+      <!-- Top Left: Minimap -->
+      <div class="minimap-container">
+        <div class="minimap-map"></div>
+      </div>
+
+      <!-- Top Right: Stats -->
+      <div class="top-stats">
+        <div class="kda-box">
+          <span class="kill">12</span> / <span class="death">0</span> / <span class="assist">5</span>
+        </div>
+        <div class="timer-box">10:45</div>
+        <div class="gold-box">
+          <span class="gold-icon"></span> <span id="current-gold">500</span>
+        </div>
+      </div>
+
+      <!-- Enemy Tower HP (Top Center) -->
+      <div id="hp-container">
+        <div id="hp-bar-bg">
+          <div id="hp-bar"></div>
+        </div>
+        <div id="hp-text">5000 / 5000</div>
+      </div>
+
+      <!-- Bottom Hotbar -->
+      <div class="bottom-hotbar" id="equipment-bar">
+        <div class="hotbar-slot active" data-weapon="fenrir">
+          <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
+        </div>
+        <div class="hotbar-slot" data-weapon="claves">
+          <img src="/assets/items/claves.png" alt="Claves Sancti">
+        </div>
+        <div class="hotbar-slot" data-weapon="omni">
+          <img src="/assets/items/omni.png" alt="Omni Arms">
+        </div>
+        <div class="hotbar-slot" data-weapon="muramasa">
+          <img src="/assets/items/muramasa.png" alt="Muramasa">
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Damage Numbers -->
+    <div id="damage-container"></div>
+  </div>
+
+  <!-- ==================== VICTORY SCREEN ==================== -->
+  <div id="victory-screen">
+    <div class="victory-content">
+      <h1 class="victory-title">VICTORY</h1>
+      <p class="victory-subtitle">Your team has destroyed the enemy tower!</p>
+      <div class="victory-stats">
+        <div class="stat-item">
+          <span class="stat-label">Total Damage</span>
+          <span class="stat-value" id="stat-damage">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Time Elapsed</span>
+          <span class="stat-value" id="stat-time">0s</span>
+        </div>
+      </div>
+      <button id="replay-btn" class="btn-primary">
+        <span>เล่นอีกครั้ง</span>
+      </button>
+    </div>
+  </div>
+
+</body>
+</html>
