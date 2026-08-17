@@ -32,6 +32,11 @@ const SMOKE_INTERVAL = 0.28;
 let currentGold = 500;
 let bonusDamage = 0;
 
+let ultimateCharge = 0; // 0 to 100
+const MAX_ULT_CHARGE = 100;
+const ULT_RING_CIRCUMFERENCE = 257.6;
+let isUltimateReady = false;
+
 /* ==========================================================
    RoV Hero Classes & Strict 10-Hero Pools (40 Heroes Total)
    ========================================================== */
@@ -558,6 +563,18 @@ function cacheDOM() {
   dom.video = document.getElementById('camera-feed');
   dom.canvas = document.getElementById('game-canvas');
   dom.handsCanvas = document.getElementById('hands-canvas');
+
+  // Ultimate Skill & Cut-in UI
+  dom.ultContainer = document.getElementById('ult-button-container');
+  dom.ultRingFill = document.getElementById('ult-ring-fill');
+  dom.ultActionBtn = document.getElementById('ult-action-btn');
+  dom.ultBtnIcon = document.getElementById('ult-btn-icon');
+  dom.ultPercentText = document.getElementById('ult-percent-text');
+  dom.ultCinematicOverlay = document.getElementById('ult-cinematic-overlay');
+  dom.ultCutinAvatar = document.getElementById('ult-cutin-avatar');
+  dom.ultCutinHeroName = document.getElementById('ult-cutin-hero-name');
+  dom.ultCutinSkillName = document.getElementById('ult-cutin-skill-name');
+  dom.ultCutinQuote = document.getElementById('ult-cutin-quote');
 }
 
 function bindEvents() {
@@ -597,6 +614,23 @@ function bindEvents() {
   if (dom.rerollHeroBtn) {
     dom.rerollHeroBtn.addEventListener('click', () => {
       startSummoningRitual(selectedClass);
+    });
+  }
+
+  // Ultimate Skill Button Trigger
+  if (dom.ultActionBtn) {
+    dom.ultActionBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      castUltimateSkill();
+    });
+  }
+
+  // Tap-to-attack on canvas / screen for mobile touch and desktop click
+  if (dom.canvas) {
+    dom.canvas.addEventListener('pointerdown', (e) => {
+      if (state === GameState.PLAYING) {
+        performSwingAttack();
+      }
     });
   }
 
@@ -748,6 +782,20 @@ function setHero(hero) {
   if (dom.heroBadgeAvatar) dom.heroBadgeAvatar.src = hero.avatar;
   if (dom.heroBadgeName) dom.heroBadgeName.textContent = hero.name;
   if (dom.heroBadgeType) dom.heroBadgeType.textContent = hero.role;
+
+  // Configure Ultimate Action Button
+  if (dom.ultBtnIcon && hero.skills && hero.skills[3]) {
+    dom.ultBtnIcon.src = hero.skills[3].icon;
+    dom.ultBtnIcon.alt = hero.skills[3].name;
+  }
+
+  // Reset Ultimate Charge Gauge
+  ultimateCharge = 0;
+  isUltimateReady = false;
+  if (dom.ultContainer) dom.ultContainer.classList.remove('ready');
+  if (dom.ultActionBtn) dom.ultActionBtn.disabled = true;
+  if (dom.ultRingFill) dom.ultRingFill.style.strokeDashoffset = ULT_RING_CIRCUMFERENCE;
+  if (dom.ultPercentText) dom.ultPercentText.textContent = '0%';
 
   renderHeroSkills(hero);
 }
@@ -1200,6 +1248,67 @@ function playSound(type, opts = {}) {
     gainNode.connect(audioCtx.destination);
     osc.start(now);
     osc.stop(now + 0.04);
+  } else if (type === 'ult_ready') {
+    [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((freq, i) => {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sawtooth';
+      const t = now + i * 0.05;
+      o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.24, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(t);
+      o.stop(t + 0.5);
+    });
+  } else if (type === 'ult_cast') {
+    // Deep Sub-Bass Shockwave Impact
+    const subOsc = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    subOsc.type = 'sawtooth';
+    subOsc.frequency.setValueAtTime(240, now);
+    subOsc.frequency.exponentialRampToValueAtTime(24, now + 1.6);
+    subGain.gain.setValueAtTime(0.95, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+    subOsc.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 1.6);
+
+    // Ascending Laser Riser
+    const riseOsc = audioCtx.createOscillator();
+    const riseGain = audioCtx.createGain();
+    riseOsc.type = 'sawtooth';
+    riseOsc.frequency.setValueAtTime(280, now);
+    riseOsc.frequency.exponentialRampToValueAtTime(2400, now + 0.35);
+    riseGain.gain.setValueAtTime(0.4, now);
+    riseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+    riseOsc.connect(riseGain);
+    riseGain.connect(audioCtx.destination);
+    riseOsc.start(now);
+    riseOsc.stop(now + 0.35);
+
+    // Huge Metallic Explosion Blast
+    for (let j = 0; j < 4; j++) {
+      const burstDelay = now + 0.12 + j * 0.1;
+      const bSize = Math.floor(audioCtx.sampleRate * 0.35);
+      const b = audioCtx.createBuffer(1, bSize, audioCtx.sampleRate);
+      const d = b.getChannelData(0);
+      for (let k = 0; k < bSize; k++) d[k] = (Math.random() * 2 - 1) * Math.exp(-k / (bSize * 0.35));
+      const s = audioCtx.createBufferSource();
+      s.buffer = b;
+      const f = audioCtx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.setValueAtTime(1500 - j * 220, burstDelay);
+      const g = audioCtx.createGain();
+      g.gain.setValueAtTime(0.65 - j * 0.09, burstDelay);
+      g.gain.exponentialRampToValueAtTime(0.001, burstDelay + 0.35);
+      s.connect(f);
+      f.connect(g);
+      g.connect(audioCtx.destination);
+      s.start(burstDelay);
+    }
   }
 }
 
@@ -1269,6 +1378,9 @@ function performSwingAttack() {
   // Rewards
   currentGold += Math.floor(dmg / 10);
 
+  // Charge Ultimate Gauge (+18% per hit)
+  chargeUltimate(18);
+
   // Determine RoV 2026 Skill Archetype (Sound + Visual FX)
   const archetype = getSkillArchetype(activeHero, selectedSkill);
 
@@ -1299,6 +1411,113 @@ function performSwingAttack() {
   if (dom.comboBadge) {
     dom.comboBadge.classList.add('combo-active');
     setTimeout(() => dom.comboBadge.classList.remove('combo-active'), 150);
+  }
+
+  updateUI();
+
+  if (tower.isDestroyed()) {
+    playAnnouncerVoice('turret_destroyed', 'TOWER DESTROYED');
+    triggerExplosion();
+  }
+}
+
+/* ==========================================================
+   RoV Ultimate Skill System — Energy Gauge & Cinematic Cast
+   ========================================================== */
+function chargeUltimate(amount) {
+  if (ultimateCharge >= MAX_ULT_CHARGE) return;
+  ultimateCharge = Math.min(MAX_ULT_CHARGE, ultimateCharge + amount);
+
+  const pct = Math.floor(ultimateCharge);
+  if (dom.ultPercentText) dom.ultPercentText.textContent = `${pct}%`;
+
+  if (dom.ultRingFill) {
+    const offset = ULT_RING_CIRCUMFERENCE - (ultimateCharge / 100) * ULT_RING_CIRCUMFERENCE;
+    dom.ultRingFill.style.strokeDashoffset = offset;
+  }
+
+  if (ultimateCharge >= MAX_ULT_CHARGE && !isUltimateReady) {
+    isUltimateReady = true;
+    if (dom.ultContainer) dom.ultContainer.classList.add('ready');
+    if (dom.ultActionBtn) dom.ultActionBtn.disabled = false;
+    playSound('ult_ready');
+    if (navigator.vibrate) navigator.vibrate([100, 60, 150]);
+  }
+}
+
+function castUltimateSkill() {
+  if (ultimateCharge < MAX_ULT_CHARGE || state !== GameState.PLAYING) return;
+
+  // Reset Ultimate Gauge
+  ultimateCharge = 0;
+  isUltimateReady = false;
+  if (dom.ultContainer) dom.ultContainer.classList.remove('ready');
+  if (dom.ultActionBtn) dom.ultActionBtn.disabled = true;
+  if (dom.ultRingFill) dom.ultRingFill.style.strokeDashoffset = ULT_RING_CIRCUMFERENCE;
+  if (dom.ultPercentText) dom.ultPercentText.textContent = '0%';
+
+  const ultSkill = (activeHero.skills && activeHero.skills[3]) ? activeHero.skills[3] : selectedSkill;
+  const ultColor = ultSkill.color || '#ffcc00';
+
+  // 1. Cinematic Anime / RoV Cut-in Overlay
+  if (dom.ultCinematicOverlay) {
+    if (dom.ultCutinAvatar) dom.ultCutinAvatar.src = activeHero.avatar;
+    if (dom.ultCutinHeroName) dom.ultCutinHeroName.textContent = activeHero.name;
+    if (dom.ultCutinSkillName) dom.ultCutinSkillName.textContent = ultSkill.name.toUpperCase();
+    if (dom.ultCutinQuote) dom.ultCutinQuote.textContent = activeHero.quote;
+
+    dom.ultCinematicOverlay.style.display = 'flex';
+    dom.ultCinematicOverlay.classList.remove('ult-cinematic-overlay');
+    void dom.ultCinematicOverlay.offsetWidth; // Reflow
+    dom.ultCinematicOverlay.classList.add('ult-cinematic-overlay');
+
+    setTimeout(() => {
+      if (dom.ultCinematicOverlay) dom.ultCinematicOverlay.style.display = 'none';
+    }, 1300);
+  }
+
+  // 2. Play Ultimate Sounds
+  playSound('ult_cast', { color: ultColor });
+
+  // Web Speech API Voice Shout (RoV Champion Voice simulation)
+  try {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(`${activeHero.name}! ${ultSkill.name}!`);
+      utterance.lang = 'th-TH';
+      utterance.pitch = 1.1;
+      utterance.rate = 1.15;
+      utterance.volume = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  } catch (e) {}
+
+  // 3. Huge Ultimate Burst Damage & 3D Particle Storm
+  const ultDmg = Math.floor(ultSkill.dmg * 3.4 + Math.random() * 600);
+  tower.takeDamage(ultDmg);
+  totalDamageDealt += ultDmg;
+  attackCount += 5;
+  currentGold += Math.floor(ultDmg / 8);
+
+  const archetype = getSkillArchetype(activeHero, ultSkill);
+  effects.createUltimateImpact(new THREE.Vector3(0, 0.2, 0), ultColor, archetype);
+  showFloatingDamage(ultDmg, 'dmg-ult', '#ffea00');
+
+  if (navigator.vibrate) navigator.vibrate([150, 60, 250, 60, 450]);
+
+  // Killstreak announcer check
+  if (attackCount >= 5 && !triggeredAnnouncements.firstBlood) {
+    triggeredAnnouncements.firstBlood = true;
+    playAnnouncerVoice('first_blood', 'FIRST BLOOD');
+  } else if (attackCount >= 15 && !triggeredAnnouncements.doubleKill) {
+    triggeredAnnouncements.doubleKill = true;
+    playAnnouncerVoice('double_kill', 'DOUBLE KILL');
+  } else if (attackCount >= 30 && !triggeredAnnouncements.tripleKill) {
+    triggeredAnnouncements.tripleKill = true;
+    playAnnouncerVoice('triple_kill', 'TRIPLE KILL');
+  } else if (attackCount >= 50 && !triggeredAnnouncements.legendary) {
+    triggeredAnnouncements.legendary = true;
+    playAnnouncerVoice('legendary', 'LEGENDARY');
   }
 
   updateUI();

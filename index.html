@@ -310,6 +310,40 @@
           <!-- Skills will be dynamically populated according to the active hero -->
         </div>
       </div>
+
+      <!-- Bottom Right: RoV Ultimate Gauge & Button -->
+      <div id="ult-button-container" class="ult-btn-wrapper">
+        <div class="ult-aura-fx"></div>
+        <svg class="ult-progress-ring" width="94" height="94" viewBox="0 0 94 94">
+          <circle class="ult-ring-bg" cx="47" cy="47" r="41" />
+          <circle id="ult-ring-fill" class="ult-ring-fill" cx="47" cy="47" r="41" stroke-dasharray="257.6" stroke-dashoffset="257.6" />
+        </svg>
+        <button id="ult-action-btn" class="ult-action-btn" disabled>
+          <img id="ult-btn-icon" src="/assets/skills/arthur_ult.png" alt="Ultimate Skill">
+          <div class="ult-overlay-lock">
+            <span id="ult-percent-text">0%</span>
+          </div>
+          <div class="ult-ready-tag">ULT READY</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Ultimate Cinematic Anime / RoV Cut-in Overlay -->
+    <div id="ult-cinematic-overlay" class="ult-cinematic-overlay" style="display: none;">
+      <div class="ult-cinematic-flash"></div>
+      <div class="ult-speed-lines"></div>
+      <div class="ult-cutin-card">
+        <div class="ult-hero-splash-wrap">
+          <img id="ult-cutin-avatar" src="/assets/heroes/arthur.png" alt="Ultimate Hero">
+          <div class="ult-slash-flare"></div>
+        </div>
+        <div class="ult-cutin-info">
+          <span class="ult-badge">⚔️ ULTIMATE BURST ⚔️</span>
+          <h2 id="ult-cutin-hero-name">ARTHUR</h2>
+          <h3 id="ult-cutin-skill-name">DEEP IMPACT</h3>
+          <p id="ult-cutin-quote">"ดาบแห่งความยุติธรรมจะไม่ปรานีใคร!"</p>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Damage Numbers -->

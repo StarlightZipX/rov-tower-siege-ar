@@ -249,6 +249,48 @@ export class EffectsManager {
   }
 
   /* -------------------------------------------------- */
+  /*  Ultimate Impact (AAA RoV Ultimate Climax Strike)   */
+  /* -------------------------------------------------- */
+  createUltimateImpact(position, color = '#ffd700', fxType = 'sword') {
+    const col = new THREE.Color(color);
+
+    // 1. Supernova Flash Light
+    const flash = new THREE.PointLight(col, 22, 30);
+    flash.position.set(position.x, position.y + 0.8, position.z + 1.2);
+    this.scene.add(flash);
+    this.activeEffects.push({ type: 'flash', light: flash, life: 1, decay: 0.015 });
+
+    // 2. Dual Shockwaves
+    this.createShockwave(position, color, 4.5);
+    this.createShockwave(new THREE.Vector3(position.x, position.y - 0.5, position.z), '#ffffff', 3.2);
+
+    // 3. Multi-layer High Density Particle Bursts
+    this.createHitParticles(position, color, 65, true, fxType);
+    this.createHitParticles(position, '#ffffff', 35, true, 'magic');
+    this.createHitParticles(new THREE.Vector3(position.x, position.y + 0.8, position.z), '#ffaa00', 40, true, 'fire');
+
+    // 4. Vertical Arcane Energy Pillar
+    const beamGeo = new THREE.CylinderGeometry(0.35, 0.65, 9, 16);
+    const beamMat = new THREE.MeshBasicMaterial({
+      color: col.clone().offsetHSL(0, 0, 0.2),
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide
+    });
+    const beamMesh = new THREE.Mesh(beamGeo, beamMat);
+    beamMesh.position.set(position.x, position.y + 2.5, position.z);
+    this.scene.add(beamMesh);
+    this.activeEffects.push({
+      type: 'shockwave',
+      mesh: beamMesh,
+      life: 1.0,
+      decay: 0.035,
+      scaleRate: 2.2
+    });
+  }
+
+  /* -------------------------------------------------- */
   /*  Per-frame update                                   */
   /* -------------------------------------------------- */
   update(dt) {
