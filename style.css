@@ -1972,8 +1972,8 @@ body, html {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(10, 20, 45, 0.75) 0%, rgba(3, 7, 18, 0.95) 100%);
-  backdrop-filter: blur(14px);
+  background: radial-gradient(circle at center, rgba(10, 20, 45, 0.8) 0%, rgba(3, 7, 18, 0.96) 100%);
+  backdrop-filter: blur(16px);
 }
 
 .tutorial-overlay {
@@ -1989,42 +1989,44 @@ body, html {
 .tutorial-container {
   position: relative;
   z-index: 2;
-  width: 92%;
-  max-width: 1060px;
-  max-height: 94vh;
+  width: 94%;
+  max-width: 1020px;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
-  background: rgba(10, 16, 32, 0.92);
-  border: 2px solid rgba(255, 200, 0, 0.4);
+  background: rgba(10, 16, 32, 0.94);
+  border: 2px solid rgba(255, 200, 0, 0.5);
   border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 180, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  padding: 20px 28px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 180, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  padding: 18px 24px;
   box-sizing: border-box;
+  overflow: hidden;
   animation: tutorialSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tutorial-header {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .tutorial-badge {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 3px;
   color: #00e5ff;
   background: rgba(0, 229, 255, 0.12);
   border: 1px solid rgba(0, 229, 255, 0.4);
-  padding: 3px 12px;
+  padding: 2px 12px;
   border-radius: 4px;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
 }
 
 .tutorial-title {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: #ffd700;
   letter-spacing: 1.5px;
@@ -2033,39 +2035,41 @@ body, html {
 }
 
 .tutorial-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #a0b2d6;
-  margin: 3px 0 0 0;
+  margin: 2px 0 0 0;
   font-weight: 500;
 }
 
 .tutorial-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin: 10px 0 14px 0;
+  gap: 10px;
+  margin: 8px 0 10px 0;
   flex: 1;
   overflow-y: auto;
+  min-height: 0;
 }
 
 .tutorial-card {
   position: relative;
-  background: linear-gradient(135deg, rgba(16, 26, 52, 0.9) 0%, rgba(9, 14, 28, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(16, 26, 52, 0.92) 0%, rgba(9, 14, 28, 0.96) 100%);
   border: 1px solid rgba(0, 229, 255, 0.25);
   border-radius: 12px;
-  padding: 12px 14px;
+  padding: 10px 14px;
   display: flex;
   gap: 12px;
-  align-items: flex-start;
+  align-items: center;
   transition: all 0.25s ease;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .tutorial-card:hover {
   border-color: rgba(255, 200, 0, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 180, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(255, 180, 0, 0.25);
 }
 
 .t-card-glow {
@@ -2083,31 +2087,42 @@ body, html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
+  min-width: 54px;
+  flex-shrink: 0;
 }
 
-.t-card-icon {
-  font-size: 1.7rem;
-  filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
+.t-card-img-real {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  object-fit: cover;
+  background: rgba(4, 8, 20, 0.8);
 }
 
 .t-card-num {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 900;
-  color: #ffb700;
-  letter-spacing: 1px;
-  margin-top: 2px;
+  color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
 }
 
 .t-card-info {
   flex: 1;
+  min-width: 0;
 }
 
 .t-card-info h3 {
   font-size: 0.95rem;
   font-weight: 800;
   color: #ffffff;
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
   letter-spacing: 0.5px;
 }
 
@@ -2115,7 +2130,7 @@ body, html {
   font-size: 0.78rem;
   color: #b8c8e6;
   line-height: 1.35;
-  margin: 0 0 6px 0;
+  margin: 0 0 5px 0;
 }
 
 .t-card-info strong {
@@ -2135,67 +2150,135 @@ body, html {
   letter-spacing: 0.5px;
 }
 
+/* ==================== REDESIGNED AAA TUTORIAL FOOTER ==================== */
 .tutorial-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 20px;
+  padding-top: 12px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 215, 0, 0.25);
+  box-sizing: border-box;
+  width: 100%;
+  flex-shrink: 0;
 }
 
-.tutorial-timer-box {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.tutorial-timer-label {
+.tutorial-timer-hud {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: #cbd8f5;
-  font-weight: 600;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
 }
 
-.t-timer-icon {
-  font-size: 1rem;
+.timer-hud-circle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 24, 48, 0.95);
+  border: 1.5px solid #00e5ff;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+  border-radius: 10px;
+  padding: 6px 14px;
+  flex-shrink: 0;
+}
+
+.timer-hud-icon {
+  font-size: 1.2rem;
   animation: timerPulse 1.2s infinite alternate;
 }
 
-.tutorial-timer-label strong {
-  font-size: 1.15rem;
-  color: #ffd700;
+.timer-hud-countdown {
+  display: flex;
+  align-items: baseline;
+}
+
+.timer-hud-countdown strong {
+  font-size: 1.35rem;
   font-weight: 900;
-  min-width: 24px;
-  display: inline-block;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  color: #ffd700;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  min-width: 28px;
+  text-align: center;
+}
+
+.timer-hud-unit {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #00e5ff;
+  margin-left: 2px;
+}
+
+.timer-hud-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.timer-hud-label-row {
+  display: flex;
+  align-items: center;
+}
+
+.timer-hud-label {
+  font-size: 0.82rem;
+  color: #c0d4f5;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
 }
 
 .tutorial-bar-track {
   width: 100%;
   height: 8px;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(0, 229, 255, 0.3);
   border-radius: 4px;
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 }
 
 .tutorial-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff9900 0%, #ffd700 50%, #00e5ff 100%);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  background: linear-gradient(90deg, #ff8800 0%, #ffd700 50%, #00e5ff 100%);
+  box-shadow: 0 0 12px rgba(255, 200, 0, 0.8);
   transition: width 1s linear;
 }
 
-#tutorial-skip-btn {
+.tutorial-action-btn {
+  background: linear-gradient(180deg, #ffb700 0%, #ff8000 50%, #d64000 100%);
+  border: 2px solid #fff5cc;
+  border-radius: 10px;
+  color: #1a0f00;
+  font-family: 'Kanit', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 900;
   padding: 10px 24px;
-  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 140, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   white-space: nowrap;
   flex-shrink: 0;
+  max-width: 320px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.tutorial-action-btn:hover {
+  filter: brightness(1.12);
+  transform: scale(1.02);
+  box-shadow: 0 6px 28px rgba(255, 180, 0, 0.8), inset 0 1px 4px #ffffff;
 }
 
 @keyframes tutorialFadeIn {
@@ -2213,50 +2296,58 @@ body, html {
   100% { transform: scale(1.15); }
 }
 
-@media (max-height: 480px) {
+@media (max-height: 500px) {
   .tutorial-container {
     padding: 10px 18px;
     max-height: 98vh;
   }
   .tutorial-header {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .tutorial-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
   .tutorial-subtitle {
     display: none;
   }
   .tutorial-grid {
-    gap: 8px;
-    margin: 4px 0 8px 0;
+    gap: 6px;
+    margin: 4px 0 6px 0;
   }
   .tutorial-card {
-    padding: 8px 10px;
+    padding: 6px 10px;
     gap: 8px;
   }
-  .t-card-icon {
-    font-size: 1.3rem;
+  .t-card-img-real {
+    width: 40px;
+    height: 40px;
   }
   .t-card-info h3 {
     font-size: 0.85rem;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
   .t-card-info p {
-    font-size: 0.7rem;
-    margin-bottom: 3px;
+    font-size: 0.68rem;
+    margin-bottom: 2px;
+    line-height: 1.25;
   }
   .t-card-tag {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     padding: 1px 6px;
   }
   .tutorial-footer {
     padding-top: 6px;
     gap: 12px;
   }
-  #tutorial-skip-btn {
+  .timer-hud-circle {
+    padding: 4px 10px;
+  }
+  .timer-hud-countdown strong {
+    font-size: 1.1rem;
+  }
+  .tutorial-action-btn {
     padding: 6px 16px;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
 }
 

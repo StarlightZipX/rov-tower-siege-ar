@@ -181,7 +181,7 @@
       <div class="tutorial-header">
         <div class="tutorial-badge">TACTICAL BRIEFING • ยุทธวิธีสมรภูมิ AR</div>
         <h2 class="tutorial-title">คู่มือการเล่น ANTARIS TOWER SIEGE</h2>
-        <p class="tutorial-subtitle">โปรดศึกษายุทธวิธี 4 ขั้นตอนก่อนนำทัพประจัญบาน</p>
+        <p class="tutorial-subtitle">โปรดศึกษายุทธวิธี 4 ขั้นตอนสำคัญก่อนนำทัพประจัญบาน</p>
       </div>
 
       <div class="tutorial-grid">
@@ -189,8 +189,8 @@
         <div class="tutorial-card">
           <div class="t-card-glow"></div>
           <div class="t-card-icon-wrap">
-            <span class="t-card-icon">⚔️</span>
-            <span class="t-card-num">01</span>
+            <img src="./assets/ui/tutorial_blade.png" alt="AR Attack" class="t-card-img-real">
+            <span class="t-card-num">STEP 01</span>
           </div>
           <div class="t-card-info">
             <h3>การควบคุม & โจมตีด้วย AR</h3>
@@ -203,8 +203,8 @@
         <div class="tutorial-card">
           <div class="t-card-glow"></div>
           <div class="t-card-icon-wrap">
-            <span class="t-card-icon">⚡</span>
-            <span class="t-card-num">02</span>
+            <img src="./assets/ui/tutorial_ult.png" alt="Ultimate Burst" class="t-card-img-real">
+            <span class="t-card-num">STEP 02</span>
           </div>
           <div class="t-card-info">
             <h3>ระบบ 4 สกิล & อัลติเมท</h3>
@@ -217,8 +217,8 @@
         <div class="tutorial-card">
           <div class="t-card-glow"></div>
           <div class="t-card-icon-wrap">
-            <span class="t-card-icon">🛡️</span>
-            <span class="t-card-num">03</span>
+            <img src="./assets/ui/tutorial_shield.png" alt="Shield Barrier" class="t-card-img-real">
+            <span class="t-card-num">STEP 03</span>
           </div>
           <div class="t-card-info">
             <h3>สกิลชาเลนเจอร์: โล่ป้องกัน</h3>
@@ -231,8 +231,8 @@
         <div class="tutorial-card">
           <div class="t-card-glow"></div>
           <div class="t-card-icon-wrap">
-            <span class="t-card-icon">🏰</span>
-            <span class="t-card-num">04</span>
+            <img src="./assets/ui/tutorial_tower.png" alt="Tower Objective" class="t-card-img-real">
+            <span class="t-card-num">STEP 04</span>
           </div>
           <div class="t-card-info">
             <h3>เป้าหมายชัยชนะ & ป้อมสวน</h3>
@@ -243,21 +243,27 @@
       </div>
 
       <div class="tutorial-footer">
-        <div class="tutorial-timer-box">
-          <div class="tutorial-timer-label">
-            <span class="t-timer-icon">⏳</span>
-            <span>เริ่มการต่อสู้อัตโนมัติใน:</span>
-            <strong id="tutorial-timer-text">60</strong>
-            <span>วินาที</span>
+        <div class="tutorial-timer-hud">
+          <div class="timer-hud-circle">
+            <span class="timer-hud-icon">⏱️</span>
+            <div class="timer-hud-countdown">
+              <strong id="tutorial-timer-text">60</strong>
+              <span class="timer-hud-unit">s</span>
+            </div>
           </div>
-          <div class="tutorial-bar-track">
-            <div id="tutorial-bar-fill" class="tutorial-bar-fill" style="width: 100%;"></div>
+          <div class="timer-hud-info">
+            <div class="timer-hud-label-row">
+              <span class="timer-hud-label">เริ่มการต่อสู้อัตโนมัติใน:</span>
+            </div>
+            <div class="tutorial-bar-track">
+              <div id="tutorial-bar-fill" class="tutorial-bar-fill" style="width: 100%;"></div>
+            </div>
           </div>
         </div>
 
-        <button id="tutorial-skip-btn" class="btn-primary rov-gold-btn pulse-epic">
+        <button id="tutorial-skip-btn" class="tutorial-action-btn pulse-epic" title="เริ่มเกมทันที">
           <span class="btn-icon">⚔️</span>
-          <span class="btn-text">ข้ามคู่มือ & เข้าสู่สมรภูมิทันที</span>
+          <span class="btn-text">ข้ามคู่มือ & เริ่มต่อสู้ทันที</span>
         </button>
       </div>
     </div>
