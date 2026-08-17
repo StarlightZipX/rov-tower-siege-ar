@@ -1192,4 +1192,98 @@ body, html {
 .stat-value { font-size: 2rem; font-weight: bold; color: #fff; }
 @keyframes dropIn { 0% { transform: translateY(-100vh) scale(0.5); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
 
+/* Reveal Action Buttons Row */
+.reveal-actions-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.rov-blue-btn {
+  background: linear-gradient(135deg, #0055ff 0%, #0099ff 100%);
+  border: 1.5px solid #66ccff;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 20px rgba(0, 150, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.rov-blue-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 30px rgba(0, 180, 255, 0.7);
+}
+
+/* ==================== AUTHENTIC IN-GAME ANNOUNCER BANNER ==================== */
+.announcer-banner {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 120;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: bannerPop 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.announcer-banner-glow {
+  position: absolute;
+  width: 500px;
+  height: 90px;
+  background: radial-gradient(ellipse at center, rgba(255, 100, 0, 0.8) 0%, rgba(255, 215, 0, 0.4) 40%, transparent 70%);
+  filter: blur(12px);
+  animation: bannerGlowPulse 0.6s ease-in-out infinite alternate;
+}
+
+.announcer-banner-content {
+  position: relative;
+  background: linear-gradient(90deg, transparent 0%, rgba(15, 20, 35, 0.95) 20%, rgba(20, 25, 45, 0.95) 50%, rgba(15, 20, 35, 0.95) 80%, transparent 100%);
+  border-top: 2px solid rgba(255, 215, 0, 0.9);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.9);
+  padding: 8px 60px;
+  box-shadow: 0 0 40px rgba(255, 120, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.announcer-sub {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffaa00;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+#announcer-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 0 20px #ff3300, 0 0 40px #ffaa00, 2px 2px 0 #000;
+}
+
+@keyframes bannerPop {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+  15% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  25% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  85% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.8) translateY(-30px); opacity: 0; }
+}
+
+@keyframes bannerGlowPulse {
+  0% { opacity: 0.6; transform: scaleX(0.9); }
+  100% { opacity: 1.0; transform: scaleX(1.15); }
+}
+
 

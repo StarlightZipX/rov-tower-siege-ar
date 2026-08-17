@@ -512,6 +512,7 @@ function cacheDOM() {
   dom.startBtn = document.getElementById('start-btn');
   dom.replayBtn = document.getElementById('replay-btn');
   dom.enterBattleBtn = document.getElementById('enter-battle-btn');
+  dom.rerollHeroBtn = document.getElementById('reroll-hero-btn');
   dom.classCards = document.querySelectorAll('.hero-card');
 
   // Summoning screen elements
@@ -551,6 +552,8 @@ function cacheDOM() {
   dom.liveDamageText = document.getElementById('live-damage-text');
   dom.comboBadge = document.querySelector('.combo-badge');
   dom.damageCont = document.getElementById('damage-container');
+  dom.announcerBanner = document.getElementById('announcer-banner');
+  dom.announcerTitle = document.getElementById('announcer-title');
 
   dom.video = document.getElementById('camera-feed');
   dom.canvas = document.getElementById('game-canvas');
@@ -590,6 +593,13 @@ function bindEvents() {
     startMatchLoadingSequence();
   });
 
+  // Re-roll Hero Button
+  if (dom.rerollHeroBtn) {
+    dom.rerollHeroBtn.addEventListener('click', () => {
+      startSummoningRitual(selectedClass);
+    });
+  }
+
   dom.replayBtn.addEventListener('click', replay);
   window.addEventListener('resize', onResize);
 }
@@ -615,6 +625,7 @@ function startSummoningRitual(classKey) {
   const totalSteps = 22 + Math.floor(Math.random() * 8);
 
   playSound('summon_charge');
+  playAnnouncerVoice('summon_charge');
 
   function step() {
     const hKey = heroPool[currentIndex % heroPool.length];
@@ -641,6 +652,7 @@ function startSummoningRitual(classKey) {
 
 function triggerHeroReveal(hero) {
   playSound('summon_reveal');
+  playAnnouncerVoice('summon_reveal');
 
   dom.summonRoulettePhase.style.display = 'none';
   dom.summonRevealPhase.style.display = 'flex';
@@ -834,17 +846,52 @@ function initAudio() {
   }
 }
 
-function speakAnnouncer(text) {
-  if (!('speechSynthesis' in window)) return;
+// Authentic Preloaded Audio Clips (RoV / Arena of Valor Real Audio Files)
+const AUDIO_CLIPS = {
+  welcome: new Audio('/assets/audio/welcome.ogg'),
+  victory: new Audio('/assets/audio/victory.ogg'),
+  defeat: new Audio('/assets/audio/defeat.ogg'),
+  first_blood: new Audio('/assets/audio/first_blood.ogg'),
+  double_kill: new Audio('/assets/audio/double_kill.ogg'),
+  triple_kill: new Audio('/assets/audio/triple_kill.ogg'),
+  legendary: new Audio('/assets/audio/legendary.ogg'),
+  turret_destroyed: new Audio('/assets/audio/turret_destroyed.ogg'),
+  summon_charge: new Audio('/assets/audio/summon_charge.ogg'),
+  summon_reveal: new Audio('/assets/audio/summon_reveal.ogg')
+};
+
+Object.values(AUDIO_CLIPS).forEach(a => {
+  a.preload = 'auto';
+  a.volume = 0.95;
+});
+
+let triggeredAnnouncements = {
+  firstBlood: false,
+  doubleKill: false,
+  tripleKill: false,
+  legendary: false
+};
+
+function playAnnouncerVoice(clipKey, bannerText = null) {
   try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-US';
-    u.pitch = 0.85;
-    u.rate = 1.02;
-    u.volume = 1.0;
-    window.speechSynthesis.speak(u);
+    const audio = AUDIO_CLIPS[clipKey];
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
   } catch (e) {}
+
+  if (bannerText && dom.announcerBanner && dom.announcerTitle) {
+    dom.announcerTitle.textContent = bannerText;
+    dom.announcerBanner.style.display = 'flex';
+    dom.announcerBanner.classList.remove('announcer-banner');
+    void dom.announcerBanner.offsetWidth; // Trigger reflow
+    dom.announcerBanner.classList.add('announcer-banner');
+
+    setTimeout(() => {
+      if (dom.announcerBanner) dom.announcerBanner.style.display = 'none';
+    }, 2400);
+  }
 }
 
 function getSkillArchetype(hero, skill) {
@@ -1092,8 +1139,8 @@ function playSound(type, opts = {}) {
       o.stop(now + delay + 2.2);
     });
     setTimeout(() => {
-      speakAnnouncer("Welcome to Arena of Valor");
-    }, 450);
+      playAnnouncerVoice('welcome');
+    }, 400);
   } else if (type === 'explode') {
     const subOsc = audioCtx.createOscillator();
     const subGain = audioCtx.createGain();
@@ -1127,7 +1174,7 @@ function playSound(type, opts = {}) {
       s.start(crashDelay);
     }
   } else if (type === 'victory') {
-    speakAnnouncer("Victory");
+    playAnnouncerVoice('victory');
     [392.00, 523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
@@ -1232,6 +1279,21 @@ function performSwingAttack() {
 
   playSound('attack', { isCrit, isMagic, soundType: archetype, color });
 
+  // Authentic RoV In-Game Announcer Killstreaks
+  if (attackCount >= 5 && !triggeredAnnouncements.firstBlood) {
+    triggeredAnnouncements.firstBlood = true;
+    playAnnouncerVoice('first_blood', 'FIRST BLOOD');
+  } else if (attackCount >= 15 && !triggeredAnnouncements.doubleKill) {
+    triggeredAnnouncements.doubleKill = true;
+    playAnnouncerVoice('double_kill', 'DOUBLE KILL');
+  } else if (attackCount >= 30 && !triggeredAnnouncements.tripleKill) {
+    triggeredAnnouncements.tripleKill = true;
+    playAnnouncerVoice('triple_kill', 'TRIPLE KILL');
+  } else if (attackCount >= 50 && !triggeredAnnouncements.legendary) {
+    triggeredAnnouncements.legendary = true;
+    playAnnouncerVoice('legendary', 'LEGENDARY');
+  }
+
   if (navigator.vibrate) navigator.vibrate(isCrit ? [80, 40, 80] : 50);
 
   if (dom.comboBadge) {
@@ -1242,6 +1304,7 @@ function performSwingAttack() {
   updateUI();
 
   if (tower.isDestroyed()) {
+    playAnnouncerVoice('turret_destroyed', 'TOWER DESTROYED');
     triggerExplosion();
   }
 }
@@ -1327,6 +1390,12 @@ function showVictory() {
 
 function replay() {
   dom.victory.style.display = 'none';
+  triggeredAnnouncements = {
+    firstBlood: false,
+    doubleKill: false,
+    tripleKill: false,
+    legendary: false
+  };
   tower.reset();
   effects.clear();
   startGame();

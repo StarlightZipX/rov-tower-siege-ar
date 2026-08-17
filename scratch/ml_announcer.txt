@@ -1,0 +1,299 @@
+The '''announcer''' in the game announces all events that is happening through out the game.
+
+They are voiced by Cristina Vee (2016-present) and Aimee Smith (2020-present; Quick Chats only).
+== Draft Pick ==
+{{Aq|Announcer.draftpick01.ogg|Please ban a hero.}}
+{{Aq|Announcer.draftpick02.ogg|Please pick a hero.}}
+{{Aq|Announcer.draftpick03.ogg|Your team is banning.}}
+{{Aq|Announcer.draftpick04.ogg|Your team is picking.}}
+{{Aq|Announcer.draftpick05.ogg|The enemy is banning.}}
+{{Aq|Announcer.draftpick06.ogg|The enemy is picking.}}
+== Start ==
+{{Aq|Announcer.start01.ogg|Welcome to Mobile Legends!}}
+{{Aq|Announcer.start02.ogg|Five seconds 'till the enemy reaches the battlefield, smash them!}}
+{{Aq|Announcer.start03.ogg|All troops deployed!}}
+== Kill ==
+=== First Blood ===
+{{Aq|Announcer.kill01.ogg|First Blood!}}
+=== Player Kill ===
+{{Aq|Announcer.kill02.ogg|You have slain an enemy!}}
+=== Player Death ===
+{{Aq|Announcer.kill03.ogg|You have been slain!}}
+=== Ally Kill ===
+{{Aq|Announcer.kill04.ogg|An enemy has been slain!}}
+=== Enemy Kill ===
+{{Aq|Announcer.kill05.ogg|An ally has been slain!}}
+=== [[Shutdown]] ===
+{{Aq|Announcer.kill06.ogg|Shut Down!}}
+=== [[Executed]] ===
+{{Aq|Announcer.kill07.ogg|Executed!}}
+=== [[Wiped Out]] ===
+{{Aq|Announcer.kill08.ogg|Wiped Out.}}
+=== Streak ===
+{{Aq|Announcer.kill09.ogg|Double Kill!}}
+{{Aq|Announcer.kill10.ogg|Triple Kill!}}
+{{Aq|Announcer.kill11.ogg|Maniac!}}
+{{Aq|Announcer.kill12.ogg|Savage!}}
+{{Aq|Announcer.kill13.ogg|Enemy Double Kill!}}
+{{Aq|Announcer.kill14.ogg|Enemy Triple Kill!}}
+{{Aq|Announcer.kill15.ogg|Enemy Maniac!}}
+{{Aq|Announcer.kill16.ogg|Enemy Savage!}}
+=== Spree ===
+{{Aq|Announcer.kill17.ogg|Killing Spree!}}
+{{Aq|Announcer.kill18.ogg|Mega Kill!}}
+{{Aq|Announcer.kill19.ogg|Unstoppable!}}
+{{Aq|Announcer.kill20.ogg|Monster Kill!}}
+{{Aq|Announcer.kill21.ogg|God-like!}}
+{{Aq|Announcer.kill22.ogg|Legendary!}}
+{{Aq|Announcer.kill23.ogg|Enemy Killing Spree!}}
+{{Aq|Announcer.kill24.ogg|Enemy Rampage!}}
+{{Aq|Announcer.kill25.ogg|Enemy Unstoppable!}}
+{{Aq|Announcer.kill26.ogg|Enemy Dominating!}}
+{{Aq|Announcer.kill27.ogg|Enemy God-like!}}
+{{Aq|Announcer.kill28.ogg|Enemy Legendary!}}
+== Objective ==
+{{Aq|Announcer.object01.ogg|You destroyed the turret!}}
+{{Aq|Announcer.object02.ogg|Your team destroyed the turret!}}
+{{Aq|Announcer.object03.ogg|Our turret is under attack!}}
+{{Aq|Announcer.object04.ogg|Our turret has been destroyed.}}
+{{Aq|Announcer.object05.ogg|Our Inhibitor Turret is under attack!}}
+{{Aq|Announcer.object06.ogg|Our base is under attack!}}
+{{Aq|Announcer.object07.ogg|An ally has slain the turtle!}}
+{{Aq|Announcer.object08.ogg|An ally has slain Lord!}}
+{{Aq|Announcer.object09.ogg|The enemy has slain the turtle!}}
+{{Aq|Announcer.object10.ogg|The enemy has slain Lord!}}
+=== Tournament ===
+{{Aq|Announcer.tournament01.ogg|Blue team hero has been slain.}}
+{{Aq|Announcer.tournament02.ogg|Blue team turret is under attack.}}
+{{Aq|Announcer.tournament03.ogg|Blue team turret has been destroyed.}}
+{{Aq|Announcer.tournament04.ogg|Blue team base turret is under attack.}}
+{{Aq|Announcer.tournament05.ogg|Blue team base turret has been destroyed.}}
+{{Aq|Announcer.tournament06.ogg|Blue team base is under attack.}}
+{{Aq|Announcer.tournament07.ogg|Blue team has slain the Turtle.}}
+{{Aq|Announcer.tournament08.ogg|Blue team has slain the Lord.}}
+{{Aq|Announcer.tournament09.ogg|Red team hero has been slain.}}
+{{Aq|Announcer.tournament10.ogg|Red team turret is under attack.}}
+{{Aq|Announcer.tournament11.ogg|Red team turret has been destroyed.}}
+{{Aq|Announcer.tournament12.ogg|Red team base turret is under attack.}}
+{{Aq|Announcer.tournament13.ogg|Red team base turret has been destroyed.}}
+{{Aq|Announcer.tournament14.ogg|Red team base is under attack.}}
+{{Aq|Announcer.tournament15.ogg|Red team has slain the Turtle.}}
+{{Aq|Announcer.tournament16.ogg|Red team has slain the Lord.}}
+== Signal ==
+{{Aq|Announcer.bm003.ogg|Launch Attack!}}
+{{Aq|Announcer.bm004.ogg|Initiate Retreat!}}
+{{Aq|Announcer.bm011.ogg|Request Backup!}}
+=== Smart Battlefield Message ===
+{{Aq|Announcer.bm001.ogg|Battle spell in cooldown.}}
+{{Aq|Announcer.bm002.ogg|Battle spell is ready.}}
+{{Aq|Announcer.bm061.ogg|Ult is not ready yet.}}
+{{Aq|Announcer.bm055.ogg|Ult is ready.}}
+{{Aq|Announcer.bm005.ogg|We're even in turrets.}}
+{{Aq|Announcer.bm006.ogg|We're ahead in turrets.}}
+{{Aq|Announcer.bm007.ogg|We're behind in turrets.}}
+{{Aq|Announcer.bm008.ogg|We're even in gold.}}
+{{Aq|Announcer.bm009.ogg|We're ahead in gold.}}
+{{Aq|Announcer.bm010.ogg|We're behind in gold.}}
+{{Aq|Announcer.bm045.ogg|Attack the turtle.}}
+{{Aq|Announcer.bm046.ogg|Attack the Lord.}}
+=== Quick Chat ===
+<tabber>
+Default=
+{{#tag:tabber|
+Defend=
+{{Aq|Announcer.bm013.ogg|Beware of ambush.}}
+{{Aq|Announcer.bm014.ogg|Enemy missing.}}
+{{Aq|Announcer.bm015.ogg|Defend the high ground.}}
+{{Aq|Announcer.bm016.ogg|Need assistance!}}
+{{Aq|Announcer.bm017.ogg|Don't troll, farm first.}}
+{{Aq|Announcer.bm018.ogg|Watch out for the jungle.}}
+{{Aq|Announcer.bm019.ogg|Protect damage dealers.}}
+{{Aq|Announcer.bm020.ogg|Beware of turret stealing.}}
+{{Aq|Announcer.bm021.ogg|Hold out and we can win!}}
+{{Aq|Announcer.bm022.ogg|Turn on Voice Chat.}}
+{{Aq|Announcer.bm023.ogg|Follow me!}}
+{{Aq|Announcer.bm024.ogg|Split up.}}
+{{Aq|Announcer.bm025.ogg|Protect back lines.}}
+{{Aq|Announcer.bm026.ogg|In a minute.}}
+{{Aq|Announcer.bm027.ogg|Skills in cooldown.}}
+{{Aq|Announcer.bm028.ogg|Not ready for teamfights.}}
+{{Aq|Announcer.bm029.ogg|Don't attack the turtle.}}
+{{Aq|Announcer.bm030.ogg|Don't attack the Lord.}}
+{{Aq|Announcer.bm031.ogg|I'll defend the high ground.}}
+{{Aq|Announcer.bm032.ogg|Top Lane, careful.}}
+{{Aq|Announcer.bm033.ogg|Mid Lane, careful.}}
+{{Aq|Announcer.bm034.ogg|Bot Lane, careful.}}
+{{Aq|Announcer.bm035.ogg|Low mana, retreat.}}
+{{Aq|Announcer.bm036.ogg|Defend the turret.}}
+{{Aq|Announcer.bm037.ogg|Watch out for ambush.}}
+{{Aq|Announcer.bm038.ogg|Economy is behind, farm first.}}
+{{Aq|Announcer.bm039.ogg|Watch out for flanking.}}
+{{!}}-{{!}}
+Attack=
+{{Aq|Announcer.bm040.ogg|Gather and ambush.}}
+{{Aq|Announcer.bm041.ogg|Clear up lanes.}}
+{{Aq|Announcer.bm042.ogg|I'll take the buff.}}
+{{Aq|Announcer.bm043.ogg|Gather for teamfight.}}
+{{Aq|Announcer.bm044.ogg|Stall them, I'll stel turrets.}}
+{{Aq|Announcer.bm045.ogg|Attack the turtle.}}
+{{Aq|Announcer.bm046.ogg|Attack the Lord.}}
+{{Aq|Announcer.bm047.ogg|Kill the damage dealer.}}
+{{Aq|Announcer.bm048.ogg|Kill the charge hero.}}
+{{Aq|Announcer.bm049.ogg|Push first.}}
+{{Aq|Announcer.bm050.ogg|Prepare for turret-dive.}}
+{{Aq|Announcer.bm051.ogg|On my way.}}
+{{Aq|Announcer.bm052.ogg|Initiate team fight!}}
+{{Aq|Announcer.bm053.ogg|Wait for me.}}
+{{Aq|Announcer.bm054.ogg|I'm ganking!}}
+{{Aq|Announcer.bm055.ogg|Ult is ready.}}
+{{Aq|Announcer.bm056.ogg|I'm ganking Top Lane.}}
+{{Aq|Announcer.bm057.ogg|I'm ganking Mid Lane.}}
+{{Aq|Announcer.bm058.ogg|I'm ganking Bot Lane.}}
+{{Aq|Announcer.bm059.ogg|Split push.}}
+{{Aq|Announcer.bm060.ogg|Need ganking!}}
+{{Aq|Announcer.bm061.ogg|Ult is not ready.}}
+{{Aq|Announcer.bm062.ogg|Gather for teamfight, do not solo.}}
+{{Aq|Announcer.bm063.ogg|Invade enemy jungle.}}
+{{Aq|Announcer.bm064.ogg|Economy's ahead. Don't throw the game.}}
+{{!}}-{{!}}
+Communicate=
+{{Aq|Announcer.bm065.ogg|Well played.}}
+{{Aq|Announcer.bm066.ogg|Sorry.}}
+{{Aq|Announcer.bm067.ogg|Thank you.}}
+{{Aq|Announcer.bm068.ogg|Okay.}}
+{{Aq|Announcer.bm069.ogg|Wait.}}
+{{Aq|Announcer.bm070.ogg|[All] Good game.}}
+{{Aq|Announcer.bm065.ogg|[All] Well played.}}
+{{Aq|Announcer.bm072.ogg|I'll go [[EXP Laner|Turtle Lane]].}}
+{{Aq|Announcer.bm073.ogg|Need help in jungle!}}
+{{Aq|Announcer.bm074.ogg|Unstable network.}}
+{{Aq|Announcer.bm075.ogg|Attack the crab!}}
+{{Aq|Announcer.bm076.ogg|Come and take buff.}}
+{{Aq|Announcer.bm077.ogg|I want to solo.}}
+{{Aq|Announcer.bm078.ogg|I'll take the purple buff.}}
+{{Aq|Announcer.bm079.ogg|I'll take the orange buff.}}
+{{Aq|Announcer.bm080.ogg|I need the buff.}}
+{{Aq|Announcer.bm081.ogg|Keep an eye on the map.}}
+{{Aq|Announcer.bm082.ogg|Merry Christmas!}}
+{{Aq|Announcer.bm083.ogg|Happy New Year!}}
+{{Aq|Announcer.bm084.ogg|Prepare for teamfight!}}
+{{Aq|Announcer.bm085.ogg|The enemy is taking turtle!}}
+{{Aq|Announcer.bm086.ogg|The enemy is taking Lord!}}
+{{Aq|Announcer.bm087.ogg|Wait for minions!}}
+{{Aq|Announcer.bm088.ogg|Wait for me!}}
+{{Aq|Announcer.bm089.ogg|The enemy is invading our jungle!}}
+{{Aq|Announcer.bm090.ogg|Help me check purple buff!}}
+{{Aq|Announcer.bm091.ogg|Help me check orange buff!}}
+{{Aq|Announcer.bm092.ogg|Give me vision!}}
+{{Aq|Announcer.bm093.ogg|Let me engage!}}
+{{Aq|Announcer.bm094.ogg|Gather!}}
+}}
+|-|Optimus Prime=
+{{#tag:tabber|
+Defend=
+{{Aq|Announcer.bm095.ogg|Enemy missing!}}
+{{Aq|Announcer.bm096.ogg|Watch out for the jungle!}}
+{{Aq|Announcer.bm097.ogg|Optimus needs assistance!}}
+{{Aq|Announcer.bm098.ogg|Hold on, we got this!}}
+{{Aq|Announcer.bm099.ogg|Defend the high ground!}}
+{{!}}-{{!}}
+Attack=
+{{Aq|Announcer.bm100.ogg|Prioritize turrets!}}
+{{Aq|Announcer.bm101.ogg|Wait for me.}}
+{{Aq|Announcer.bm102.ogg|I'll take the buff!}}
+{{Aq|Announcer.bm103.ogg|Attack the turtle!}}
+{{Aq|Announcer.bm104.ogg|Attack the Lord!}}
+{{Aq|Announcer.bm105.ogg|Clear up lanes.}}
+{{Aq|Announcer.bm106.ogg|Optimus' on the way.}}
+{{!}}-{{!}}
+Communicate=
+{{Aq|Announcer.bm107.ogg|Keep an eye on the map.}}
+{{Aq|Announcer.bm108.ogg|Patience, my friend!}}
+{{Aq|Announcer.bm109.ogg|Okay.}}
+{{Aq|Announcer.bm110.ogg|Well done.}}
+{{Aq|Announcer.bm111.ogg|You have my gratitude.}}
+{{Aq|Announcer.bm112.ogg|My apologies.}}
+{{Aq|Announcer.bm113.ogg|Good work.}}
+{{Aq|Announcer.bm114.ogg|Unstable transmission.}}
+}}
+|-|Fanny=
+{{#tag:tabber|
+Defend=
+{{Aq|Announcer.bm115.ogg|Enemy missing!}}
+{{Aq|Announcer.bm116.ogg|Check the bushes!}}
+{{Aq|Announcer.bm117.ogg|Can anyone help me?}}
+{{Aq|Announcer.bm118.ogg|Hold out, everyone! We can win this!}}
+{{Aq|Announcer.bm119.ogg|Defend the high ground!}}
+{{!}}-{{!}}
+Attack=
+{{Aq|Announcer.bm120.ogg|Clear the minions first!}}
+{{Aq|Announcer.bm121.ogg|Push first!}}
+{{Aq|Announcer.bm122.ogg|Can I take the buff?}}
+{{Aq|Announcer.bm123.ogg|Take down the turtle!}}
+{{Aq|Announcer.bm124.ogg|Take down the Lord!}}
+{{Aq|Announcer.bm125.ogg|Coming! On my way!}}
+{{Aq|Announcer.bm126.ogg|On my way!}}
+{{!}}-{{!}}
+Communicate=
+{{Aq|Announcer.bm127.ogg|Wait a second!}}
+{{Aq|Announcer.bm128.ogg|Roger that.}}
+{{Aq|Announcer.bm129.ogg|Excellent work!}}
+{{Aq|Announcer.bm130.ogg|Thank you!}}
+{{Aq|Announcer.bm131.ogg|Sorry!}}
+{{Aq|Announcer.bm132.ogg|Good game!}}
+{{Aq|Announcer.bm133.ogg|My internet is being slow.}}
+{{Aq|Announcer.bm134.ogg|Map awareness is important!}}
+}}
+|-|Layla=
+{{#tag:tabber|
+Defend=
+{{Aq|Announcer.bm135.ogg|Careful! The enemy is missing!}}
+{{Aq|Announcer.bm136.ogg|Don't get ambushed!}}
+{{Aq|Announcer.bm137.ogg|I need help!}}
+{{Aq|Announcer.bm138.ogg|Keep it up! We are winning!}}
+{{Aq|Announcer.bm139.ogg|Defend the high ground!}}
+{{!}}-{{!}}
+Attack=
+{{Aq|Announcer.bm140.ogg|Kill the annoying minions first!}}
+{{Aq|Announcer.bm141.ogg|We need to push first!}}
+{{Aq|Announcer.bm142.ogg|Let me take the buff!}}
+{{Aq|Announcer.bm143.ogg|Let's get the turtle!}}
+{{Aq|Announcer.bm144.ogg|Let's get the Lord!}}
+{{Aq|Announcer.bm145.ogg|Don't engage! Wait for me!}}
+{{Aq|Announcer.bm146.ogg|Layla's on her way!}}
+{{!}}-{{!}}
+Communicate=
+{{Aq|Announcer.bm147.ogg|Wait up!}}
+{{Aq|Announcer.bm148.ogg|OK!}}
+{{Aq|Announcer.bm149.ogg|Good job!}}
+{{Aq|Announcer.bm150.ogg|Thank you!}}
+{{Aq|Announcer.bm151.ogg|I'm really sorry!}}
+{{Aq|Announcer.bm152.ogg|It was a great game!}}
+{{Aq|Announcer.bm153.ogg|I'm laging so badly!}}
+{{Aq|Announcer.bm154.ogg|Keep an eye on the map!}}}}
+</tabber>
+== End ==
+{{Aq|Announcer.end01.ogg|Victory!}}
+{{Aq|Announcer.end02.ogg|Defeat.}}
+== Removed/Legacy ==
+{{Aq|Announcer.rem01.ogg|Turtle resurrecting soon.}}
+{{Aq|Announcer.rem02.ogg|Lord resurrecting soon.}}
+{{Aq|Announcer.rem03.ogg|Impossible!}}
+{{Aq|Announcer.rem04.ogg|Quadra Kill!}}
+{{Aq|Announcer.rem05.ogg|Penta Kill!}}
+{{Aq|Announcer.rem06.ogg|Enemy Quadra Kill!}}
+{{Aq|Announcer.rem07.ogg|Enemy Penta Kill!}}
+{{Aq|Announcer.rem08.ogg|Ace!}}
+=== MCL ===
+{{Aq|Announcer.mcl.start01.ogg|Welcome to MCL Quarterfinal!}}
+{{Aq|Announcer.mcl.start02.ogg|Welcome to MCL Semifinal!}}
+{{Aq|Announcer.mcl.start03.ogg|Welcome to MCL Final}}
+{{Aq|Announcer.mcl.win01.ogg|Victory! Welcome to Semifinal!}}
+{{Aq|Announcer.mcl.win02.ogg|Victory! Welcome to Final!}}
+{{Aq|Announcer.mcl.win03.ogg|Victory! You are the champion of MCL!}}
+== Trivia ==
+*Quadra Kill and Penta Kill were the old Maniac and Savage, while Ace was the old Wiped Out.
+*Aside from voicing the announcer, Cristina Vee also voices the old version of {{hi|Kagura}} and {{hi|Lolita}}.
+*Back in 2018, there were rumors that {{Aq|Announcer.kill11.ogg|Maniac!}} would be changed to {{Aq|Announcer.kill29.ogg|Frenzy Kill!}}, but there was no confirmation from the developers.
+[[Category:Announcer-Voice]]
+[[Category:Audio]]

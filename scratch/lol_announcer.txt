@@ -1,0 +1,476 @@
+{{Audio construction|This page's quote section is incomplete}}
+{{section top}}
+The Female, or Classic, Announcer pack is the base announcer for [[League of Legends]]. Besides the current playable PvP maps such as [[Summoner's Rift]] (5v5) and [[Howling Abyss]] ([[ARAM]]), The Female Classic Announcer has also been used on discontinued maps and modes such as [[Twisted Treeline]] (3v3), [[Snowdown Showdown]] ([[Legend of the Poro King]]), [[Crystal Scar]] ([[Dominion]]), and [[Nexus Siege]].
+<tabber>
+General=
+== Game Start ==
+;Upon Entering [[Summoner's Rift]]
+* {{sm2|Announcer Female1 117.ogg}} ''"Welcome to Summoner's Rift!"''
+* {{sm2|Announcer Female1 118.ogg}} ''"Welcome to Summoner's Rift."''
+
+;Upon Entering [[Howling Abyss]]
+* {{sm2|Announcer Female1 001.ogg}} ''"Welcome to the Howling Abyss!"''
+* {{sm2|Announcer Female1 196.ogg}} ''"Welcome to the Murder Bridge!"''
+
+;Upon Entering [[Twisted Treeline]]
+* {{sm2|Announcer Female1 121.ogg}} ''"Welcome to the Twisted Treeline!"''
+* {{sm2|Announcer Female1 122.ogg}} ''"Welcome to the Twisted Treeline!"''
+* {{sm2|Announcer Female1 197.ogg}} ''"The altars will unlock in thirty seconds!"''
+* {{sm2|Announcer Female1 198.ogg}} ''"The altars have unlocked!"''
+
+;Upon Entering [[Snowdown Showdown]]
+* {{sm2|Announcer Female1 130.ogg}} ''"Welcome to the Snowdown Showdown."''
+
+;[[Minion]]s Spawning
+* {{sm2|Announcer Female1 094.ogg}} ''"One minute until minion spawn."''
+* {{sm2|Announcer Female1 095.ogg}} ''"One minute until minion spawn!"''
+* {{sm2|Announcer Female1 109.ogg}} ''"Thirty seconds until minions spawn!"''
+* {{sm2|Announcer Female1 092.ogg}} ''"Minions have spawned!"''
+
+== Kill Announcements ==
+;Upon First Blood
+* {{sm2|Announcer Female1 052.ogg}} ''"First blood!"''
+
+;On Kill
+* {{sm2|Announcer Female1 009.ogg}} ''"A champion has been slain."''
+* {{sm2|Announcer Female1 010.ogg}} ''"A champion has been slain."''
+* {{sm2|Announcer Female1 011.ogg}} ''"A champion has been slain."''
+
+;On Player Kill
+* {{sm2|Announcer Female1 024.ogg}} ''"You have slain an enemy!"''
+* {{sm2|Announcer Female1 025.ogg}} ''"You have slain an enemy."''
+* {{sm2|Announcer Female1 026.ogg}} ''"You have slain an enemy."''
+
+;On Player Death
+* {{sm2|Announcer Female1 017.ogg}} ''"You have been slain!"''
+* {{sm2|Announcer Female1 018.ogg}} ''"You have been slain."''
+
+;On Ally Kill
+* {{sm2|Announcer Female1 014.ogg}} ''"An enemy has been slain."''
+* {{sm2|Announcer Female1 015.ogg}} ''"An enemy has been slain."''
+* {{sm2|Announcer Female1 016.ogg}} ''"An enemy has been slain."''
+
+;On Enemy Kill
+* {{sm2|Announcer Female1 012.ogg}} ''"An ally has been slain."''
+* {{sm2|Announcer Female1 013.ogg}} ''"An ally has been slain."''
+
+;Upon Execution
+* {{sm2|Announcer Female1 021.ogg}} ''"Executed!"''
+* {{sm2|Announcer Female1 022.ogg}} ''"Executed!"''
+* {{sm2|Announcer Female1 023.ogg}} ''"Executed!"''
+
+;When An [[Ace]] Occurs
+* {{sm2|Announcer Female1 002.ogg}} ''"Aced."''
+* {{sm2|Announcer Female1 003.ogg}} ''"Aced."''
+
+==[[Multikill]] Announcements==
+;Ally Double Kill
+* {{sm2|Announcer Female1 006.ogg}} ''"Double kill!"''
+* {{sm2|Announcer Female1 007.ogg}} ''"Double kill!"''
+* {{sm2|Announcer Female1 008.ogg}} ''"Double kill!"''
+
+;Ally Triple Kill
+* {{sm2|Announcer Female1 036.ogg}} ''"Triple kill!"''
+* {{sm2|Announcer Female1 037.ogg}} ''"Triple kill!"''
+
+;Ally Quadra Kill
+* {{sm2|Announcer Female1 032.ogg}} ''"Quadrakill!"''
+* {{sm2|Announcer Female1 033.ogg}} ''"Quadrakill!"''
+
+;Ally Pentakill
+* {{sm2|Announcer Female1 029.ogg}} ''"Pentakill!"''
+* {{sm2|Announcer Female1 030.ogg}} ''"Pentakill!"''
+
+;Ally Hexakill
+* {{sm2|Announcer Female1 126.ogg}} ''"Hexakill!"''
+
+;Ally Legendary Kill
+* {{sm2|Announcer Female1 039.ogg}} ''"Legendary kill!"'' (Unobtainable)
+* {{sm2|Announcer Female1 040.ogg}} ''"Legendary kill!"'' (Unobtainable)
+
+;Enemy Double Kill
+* {{sm2|Announcer Female1 004.ogg}} ''"Enemy double kill!"''
+* {{sm2|Announcer Female1 005.ogg}} ''"Enemy double kill!"''
+
+;Enemy Triple Kill
+* {{sm2|Announcer Female1 034.ogg}} ''"Enemy triple kill!"''
+* {{sm2|Announcer Female1 035.ogg}} ''"Enemy triple kill!"''
+
+;Enemy Quadra Kill
+* {{sm2|Announcer Female1 031.ogg}} ''"Enemy quadrakill!"''
+
+;Enemy Pentakill
+* {{sm2|Announcer Female1 027.ogg}} ''"Enemy pentakill!"''
+* {{sm2|Announcer Female1 028.ogg}} ''"Enemy pentakill!"''
+
+;Enemy Hexakill
+* {{sm2|Announcer Female1 124.ogg}} ''"Enemy hexakill!"''
+
+;Enemy Legendary Kill
+* {{sm2|Announcer Female1 038.ogg}} ''"Enemy legendary kill!"'' (Unobtainable)
+
+== Spree Announcements ==
+;An Ally Killing Spree
+* {{sm2|Announcer Female1 059.ogg}} ''"Killing spree!"''
+* {{sm2|Announcer Female1 060.ogg}} ''"Killing spree!"''
+
+;An Ally Rampage
+* {{sm2|Announcer Female1 064.ogg}} ''"Rampage!"''
+* {{sm2|Announcer Female1 065.ogg}} ''"Rampage!"''
+
+;An Ally Is Dominating
+* {{sm2|Announcer Female1 073.ogg}} ''"Dominating!"''
+
+;An Ally Is Unstoppable
+* {{sm2|Announcer Female1 070.ogg}} ''"Unstoppable!"''
+
+;An Ally Is Godlike
+* {{sm2|Announcer Female1 078.ogg}} ''"Godlike!"''
+* {{sm2|Announcer Female1 079.ogg}} ''"Godlike!"''
+
+;An Ally Is Legendary
+* {{sm2|Announcer Female1 084.ogg}} ''"Legendary!"''
+* {{sm2|Announcer Female1 085.ogg}} ''"Legendary!"''
+* {{sm2|Announcer Female1 086.ogg}} ''"Legendary!"''
+
+;An Enemy Killing Spree
+* {{sm2|Announcer Female1 056.ogg}} ''"Enemy killing spree!"''
+* {{sm2|Announcer Female1 057.ogg}} ''"Enemy killing spree!"''
+
+;An Enemy Rampage
+* {{sm2|Announcer Female1 061.ogg}} ''"Enemy rampage!"''
+
+;An Enemy Is Dominating
+* {{sm2|Announcer Female1 071.ogg}} ''"An enemy is dominating!"''
+
+;An Enemy Is Unstoppable
+* {{sm2|Announcer Female1 066.ogg}} ''"An enemy is unstoppable!"''
+* {{sm2|Announcer Female1 067.ogg}} ''"An enemy is unstoppable!"''
+
+;An Enemy Is Godlike
+* {{sm2|Announcer Female1 074.ogg}} ''"An enemy is godlike!"''
+* {{sm2|Announcer Female1 075.ogg}} ''"An enemy is godlike."''
+
+;An Enemy Is Legendary
+* {{sm2|Announcer Female1 080.ogg}} ''"An enemy is legendary!"''
+* {{sm2|Announcer Female1 081.ogg}} ''"An enemy is legendary!"''
+
+;Upon Shut-Down
+* {{sm2|Announcer Female1 054.ogg}} ''"Shutdown!"''
+* {{sm2|Announcer Female1 055.ogg}} ''"Shutdown!"''
+
+== Objective Announcements ==
+;Upon An Allied [[Turret]] Being Destroyed
+* {{sm2|Announcer Female1 112.ogg}} ''"Your turret has been destroyed."''
+* {{sm2|Announcer Female1 113.ogg}} ''"Your turret has been destroyed."''
+
+;Upon An Enemy [[Turret]] Being Destroyed
+* {{sm2|Announcer Female1 111.ogg}} ''"Your team has destroyed a turret."''
+
+;Upon Allied [[Inhibitor]] Being Destroyed
+* {{sm2|Announcer Female1 043.ogg}} ''"Your inhibitor has been destroyed."''
+* {{sm2|Announcer Female1 044.ogg}} ''"Your inhibitor has been destroyed."''
+
+;Upon Enemy [[Inhibitor]] Being Destroyed
+* {{sm2|Announcer Female1 041.ogg}} ''"Your team has destroyed an inhibitor."''
+* {{sm2|Announcer Female1 042.ogg}} ''"Your team has destroyed an inhibitor."''
+
+;Upon Allied [[Inhibitor]] Respawning Soon
+* {{sm2|Announcer Female1 049.ogg}} ''"Your inhibitor is respawning soon."''
+
+;Upon Enemy [[Inhibitor]] Respawning Soon
+* {{sm2|Announcer Female1 047.ogg}} ''"The enemy inhibitor is respawning soon!"''
+* {{sm2|Announcer Female1 048.ogg}} ''"The enemy inhibitor is respawning soon."''
+
+== Game Conclusion ==
+;Upon Victory
+* {{sm2|Announcer Female1 114.ogg}} ''"Victory!"''
+
+;Upon Defeat
+* {{sm2|Announcer Female1 051.ogg}} ''"Defeat!"''
+
+== General Announcements ==
+;Upon Player Disconnection
+* {{sm2|Announcer Female1 096.ogg}} ''"A summoner has disconnected."''
+
+;Upon Player Reconnection
+* {{sm2|Announcer Female1 104.ogg}} ''"A summoner has reconnected."''
+* {{sm2|Announcer Female1 105.ogg}} ''"A summoner has reconnected."''
+
+|-|
+Crystal Scar=
+== Game Start ==
+;Upon Entering [[Crystal Scar]]
+* {{sm2|Announcer Female1 134.ogg}} ''"Welcome to the Crystal Scar!"''
+* {{sm2|Announcer Female1 135.ogg}} ''"Welcome to the Crystal Scar."''
+
+;Before The Nexus Opens
+* {{sm2|Announcer Female1 Map8 001.ogg}} ''"Prepare for battle!"''
+* {{sm2|Announcer Female1 Map8 004.ogg}} ''"The battle will begin in sixty seconds."''
+* {{sm2|Announcer Female1 Map8 006.ogg}} ''"The battle will begin in ten seconds!"''
+* {{sm2|Announcer Female1 Map8 008.ogg}} ''"Begin the fight!"''
+* {{sm2|Announcer Female1 Map8 009.ogg}} ''"Start!"''
+* {{sm2|Announcer Female1 Map8 010.ogg}} ''"To arms!"''
+
+== Objective Announcements ==
+;General
+* {{sm2|Announcer Female1 Map8 021.ogg}} ''"Quest received."''
+* {{sm2|Announcer Female1 Map8 023.ogg}} ''"Quest complete!"''
+* {{sm2|Announcer Female1 Map8 022.ogg}} ''"Assault the enemy!"''
+* {{sm2|Announcer Female1 Map8 028.ogg}} ''"Domination."''
+* {{sm2|Announcer Female1 Map8 029.ogg}} ''"Enemy domination!"''
+
+;An Ally Captured Points
+* {{sm2|Announcer Female1 Map8 013.ogg}} ''"Your team has captured The Boneyard."''
+* {{sm2|Announcer Female1 Map8 012.ogg}} ''"Your team has captured The Drill."''
+* {{sm2|Announcer Female1 Map8 014.ogg}} ''"Your team has captured The Quarry."''
+* {{sm2|Announcer Female1 Map8 015.ogg}} ''"Your team has captured The Refinery."''
+* {{sm2|Announcer Female1 Map8 011.ogg}} ''"Your team has captured The Windmill."''
+
+;An Enemy Captured Points
+* {{sm2|Announcer Female1 Map8 018.ogg}} ''"The enemy has captured The Boneyard."''
+* {{sm2|Announcer Female1 Map8 017.ogg}} ''"The enemy has captured The Drill."''
+* {{sm2|Announcer Female1 Map8 019.ogg}} ''"The enemy has captured The Quarry."''
+* {{sm2|Announcer Female1 Map8 020.ogg}} ''"The enemy has captured The Refinery."''
+* {{sm2|Announcer Female1 Map8 016.ogg}} ''"The enemy has captured The Windmill."''
+
+;General Neutralized Points
+* {{sm2|Announcer Female1 Map8 040.ogg}} ''"The Boneyard has been neutralized."''
+* {{sm2|Announcer Female1 Map8 044.ogg}} ''"The Drill has been neutralized."''
+* {{sm2|Announcer Female1 Map8 051.ogg}} ''"The Quarry has been neutralized."''
+* {{sm2|Announcer Female1 Map8 058.ogg}} ''"The Refinery has been neutralized."''
+* {{sm2|Announcer Female1 Map8 062.ogg}} ''"The Windmill has been neutralized."''
+
+;Upon Allied [[Nexus]] Taking Damage
+* {{sm2|Announcer Female1 Map8 024.ogg}} ''"Your team's nexus has been cracked!"''
+* {{sm2|Announcer Female1 Map8 032.ogg}} ''"Your nexus is at 75% health."''
+* {{sm2|Announcer Female1 Map8 031.ogg}} ''"Your nexus is at 50% health."''
+* {{sm2|Announcer Female1 Map8 030.ogg}} ''"Your nexus is at 25% health!"''
+* {{sm2|Announcer Female1 Map8 026.ogg}} ''"Your team's nexus is about to explode."''
+
+;Upon Enemy [[Nexus]] Taking Damage
+* {{sm2|Announcer Female1 Map8 025.ogg}} ''"The enemy's nexus has cracked!"''
+* {{sm2|Announcer Female1 Map8 035.ogg}} ''"The enemy nexus is at 75% health."''
+* {{sm2|Announcer Female1 Map8 034.ogg}} ''"The enemy nexus is at 50% health."''
+* {{sm2|Announcer Female1 Map8 033.ogg}} ''"The enemy nexus is at 25% health."''
+* {{sm2|Announcer Female1 Map8 027.ogg}} ''"The enemy's nexus is about to explode."''
+
+|-|
+Nexus Siege=
+== Game Start ==
+* {{sm2|Announcer Female1 Map11 008.ogg}} ''"The siege has begun."''
+
+== Objective Announcements ==
+;Crystal Generator
+* {{sm2|Announcer Female1 Map11 001.ogg}} ''"Crystal generator destroyed."''
+* {{sm2|Announcer Female1 Map11 002.ogg}} ''"A crystal generator has been repositioned."''
+* {{sm2|Announcer Female1 Map11 003.ogg}} ''"A crystal generator has been deployed."''
+
+;Obliterator
+* {{sm2|Announcer Female1 Map11 004.ogg}} ''"Obliterator charging."''
+* {{sm2|Announcer Female1 Map11 006.ogg}} ''"Obliterator firing!"''
+* {{sm2|Announcer Female1 Map11 005.ogg}} ''"Fire!"''
+
+;Port Pad
+* {{sm2|Announcer Female1 Map11 009.ogg}} ''"New Port Pad activated."''
+
+;Objective End
+* {{sm2|Announcer Female1 Map11 007.ogg}} ''"One minute remaining."''
+* {{sm2|Announcer Female1 Map11 011.ogg}} ''"Thirty seconds remaining."''
+* {{sm2|Announcer Female1 Map11 010.ogg}} ''"10, 9, 8, 7, 6, 5, 4, 3, 2, 1!"''
+
+|-|
+Legend of the Poro King=
+== Game Start ==
+* {{sm2|Announcer Female1 Map12 006.ogg}} ''"Welcome to Snowdown!"''
+
+== Objective Announcements ==
+;An Ally Summoned the Poro King
+* {{sm2|Announcer Female1 Map12 011.ogg}} ''"Your team has summoned the Poro King."''
+
+;An Enemy Summoned the Poro King
+* {{sm2|Announcer Female1 Map12 008.ogg}} ''"The enemy team has summoned the Poro King."''
+
+;Аn Ally Dispelled the Poro King
+* {{sm2|Announcer Female1 Map12 005.ogg}} ''"Your team has dispelled the Poro King."''
+
+;An Enemy Dispelled the Poro King
+* {{sm2|Announcer Female1 Map12 002.ogg}} ''"The enemy team has dispelled the Poro King."''
+
+|-|
+Spectator=
+== General Announcements ==
+;Blue Team [[Multikill]]s
+* {{sm2|Announcer Female1 141.ogg}} ''"Blue team double kill!"''
+* {{sm2|Announcer Female1 150.ogg}} ''"Blue team triple kill!"''
+* {{sm2|Announcer Female1 147.ogg}} ''"Blue team quadrakill!"''
+* {{sm2|Announcer Female1 144.ogg}} ''"Blue team pentakill!"''
+* {{sm2|Announcer Female1 123.ogg}} ''"Blue team hexakill!"''
+* {{sm2|Announcer Female1 153.ogg}} ''"Blue team legendary kill!"''
+* {{sm2|Announcer Female1 138.ogg}} ''"Blue team has scored an ace!"''
+* {{sm2|Announcer Female1 139.ogg}} ''"Purple team has scored an ace!"''
+
+;Red Team [[Multikill]]s
+* {{sm2|Announcer Female1 143.ogg}} ''"Red team double kill!"''
+* {{sm2|Announcer Female1 152.ogg}} ''"Red team triple kill!"''
+* {{sm2|Announcer Female1 149.ogg}} ''"Red team quadrakill!"''
+* {{sm2|Announcer Female1 146.ogg}} ''"Red team pentakill!"''
+* {{sm2|Announcer Female1 125.ogg}} ''"Red team hexakill!"''
+* {{sm2|Announcer Female1 155.ogg}} ''"Red team legendary kill!"''
+* {{sm2|Announcer Female1 140.ogg}} ''"Red team has scored an ace!"''
+
+;Purple Team [[Multikill]]s
+* {{sm2|Announcer Female1 142.ogg}} ''"Purple team double kill!"''
+* {{sm2|Announcer Female1 151.ogg}} ''"Purple team triple kill!"''
+* {{sm2|Announcer Female1 148.ogg}} ''"Purple team quadrakill!"''
+* {{sm2|Announcer Female1 145.ogg}} ''"Purple team pentakill!"''
+* {{sm2|Announcer Female1 154.ogg}} ''"Purple team legendary kill!"''
+
+;Blue Team Objective Announcements
+* {{sm2|Announcer Female1 186.ogg}} ''"Blue team's turret has been destroyed."''
+* {{sm2|Announcer Female1 156.ogg}} ''"Blue team's inhibitor has been destroyed!"''
+* {{sm2|Announcer Female1 162.ogg}} ''"Blue team's inhibitor is respawning soon."''
+* {{sm2|Announcer Female1 159.ogg}} ''"Blue team's inhibitor has respawned!"''
+* {{sm2|Announcer Female1 168.ogg}} ''"Blue team has slain the Dragon."''
+* {{sm2|Announcer Female1 171.ogg}} ''"Blue team has slain Baron Nashor."''
+* {{sm2|Announcer Female1 193.ogg}} ''"Blue team victory!"''
+
+;Red Team Objective Announcements
+* {{sm2|Announcer Female1 188.ogg}} ''"Red team's turret has been destroyed."''
+* {{sm2|Announcer Female1 158.ogg}} ''"Red team's inhibitor has been destroyed!"''
+* {{sm2|Announcer Female1 164.ogg}} ''"Red team's inhibitor is respawning soon!"''
+* {{sm2|Announcer Female1 161.ogg}} ''"Red team's inhibitor has respawned!"''
+* {{sm2|Announcer Female1 170.ogg}} ''"Red team has slain the Dragon!"''
+* {{sm2|Announcer Female1 173.ogg}} ''"Red team has slain Baron Nashor."''
+* {{sm2|Announcer Female1 195.ogg}} ''"Red team victory!"''
+
+;Purple Team Objective Announcements
+* {{sm2|Announcer Female1 187.ogg}} ''"Purple team's turret has been destroyed."''
+* {{sm2|Announcer Female1 157.ogg}} ''"Purple team's inhibitor has been destroyed!"''
+* {{sm2|Announcer Female1 163.ogg}} ''"Purple team's inhibitor is respawning soon."''
+* {{sm2|Announcer Female1 160.ogg}} ''"Purple team's inhibitor has respawned!"''
+* {{sm2|Announcer Female1 169.ogg}} ''"Purple team has slain the Dragon!"''
+* {{sm2|Announcer Female1 172.ogg}} ''"Purple team has slain Baron Nashor!"''
+* {{sm2|Announcer Female1 194.ogg}} ''"Purple team victory!"''
+
+== Crystal Scar Announcements ==
+;Blue Team Objective Announcements
+* {{sm2|Announcer Female1 Map8 039.ogg}} ''"Blue team has captured The Boneyard."''
+* {{sm2|Announcer Female1 Map8 043.ogg}} ''"Blue team has captured The Drill."''
+* {{sm2|Announcer Female1 Map8 050.ogg}} ''"Blue team has captured The Quarry."''
+* {{sm2|Announcer Female1 Map8 057.ogg}} ''"Blue team has captured The Refinery."''
+* {{sm2|Announcer Female1 Map8 061.ogg}} ''"Blue team has captured The Windmill."''
+* {{sm2|Announcer Female1 Map8 038.ogg}} ''"Blue team nexus is at 75% health."''
+* {{sm2|Announcer Female1 Map8 037.ogg}} ''"Blue team nexus is at 50% health."''
+* {{sm2|Announcer Female1 Map8 036.ogg}} ''"Blue team nexus is at 25% health."''
+
+;Red Team Objective Announcements
+* {{sm2|Announcer Female1 Map8 042.ogg}} ''"Red team has captured The Boneyard."''
+* {{sm2|Announcer Female1 Map8 046.ogg}} ''"Red team has captured The Drill."''
+* {{sm2|Announcer Female1 Map8 053.ogg}} ''"Red team has captured The Quarry."''
+* {{sm2|Announcer Female1 Map8 060.ogg}} ''"Red team has captured The Refinery."''
+* {{sm2|Announcer Female1 Map8 064.ogg}} ''"Red team has captured The Windmill."''
+* {{sm2|Announcer Female1 Map8 056.ogg}} ''"Red team's nexus is at 75% health."''
+* {{sm2|Announcer Female1 Map8 055.ogg}} ''"Red team's nexus is at 50% health."''
+* {{sm2|Announcer Female1 Map8 054.ogg}} ''"Red team's nexus is at 25% health."''
+
+;Purple Team Objective Announcements
+* {{sm2|Announcer Female1 Map8 041.ogg}} ''"Purple team has captured The Boneyard."''
+* {{sm2|Announcer Female1 Map8 045.ogg}} ''"Purple team has captured The Drill."''
+* {{sm2|Announcer Female1 Map8 052.ogg}} ''"Purple team has captured The Quarry."''
+* {{sm2|Announcer Female1 Map8 059.ogg}} ''"Purple team has captured The Refinery."''
+* {{sm2|Announcer Female1 Map8 063.ogg}} ''"Purple team has captured The Windmill."''
+* {{sm2|Announcer Female1 Map8 049.ogg}} ''"Purple team's nexus is at 75% health."''
+* {{sm2|Announcer Female1 Map8 048.ogg}} ''"Purple team's nexus is at 50% health."''
+* {{sm2|Announcer Female1 Map8 047.ogg}} ''"Purple team's nexus is at 25% health."''
+
+== Legend of the Poro King Announcements ==
+;Blue Team Objective Announcements
+* {{sm2|Announcer Female1 Map12 007.ogg}} ''"Blue team has summoned the Poro King."''
+* {{sm2|Announcer Female1 Map12 001.ogg}} ''"Blue team has dispelled the Poro King."''
+
+;Red Team Objective Announcements
+* {{sm2|Announcer Female1 Map12 010.ogg}} ''"Red team has summoned the Poro King."''
+* {{sm2|Announcer Female1 Map12 004.ogg}} ''"Red team has dispelled the Poro King."''
+
+;Purple Team Objective Announcements
+* {{sm2|Announcer Female1 Map12 009.ogg}} ''"Purple team has summoned the Poro King."''
+* {{sm2|Announcer Female1 Map12 003.ogg}} ''"Purple team has dispelled the Poro King."''
+
+|-|
+Unknown=
+;Unknown or Unused Announcer quotes.
+* {{sm2|Announcer Female1 019.ogg}} ''"Terminated!"''
+* {{sm2|Announcer Female1 020.ogg}} ''"Neutralized!"''
+* {{sm2|Announcer Female1 045.ogg}} ''"The enemy inhibitor has respawned."''
+* {{sm2|Announcer Female1 046.ogg}} ''"The enemy inhibitor has respawned."''
+* {{sm2|Announcer Female1 050.ogg}} ''"Your inhibitor has respawned!"''
+* {{sm2|Announcer Female1 053.ogg}} ''"Your inhibitor is under attack!"''
+* {{sm2|Announcer Female1 058.ogg}} ''"You are on a killing spree."''
+* {{sm2|Announcer Female1 062.ogg}} ''"You are on a rampage!"''
+* {{sm2|Announcer Female1 063.ogg}} ''"You are on a rampage!"''
+* {{sm2|Announcer Female1 068.ogg}} ''"You're unstoppable!"''
+* {{sm2|Announcer Female1 069.ogg}} ''"You are unstoppable!"''
+* {{sm2|Announcer Female1 072.ogg}} ''"You are dominating!"''
+* {{sm2|Announcer Female1 076.ogg}} ''"You are godlike!"''
+* {{sm2|Announcer Female1 077.ogg}} ''"You are godlike!"''
+* {{sm2|Announcer Female1 082.ogg}} ''"You are legendary!"''
+* {{sm2|Announcer Female1 083.ogg}} ''"You are legendary!"''
+* {{sm2|Announcer Female1 087.ogg}} ''"A summoner has quit!"''
+* {{sm2|Announcer Female1 088.ogg}} ''"A summoner has quit!"''
+* {{sm2|Announcer Female1 089.ogg}} ''"An enemy has quit."''
+* {{sm2|Announcer Female1 090.ogg}} ''"An ally has quit!"''
+* {{sm2|Announcer Female1 091.ogg}} ''"An ally has quit!"''
+* {{sm2|Announcer Female1 093.ogg}} ''"Your nexus is under attack!"''
+* {{sm2|Announcer Female1 097.ogg}} ''"An enemy has left the game."''
+* {{sm2|Announcer Female1 100.ogg}} ''"An ally has left the game."''
+* {{sm2|Announcer Female1 101.ogg}} ''"An ally has left the game."''
+* {{sm2|Announcer Female1 098.ogg}} ''"An enemy has disconnected."''
+* {{sm2|Announcer Female1 099.ogg}} ''"An enemy has disconnected."''
+* {{sm2|Announcer Female1 102.ogg}} ''"An ally has disconnected!"''
+* {{sm2|Announcer Female1 103.ogg}} ''"An ally has disconnected."''
+* {{sm2|Announcer Female1 106.ogg}} ''"An enemy has reconnected."''
+* {{sm2|Announcer Female1 107.ogg}} ''"An enemy has reconnected."''
+* {{sm2|Announcer Female1 108.ogg}} ''"An ally has reconnected."''
+* {{sm2|Announcer Female1 110.ogg}} ''"Your turret is under attack."''
+* {{sm2|Announcer Female1 115.ogg}} ''"Welcome!"''
+* {{sm2|Announcer Female1 116.ogg}} ''"Welcome!"''
+* {{sm2|Announcer Female1 119.ogg}} ''"Welcome to the League of Legends!"''
+* {{sm2|Announcer Female1 120.ogg}} ''"Welcome to the League of Legends!"''
+* {{sm2|Announcer Female1 127.ogg}} ''"The enemy has scored a point."''
+* {{sm2|Announcer Female1 128.ogg}} ''"You have scored a point!"''
+* {{sm2|Announcer Female1 129.ogg}} ''"Your team has scored a point!"''
+* {{sm2|Announcer Female1 131.ogg}} ''"The enemy has almost won."''
+* {{sm2|Announcer Female1 132.ogg}} ''"You have almost won!"''
+* {{sm2|Announcer Female1 133.ogg}} ''"Your team has almost won!"''
+* {{sm2|Announcer Female1 165.ogg}} ''"Blue team's inhibitor is under attack."''
+* {{sm2|Announcer Female1 166.ogg}} ''"Purple team's inhibitor is under attack."''
+* {{sm2|Announcer Female1 167.ogg}} ''"Red team's inhibitor is under attack."''
+* {{sm2|Announcer Female1 178.ogg}} ''"Blue team's nexus is under attack!"''
+* {{sm2|Announcer Female1 179.ogg}} ''"Purple team's nexus is under attack!"''
+* {{sm2|Announcer Female1 180.ogg}} ''"Red team's nexus is under attack!"''
+* {{sm2|Announcer Female1 174.ogg}} ''"Blue team is nearly out of minions."''
+* {{sm2|Announcer Female1 175.ogg}} ''"Red team is nearly out of minions."''
+* {{sm2|Announcer Female1 176.ogg}} ''"Blue team has lost half its minions."''
+* {{sm2|Announcer Female1 177.ogg}} ''"Red team has lost half its minions."''
+* {{sm2|Announcer Female1 181.ogg}} ''"Blue team has surrendered."''
+* {{sm2|Announcer Female1 182.ogg}} ''"Purple team has surrendered."''
+* {{sm2|Announcer Female1 183.ogg}} ''"Red team has surrendered."''
+* {{sm2|Announcer Female1 184.ogg}} ''"Blue team's turret is nearly destroyed."''
+* {{sm2|Announcer Female1 185.ogg}} ''"Red team's turret is nearly destroyed."''
+* {{sm2|Announcer Female1 189.ogg}} ''"Red team's turret is at half health."''
+* {{sm2|Announcer Female1 190.ogg}} ''"Blue team's turret is under attack."''
+* {{sm2|Announcer Female1 191.ogg}} ''"Purple team's turret is under attack."''
+* {{sm2|Announcer Female1 192.ogg}} ''"Red team's turret is under attack."''
+* {{sm2|Announcer Female1 136.ogg}} ''"The battle will begin in thirty seconds!"''
+* {{sm2|Announcer Female1 137.ogg}} ''"The battle has begun!"''
+</tabber>
+
+== Trivia ==
+* Some localizations feature a male voice for the Classic announcer:
+** '''es-MX:''' Spanish (Latin America)
+** '''tr-TR:''' Turkish
+
+{{section bot}}
+[[Category:Announcer voice-overs]]
+[[ru:Комментатор/Классический]]

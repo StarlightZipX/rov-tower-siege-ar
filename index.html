@@ -143,9 +143,14 @@
             <!-- Dynamically populated skills -->
           </div>
 
-          <button id="enter-battle-btn" class="btn-primary rov-gold-btn pulse-epic">
-            <span class="btn-text">⚔️ เข้าสู่สมรภูมิประจัญบาน! (ENTER BATTLE)</span>
-          </button>
+          <div class="reveal-actions-row">
+            <button id="reroll-hero-btn" class="btn-secondary rov-blue-btn">
+              <span class="btn-text">🎲 สุ่มใหม่ (RE-ROLL)</span>
+            </button>
+            <button id="enter-battle-btn" class="btn-primary rov-gold-btn pulse-epic">
+              <span class="btn-text">⚔️ เข้าสู่สมรภูมิประจัญบาน!</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -309,6 +314,15 @@
 
     <!-- Floating Damage Numbers -->
     <div id="damage-container"></div>
+
+    <!-- In-Game Authentic RoV Announcer Killstreak Banner -->
+    <div id="announcer-banner" class="announcer-banner" style="display: none;">
+      <div class="announcer-banner-glow"></div>
+      <div class="announcer-banner-content">
+        <span class="announcer-sub">ANTARIS TOURNAMENT</span>
+        <h2 id="announcer-title">FIRST BLOOD</h2>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== VICTORY SCREEN ==================== -->
