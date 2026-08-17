@@ -850,15 +850,31 @@ function speakAnnouncer(text) {
 function getSkillArchetype(hero, skill) {
   const name = ((skill.name || '') + ' ' + (skill.tag || '') + ' ' + (skill.desc || '')).toLowerCase();
   const hId = hero.id;
+  const cId = hero.classId;
 
-  if (hId === 'tulen' || name.includes('สายฟ้า') || name.includes('lightning') || name.includes('thunder')) return 'lightning';
-  if (hId === 'raz' || name.includes('เพลิง') || name.includes('fire') || name.includes('flame')) return 'fire';
-  if (hId === 'zill' || name.includes('ลม') || name.includes('wind') || name.includes('cyclone') || name.includes('tornado')) return 'wind';
-  if (hId === 'kaine' || hId === 'maloch' || name.includes('โลหิต') || name.includes('blood') || name.includes('วิญญาณ')) return 'blood';
-  if (['violet', 'moren', 'thorne', 'wisp', 'valhein'].includes(hId) || name.includes('ปืน') || name.includes('กระสุน') || name.includes('gun') || name.includes('bullet') || name.includes('ระเบิด')) return 'gun';
-  if (['yorn', 'telannas', 'lindis', 'slimz'].includes(hId) || name.includes('ศร') || name.includes('ธนู') || name.includes('หอก') || name.includes('arrow') || name.includes('spear')) return 'bow';
-  if (['taara', 'skud', 'thane', 'wukong'].includes(hId) || name.includes('ค้อน') || name.includes('หมัด') || name.includes('กระบอง') || name.includes('ทุบ') || name.includes('hammer')) return 'heavy';
-  if (hero.classId === 'mage' || name.includes('เวท') || name.includes('มนตรา') || name.includes('magic') || name.includes('ลำแสง')) return 'magic';
+  // 1. Explicit hero definitions (Hard overrides)
+  if (hId === 'tulen' || hId === 'fennik' || hId === 'aleister') return 'lightning';
+  if (hId === 'raz' || hId === 'zill' || hId === 'wukong') {
+    if (hId === 'raz') return 'fire';
+    if (hId === 'zill') return 'wind';
+    if (hId === 'wukong') return 'heavy';
+  }
+  if (hId === 'kaine' || hId === 'maloch') return 'blood';
+  if (['violet', 'moren', 'thorne', 'wisp', 'valhein'].includes(hId)) return 'gun';
+  if (['yorn', 'telannas', 'lindis', 'slimz'].includes(hId)) return 'bow';
+  if (['taara', 'skud', 'thane'].includes(hId)) return 'heavy';
+
+  // 2. Keyword matching with strict boundaries
+  if (name.includes('สายฟ้า') || name.includes('lightning') || name.includes('thunder')) return 'lightning';
+  if (name.includes('เพลิง') || name.includes('fire') || name.includes('flame')) return 'fire';
+  if (name.includes('ลม') || name.includes('wind') || name.includes('cyclone') || name.includes('tornado')) return 'wind';
+  if (name.includes('ศร') || name.includes('ธนู') || name.includes('หอก') || name.includes('arrow') || name.includes('spear')) return 'bow';
+  if (name.includes('ปืน') || name.includes('กระสุน') || name.includes('gun') || name.includes('bullet')) return 'gun';
+  if (name.includes('ค้อน') || name.includes('หมัด') || name.includes('กระบอง') || name.includes('hammer')) return 'heavy';
+  if (name.includes('โลหิต') || name.includes('blood') || name.includes('แวมไพร์')) return 'blood';
+
+  // 3. Fallbacks based on class
+  if (cId === 'mage' || name.includes('เวท') || name.includes('มนตรา') || name.includes('magic') || name.includes('วิญญาณ')) return 'magic';
 
   return 'sword';
 }
