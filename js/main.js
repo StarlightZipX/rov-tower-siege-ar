@@ -770,6 +770,8 @@ function selectSkill(skill, slotEl) {
   selectedSkill = skill;
   baseDamage = skill.dmg;
 
+  playSound('skill_select');
+
   if (dom.skillsContainer) {
     dom.skillsContainer.querySelectorAll('.hotbar-slot').forEach(s => s.classList.remove('active'));
   }
@@ -781,7 +783,7 @@ function selectSkill(skill, slotEl) {
 }
 
 /* ==========================================================
-   Three.js & Graphics (AAA RoV Lighting Setup)
+   Three.js & Graphics (AAA RoV 2026 Lighting Setup)
    ========================================================== */
 function initThreeJS() {
   scene = new THREE.Scene();
@@ -793,23 +795,23 @@ function initThreeJS() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.25;
 
-  // 1. Ambient environmental base
-  scene.add(new THREE.AmbientLight(0x2a3352, 1.6));
+  // 1. Ambient environmental base (Antaris deep mystic field)
+  scene.add(new THREE.AmbientLight(0x1e263d, 1.8));
 
-  // 2. Warm Key Light (Antaris Sun)
-  const keyLight = new THREE.DirectionalLight(0xffeedd, 2.4);
+  // 2. Warm Key Light (Sun of Antaris)
+  const keyLight = new THREE.DirectionalLight(0xfff8ee, 2.6);
   keyLight.position.set(6, 12, 6);
   scene.add(keyLight);
 
-  // 3. Cool Blue Fill Light (Mystical Field)
-  const fillLight = new THREE.DirectionalLight(0x00c8ff, 1.5);
+  // 3. Cool Arcane Fill Light (Mystical Field)
+  const fillLight = new THREE.DirectionalLight(0x00e5ff, 1.6);
   fillLight.position.set(-6, 4, 4);
   scene.add(fillLight);
 
   // 4. Gold Rim/Back Light (For high-spec metallic sheen)
-  const rimLight = new THREE.DirectionalLight(0xff9900, 2.2);
+  const rimLight = new THREE.DirectionalLight(0xffaa22, 2.5);
   rimLight.position.set(0, 8, -6);
   scene.add(rimLight);
 
@@ -821,7 +823,7 @@ function initThreeJS() {
 }
 
 /* ==========================================================
-   Sound Synthesizer (Web Audio API)
+   RoV 2026 AAA Sound Synthesizer & Announcer Engine (Web Audio API)
    ========================================================== */
 function initAudio() {
   if (!audioCtx) {
@@ -832,89 +834,205 @@ function initAudio() {
   }
 }
 
-function playSound(type) {
+function speakAnnouncer(text) {
+  if (!('speechSynthesis' in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.pitch = 0.85;
+    u.rate = 1.02;
+    u.volume = 1.0;
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+function playSound(type, opts = {}) {
   if (!audioCtx) return;
   const now = audioCtx.currentTime;
 
   if (type === 'attack') {
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    const isCrit = opts.isCrit || false;
+    const isMagic = opts.isMagic || false;
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(440, now);
-    osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-    gainNode.gain.setValueAtTime(0.32, now);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-    osc.start(now);
-    osc.stop(now + 0.1);
-  } else if (type === 'summon_charge') {
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    // 1. Blade Slash / Projectile Noise Transient
+    const bufferSize = Math.floor(audioCtx.sampleRate * 0.08);
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    const noiseFilter = audioCtx.createBiquadFilter();
+    noiseFilter.type = isMagic ? 'bandpass' : 'highpass';
+    noiseFilter.frequency.setValueAtTime(isMagic ? 1200 : 2500, now);
+    noiseFilter.Q.setValueAtTime(2, now);
+    const noiseGain = audioCtx.createGain();
+    noiseGain.gain.setValueAtTime(isCrit ? 0.45 : 0.28, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(audioCtx.destination);
+    noise.start(now);
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(150, now);
-    osc.frequency.exponentialRampToValueAtTime(850, now + 1.8);
-    gainNode.gain.setValueAtTime(0.06, now);
-    gainNode.gain.linearRampToValueAtTime(0.42, now + 1.8);
-    osc.start(now);
-    osc.stop(now + 1.8);
-  } else if (type === 'summon_reveal') {
-    [440, 554.37, 659.25, 880].forEach((freq, i) => {
+    // 2. Heavy Physical/Magic Impact Punch (Low Sub-Bass)
+    const punchOsc = audioCtx.createOscillator();
+    const punchGain = audioCtx.createGain();
+    punchOsc.type = 'triangle';
+    punchOsc.frequency.setValueAtTime(isCrit ? 140 : 110, now);
+    punchOsc.frequency.exponentialRampToValueAtTime(30, now + 0.14);
+    punchGain.gain.setValueAtTime(isCrit ? 0.65 : 0.4, now);
+    punchGain.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+    punchOsc.connect(punchGain);
+    punchGain.connect(audioCtx.destination);
+    punchOsc.start(now);
+    punchOsc.stop(now + 0.14);
+
+    // 3. Metallic Weapon Resonance / Magic Ring
+    const ringOsc = audioCtx.createOscillator();
+    const ringGain = audioCtx.createGain();
+    ringOsc.type = isMagic ? 'sine' : 'sawtooth';
+    ringOsc.frequency.setValueAtTime(isMagic ? 680 : 380, now);
+    ringOsc.frequency.exponentialRampToValueAtTime(isMagic ? 440 : 180, now + 0.12);
+    ringGain.gain.setValueAtTime(isCrit ? 0.35 : 0.18, now);
+    ringGain.gain.exponentialRampToValueAtTime(0.005, now + 0.12);
+    ringOsc.connect(ringGain);
+    ringGain.connect(audioCtx.destination);
+    ringOsc.start(now);
+    ringOsc.stop(now + 0.12);
+
+    // 4. Critical Hit Shockwave Crack
+    if (isCrit) {
+      const critOsc = audioCtx.createOscillator();
+      const critGain = audioCtx.createGain();
+      critOsc.type = 'sawtooth';
+      critOsc.frequency.setValueAtTime(800, now);
+      critOsc.frequency.exponentialRampToValueAtTime(80, now + 0.22);
+      critGain.gain.setValueAtTime(0.4, now);
+      critGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      critOsc.connect(critGain);
+      critGain.connect(audioCtx.destination);
+      critOsc.start(now);
+      critOsc.stop(now + 0.22);
+    }
+  } else if (type === 'skill_select') {
+    [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(freq, now + i * 0.03);
+      g.gain.setValueAtTime(0.18, now + i * 0.03);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
       o.connect(g);
       g.connect(audioCtx.destination);
+      o.start(now + i * 0.03);
+      o.stop(now + 0.25);
+    });
+  } else if (type === 'summon_charge') {
+    [120, 122, 240, 360].forEach((freq, i) => {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
       o.type = 'triangle';
-      o.frequency.setValueAtTime(freq, now + i * 0.05);
-      g.gain.setValueAtTime(0.38, now + i * 0.05);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
-      o.start(now + i * 0.05);
-      o.stop(now + 2.5);
+      o.frequency.setValueAtTime(freq, now);
+      o.frequency.exponentialRampToValueAtTime(freq * 3.5, now + 1.8);
+      g.gain.setValueAtTime(0.08, now);
+      g.gain.linearRampToValueAtTime(0.28, now + 1.8);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(now);
+      o.stop(now + 1.8);
+    });
+  } else if (type === 'summon_reveal') {
+    [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'sawtooth';
+      const startTime = now + i * 0.06;
+      o.frequency.setValueAtTime(freq, startTime);
+      g.gain.setValueAtTime(0.25, startTime);
+      g.gain.exponentialRampToValueAtTime(0.001, startTime + 2.4);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(startTime);
+      o.stop(startTime + 2.4);
     });
   } else if (type === 'match_start') {
-    // RoV War Horn Fanfare
-    [196, 261.63, 329.63, 392, 523.25].forEach((freq, i) => {
+    [130.81, 196.00, 261.63, 329.63, 392.00, 523.25].forEach((freq, i) => {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
+      o.type = 'sawtooth';
+      const delay = i * 0.07;
+      o.frequency.setValueAtTime(freq, now + delay);
+      g.gain.setValueAtTime(0.22, now + delay);
+      g.gain.exponentialRampToValueAtTime(0.001, now + delay + 2.2);
       o.connect(g);
       g.connect(audioCtx.destination);
-      o.type = 'sawtooth';
-      o.frequency.setValueAtTime(freq, now + i * 0.08);
-      g.gain.setValueAtTime(0.28, now + i * 0.08);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
-      o.start(now + i * 0.08);
-      o.stop(now + 2.2);
+      o.start(now + delay);
+      o.stop(now + delay + 2.2);
     });
+    setTimeout(() => {
+      speakAnnouncer("Welcome to Arena of Valor");
+    }, 450);
   } else if (type === 'explode') {
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    const subOsc = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    subOsc.type = 'sawtooth';
+    subOsc.frequency.setValueAtTime(140, now);
+    subOsc.frequency.exponentialRampToValueAtTime(18, now + 2.2);
+    subGain.gain.setValueAtTime(0.9, now);
+    subGain.gain.exponentialRampToValueAtTime(0.01, now + 2.2);
+    subOsc.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 2.2);
 
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(120, now);
-    osc.frequency.linearRampToValueAtTime(20, now + 2.0);
-    gainNode.gain.setValueAtTime(1.0, now);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 2.0);
-    osc.start(now);
-    osc.stop(now + 2.0);
+    for (let j = 0; j < 3; j++) {
+      const crashDelay = now + j * 0.25;
+      const bSize = Math.floor(audioCtx.sampleRate * 0.3);
+      const b = audioCtx.createBuffer(1, bSize, audioCtx.sampleRate);
+      const d = b.getChannelData(0);
+      for (let k = 0; k < bSize; k++) d[k] = (Math.random() * 2 - 1) * Math.exp(-k / (bSize * 0.4));
+      const s = audioCtx.createBufferSource();
+      s.buffer = b;
+      const f = audioCtx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.setValueAtTime(800 - j * 150, crashDelay);
+      const g = audioCtx.createGain();
+      g.gain.setValueAtTime(0.5 - j * 0.1, crashDelay);
+      g.gain.exponentialRampToValueAtTime(0.01, crashDelay + 0.3);
+      s.connect(f);
+      f.connect(g);
+      g.connect(audioCtx.destination);
+      s.start(crashDelay);
+    }
+  } else if (type === 'victory') {
+    speakAnnouncer("Victory");
+    [392.00, 523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'triangle';
+      const t = now + 0.2 + i * 0.08;
+      o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.3, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 2.5);
+      o.connect(g);
+      g.connect(audioCtx.destination);
+      o.start(t);
+      o.stop(t + 2.5);
+    });
   } else if (type === 'roll') {
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(700, now);
+    osc.frequency.exponentialRampToValueAtTime(1400, now + 0.04);
+    gainNode.gain.setValueAtTime(0.16, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
     osc.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(650, now);
-    osc.frequency.exponentialRampToValueAtTime(1300, now + 0.05);
-    gainNode.gain.setValueAtTime(0.18, now);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
     osc.start(now);
-    osc.stop(now + 0.05);
+    osc.stop(now + 0.04);
   }
 }
 
@@ -969,7 +1087,8 @@ function performSwingAttack() {
   let dmg = baseDamage + bonusDamage;
   let isCrit = selectedSkill.isCrit || false;
   let color = selectedSkill.color || '#ffd700';
-  let dmgClass = isCrit ? 'dmg-crit' : (activeHero.classId === 'mage' ? 'dmg-magic' : 'dmg-text');
+  let isMagic = activeHero.classId === 'mage';
+  let dmgClass = isCrit ? 'dmg-crit' : (isMagic ? 'dmg-magic' : 'dmg-text');
 
   if (isCrit && Math.random() < 0.6) {
     dmg = Math.floor(dmg * 1.5);
@@ -985,10 +1104,10 @@ function performSwingAttack() {
 
   // Visual Effects & Sound
   const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
-  effects.createHitParticles(hitPos, color, isCrit ? 30 : 15);
+  effects.createHitParticles(hitPos, color, isCrit ? 35 : 18, isCrit);
   showFloatingDamage(Math.floor(dmg), dmgClass, color);
 
-  playSound('attack');
+  playSound('attack', { isCrit, isMagic });
 
   if (navigator.vibrate) navigator.vibrate(isCrit ? [80, 40, 80] : 50);
 
@@ -1074,6 +1193,7 @@ function triggerExplosion() {
 
 function showVictory() {
   state = GameState.VICTORY;
+  playSound('victory');
   const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
   document.getElementById('stat-damage').textContent = totalDamageDealt;
   document.getElementById('stat-time').textContent = elapsed + 's';
