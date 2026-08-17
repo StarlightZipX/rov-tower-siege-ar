@@ -1049,7 +1049,12 @@ const AUDIO_CLIPS = {
   legendary: new Audio('./assets/audio/legendary.ogg'),
   turret_destroyed: new Audio('./assets/audio/turret_destroyed.ogg'),
   summon_charge: new Audio('./assets/audio/summon_charge.ogg'),
-  summon_reveal: new Audio('./assets/audio/summon_reveal.ogg')
+  summon_reveal: new Audio('./assets/audio/summon_reveal.ogg'),
+  tower_lock: new Audio('./assets/audio/tower_lock.wav'),
+  tower_charge: new Audio('./assets/audio/tower_charge.wav'),
+  tower_fire: new Audio('./assets/audio/tower_fire.wav'),
+  player_hit: new Audio('./assets/audio/player_hit.wav'),
+  shield_block: new Audio('./assets/audio/shield_block.wav')
 };
 
 Object.values(AUDIO_CLIPS).forEach(a => {
@@ -1119,6 +1124,15 @@ function getSkillArchetype(hero, skill) {
 }
 
 function playSound(type, opts = {}) {
+  // If dedicated studio-grade audio clip exists, play it with polyphony
+  if (AUDIO_CLIPS[type]) {
+    try {
+      const clip = AUDIO_CLIPS[type].cloneNode();
+      clip.volume = opts.volume !== undefined ? opts.volume : 0.95;
+      clip.play().catch(() => {});
+    } catch (e) {}
+  }
+
   if (!audioCtx) return;
   const now = audioCtx.currentTime;
 
