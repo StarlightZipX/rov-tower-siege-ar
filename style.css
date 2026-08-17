@@ -238,6 +238,19 @@ body, html {
 
 .landing-action-group {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#start-btn {
+  max-width: 420px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.landing-action-group-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 .landing-note { 
   margin-top: 14px; 
