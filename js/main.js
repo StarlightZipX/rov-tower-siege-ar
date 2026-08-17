@@ -786,8 +786,8 @@ function selectSkill(skill, slotEl) {
 function initThreeJS() {
   scene = new THREE.Scene();
   camera3d = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera3d.position.set(0, 2.5, 7.8);
-  camera3d.lookAt(0, 1.2, 0);
+  camera3d.position.set(0, 1.0, 8.2);
+  camera3d.lookAt(0, 0.1, 0);
 
   renderer = new THREE.WebGLRenderer({ canvas: dom.canvas, alpha: true, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -984,7 +984,7 @@ function performSwingAttack() {
   currentGold += Math.floor(dmg / 10);
 
   // Visual Effects & Sound
-  const hitPos = new THREE.Vector3(0, Math.random() * 2, 0);
+  const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
   effects.createHitParticles(hitPos, color, isCrit ? 30 : 15);
   showFloatingDamage(Math.floor(dmg), dmgClass, color);
 
@@ -1043,7 +1043,7 @@ function gameLoop(timestamp) {
       if (lastSmokeTime >= SMOKE_INTERVAL) {
         lastSmokeTime = 0;
         const hp = tower.getHPPercent();
-        const base = new THREE.Vector3(0, -2.4, 0);
+        const base = new THREE.Vector3(0, -1.9, 0);
         if (hp < 0.75 && hp > 0) effects.createSmokeParticles(base, hp < 0.5 ? 3 : 1);
         if (hp < 0.5 && hp > 0) effects.createFireParticles(base, hp < 0.25 ? 6 : 2);
       }
@@ -1063,7 +1063,7 @@ function gameLoop(timestamp) {
 function triggerExplosion() {
   state = GameState.EXPLODING;
   const debrisPieces = tower.getExplosionParts();
-  effects.createExplosion(new THREE.Vector3(0, -2.4, 0), debrisPieces);
+  effects.createExplosion(new THREE.Vector3(0, -0.5, 0), debrisPieces);
   tower.hide();
 
   playSound('explode');

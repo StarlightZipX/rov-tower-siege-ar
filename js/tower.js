@@ -27,7 +27,8 @@ export class Tower {
     this.time = 0;
 
     this._buildAAATower();
-    this.group.position.set(0, -2.4, 0);
+    this.group.scale.set(0.52, 0.52, 0.52);
+    this.group.position.set(0, -1.9, 0);
     this.scene.add(this.group);
   }
 
@@ -354,7 +355,7 @@ export class Tower {
   getExplosionParts() {
     const debris = [];
     for (let i = 0; i < 60; i++) {
-      const s = 0.2 + Math.random() * 0.5;
+      const s = 0.12 + Math.random() * 0.28;
       const mat = new THREE.MeshStandardMaterial({
         color: new THREE.Color().setHSL(0.06 + Math.random() * 0.08, 0.7, 0.2 + Math.random() * 0.4),
         roughness: 0.6,
@@ -362,11 +363,11 @@ export class Tower {
       });
       const piece = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), mat);
       piece.position.set(
-        this.group.position.x + (Math.random() - 0.5) * 3,
-        this.group.position.y + 1 + Math.random() * 5,
-        this.group.position.z + (Math.random() - 0.5) * 3
+        this.group.position.x + (Math.random() - 0.5) * 1.8,
+        this.group.position.y + 0.5 + Math.random() * 3.0,
+        this.group.position.z + (Math.random() - 0.5) * 1.8
       );
-      piece.velocity = new THREE.Vector3((Math.random() - 0.5) * 18, Math.random() * 14 + 5, (Math.random() - 0.5) * 18);
+      piece.velocity = new THREE.Vector3((Math.random() - 0.5) * 12, Math.random() * 10 + 4, (Math.random() - 0.5) * 12);
       piece.rotationVelocity = new THREE.Vector3((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
       debris.push(piece);
     }
