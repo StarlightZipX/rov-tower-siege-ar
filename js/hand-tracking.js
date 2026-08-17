@@ -17,6 +17,10 @@ export class HandTracker {
     this.weaponImage = null; // HTMLImageElement
     this.weaponScale = 1.0;
 
+    // Blade Slash Energy Trail
+    this.trailPoints = [];
+    this.trailColor = '#ffd700';
+
     // Motion tracking
     this.lastWristPos = null;
     this.lastFrameTime = 0;
@@ -31,6 +35,10 @@ export class HandTracker {
     this.weaponImage = imageElement;
   }
 
+  setTrailColor(color) {
+    if (color) this.trailColor = color;
+  }
+
   initMediaPipe() {
     this.hands = new window.Hands({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
@@ -38,9 +46,9 @@ export class HandTracker {
 
     this.hands.setOptions({
       maxNumHands: 1, // Only need 1 hand for swinging
-      modelComplexity: 1,
-      minDetectionConfidence: 0.6,
-      minTrackingConfidence: 0.6
+      modelComplexity: 0, // Ultra-fast 60 FPS for mobile
+      minDetectionConfidence: 0.55,
+      minTrackingConfidence: 0.55
     });
 
     this.hands.onResults(this.onResults.bind(this));
@@ -77,10 +85,10 @@ export class HandTracker {
   }
 
   onResults(results) {
-    const w = this.videoElement.videoWidth;
-    const h = this.videoElement.videoHeight;
+    const w = this.videoElement.videoWidth || this.canvasElement.width;
+    const h = this.videoElement.videoHeight || this.canvasElement.height;
     
-    if (this.canvasElement.width !== w) {
+    if (this.canvasElement.width !== w && w > 0) {
       this.canvasElement.width = w;
       this.canvasElement.height = h;
     }
@@ -88,36 +96,46 @@ export class HandTracker {
     this.canvasCtx.save();
     this.canvasCtx.clearRect(0, 0, w, h);
 
+    const now = performance.now();
+
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
       
       // Draw Skeleton lightly
-      window.drawConnectors(this.canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: 'rgba(255,215,0,0.5)', lineWidth: 2 });
+      window.drawConnectors(this.canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: 'rgba(255,215,0,0.4)', lineWidth: 1.5 });
       window.drawLandmarks(this.canvasCtx, landmarks, { color: '#ffffff', lineWidth: 1, radius: 2 });
+
+      // Track index fingertip (landmark 8) for Blade Slash Energy Trail
+      const indexTip = landmarks[8];
+      this.trailPoints.push({
+        x: indexTip.x * w,
+        y: indexTip.y * h,
+        time: now
+      });
 
       // Analyze Motion
       this.analyzeMotion(landmarks);
 
+      // Render Blade Slash Energy Trail
+      this.renderBladeSlashTrail(w, h, now);
+
       // Render Weapon
       if (this.weaponImage) {
-        // Wrist is landmark 0, Index finger base is 5
         const wrist = landmarks[0];
         const indexBase = landmarks[5];
         
         const px = wrist.x * w;
         const py = wrist.y * h;
         
-        // Calculate angle between wrist and index finger to rotate weapon
         const dx = (indexBase.x * w) - px;
         const dy = (indexBase.y * h) - py;
         const angle = Math.atan2(dy, dx);
         
-        // Estimate depth for scaling (distance between wrist and index base)
         const handSize = Math.hypot(dx, dy);
-        const scale = (handSize / 50) * 1.5; // adjust multiplier as needed
+        const scale = (handSize / 50) * 1.5;
 
         this.canvasCtx.translate(px, py);
-        this.canvasCtx.rotate(angle - Math.PI / 4); // Adjust rotation so weapon points up from hand
+        this.canvasCtx.rotate(angle - Math.PI / 4);
         
         const imgW = 200 * scale;
         const imgH = 200 * scale;
@@ -125,8 +143,49 @@ export class HandTracker {
         this.canvasCtx.drawImage(this.weaponImage, -imgW/2, -imgH, imgW, imgH);
       }
     } else {
-      this.lastWristPos = null; // Hand lost
+      this.lastWristPos = null;
     }
+
+    // Clean up expired trail points (> 280ms)
+    this.trailPoints = this.trailPoints.filter(p => now - p.time < 280);
+
+    this.canvasCtx.restore();
+  }
+
+  renderBladeSlashTrail(w, h, now) {
+    if (this.trailPoints.length < 3) return;
+
+    this.canvasCtx.save();
+    this.canvasCtx.lineCap = 'round';
+    this.canvasCtx.lineJoin = 'round';
+    this.canvasCtx.shadowColor = this.trailColor;
+    this.canvasCtx.shadowBlur = 16;
+
+    for (let i = 1; i < this.trailPoints.length; i++) {
+      const pPrev = this.trailPoints[i - 1];
+      const pCurr = this.trailPoints[i];
+      const age = now - pCurr.time;
+      const progress = Math.max(0, 1 - (age / 280)); // 1 (new) to 0 (old)
+
+      this.canvasCtx.beginPath();
+      this.canvasCtx.moveTo(pPrev.x, pPrev.y);
+      this.canvasCtx.lineTo(pCurr.x, pCurr.y);
+
+      this.canvasCtx.strokeStyle = this.trailColor;
+      this.canvasCtx.globalAlpha = progress * 0.9;
+      this.canvasCtx.lineWidth = 4 + progress * 14;
+      this.canvasCtx.stroke();
+
+      // Inner white core
+      this.canvasCtx.beginPath();
+      this.canvasCtx.moveTo(pPrev.x, pPrev.y);
+      this.canvasCtx.lineTo(pCurr.x, pCurr.y);
+      this.canvasCtx.strokeStyle = '#ffffff';
+      this.canvasCtx.globalAlpha = progress * 0.95;
+      this.canvasCtx.lineWidth = 2 + progress * 5;
+      this.canvasCtx.stroke();
+    }
+
     this.canvasCtx.restore();
   }
 

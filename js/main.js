@@ -6,7 +6,7 @@
 import * as THREE from 'three';
 import { Tower }          from './tower.js';
 import { EffectsManager } from './effects.js';
-import { initCamera }     from './camera.js';
+import { initCamera, toggleCamera } from './camera.js';
 import { HandTracker }    from './hand-tracking.js';
 
 /* ==========================================================
@@ -29,6 +29,13 @@ let gameStartTime = 0;
 let lastTimestamp = 0;
 let lastSmokeTime = 0;
 const SMOKE_INTERVAL = 0.28;
+
+// AR Gyroscope & Parallax Tracking
+let targetCamX = 0;
+let targetCamY = 1.0;
+let currentCamX = 0;
+let currentCamY = 1.0;
+let isGyroActive = false;
 
 let currentGold = 500;
 let bonusDamage = 0;
@@ -517,6 +524,30 @@ function init() {
   cacheDOM();
   bindEvents();
   initThreeJS();
+  initGyroscopeAR();
+}
+
+function initGyroscopeAR() {
+  window.addEventListener('deviceorientation', (e) => {
+    if (e.gamma !== null && e.beta !== null) {
+      isGyroActive = true;
+      const clampGamma = Math.max(-40, Math.min(40, e.gamma));
+      const clampBeta = Math.max(15, Math.min(75, e.beta));
+
+      targetCamX = (clampGamma / 40) * 1.5;
+      targetCamY = 1.0 + ((clampBeta - 45) / 30) * 1.0;
+    }
+  });
+
+  // Desktop mouse parallax fallback
+  window.addEventListener('pointermove', (e) => {
+    if (state === GameState.PLAYING && !isGyroActive) {
+      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
+      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
+      targetCamX = normX * 1.2;
+      targetCamY = 1.0 - normY * 0.8;
+    }
+  });
 }
 
 function cacheDOM() {
@@ -531,6 +562,9 @@ function cacheDOM() {
   dom.enterBattleBtn = document.getElementById('enter-battle-btn');
   dom.rerollHeroBtn = document.getElementById('reroll-hero-btn');
   dom.classCards = document.querySelectorAll('.hero-card');
+
+  // Top stats and AR Controls
+  dom.cameraToggleBtn = document.getElementById('camera-toggle-btn');
 
   // Summoning screen elements
   dom.summonRoulettePhase = document.getElementById('summon-roulette-phase');
@@ -642,6 +676,18 @@ function bindEvents() {
   if (dom.rerollHeroBtn) {
     dom.rerollHeroBtn.addEventListener('click', () => {
       startSummoningRitual(selectedClass);
+    });
+  }
+
+  // Camera Toggle (Front / Back AR Camera)
+  if (dom.cameraToggleBtn) {
+    dom.cameraToggleBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      try {
+        cameraStream = await toggleCamera(dom.video, cameraStream);
+      } catch (err) {
+        console.warn('Failed to switch camera', err);
+      }
     });
   }
 
@@ -876,8 +922,11 @@ function selectSkill(skill, slotEl) {
   }
   if (slotEl) slotEl.classList.add('active');
 
-  if (handTracker && skillImages[skill.id]) {
-    handTracker.setWeapon(skillImages[skill.id]);
+  if (handTracker) {
+    if (skillImages[skill.id]) {
+      handTracker.setWeapon(skillImages[skill.id]);
+    }
+    handTracker.setTrailColor(skill.color || '#ffd700');
   }
 }
 
@@ -1843,6 +1892,13 @@ function gameLoop(timestamp) {
         if (hp < 0.5 && hp > 0) effects.createFireParticles(base, hp < 0.25 ? 6 : 2);
       }
     }
+
+    // 3D AR Camera Gyroscope & Parallax Smooth Interpolation
+    currentCamX += (targetCamX - currentCamX) * 0.08;
+    currentCamY += (targetCamY - currentCamY) * 0.08;
+    camera3d.position.x = currentCamX;
+    camera3d.position.y = currentCamY;
+    camera3d.lookAt(0, 0.3, 0);
 
     tower.update(dt);
     effects.update(dt);

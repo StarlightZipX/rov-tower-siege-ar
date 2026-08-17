@@ -24,6 +24,7 @@ export class Tower {
     this.orbitShards = [];
     this.runeRings = [];
     this.energyBeams = [];
+    this.groundDecalMesh = null;
     this.time = 0;
 
     this._buildAAATower();
@@ -35,6 +36,59 @@ export class Tower {
   /* ----------------------------------------------------------
      Procedural Canvas Texture Generators for AAA Realism
      ---------------------------------------------------------- */
+  _createGroundDecalTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 512;
+    const ctx = canvas.getContext('2d');
+
+    // 1. Soft Ambient Occlusion Contact Shadow
+    const shadowGrad = ctx.createRadialGradient(256, 256, 40, 256, 256, 250);
+    shadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.9)');
+    shadowGrad.addColorStop(0.5, 'rgba(5, 10, 25, 0.65)');
+    shadowGrad.addColorStop(0.85, 'rgba(0, 200, 255, 0.15)');
+    shadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = shadowGrad;
+    ctx.fillRect(0, 0, 512, 512);
+
+    // 2. Glowing Antaris Gold & Arcane Magic Circle
+    ctx.strokeStyle = 'rgba(255, 200, 0, 0.7)';
+    ctx.lineWidth = 6;
+    ctx.shadowColor = '#ffbb00';
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    ctx.arc(256, 256, 210, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(0, 220, 255, 0.8)';
+    ctx.lineWidth = 3;
+    ctx.shadowColor = '#00e5ff';
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(256, 256, 175, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // 3. Ancient Runic Glyphs
+    ctx.fillStyle = '#ffe680';
+    ctx.font = 'bold 22px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const runes = ['⚔️', '⚡', '🛡️', '✦', '᚛', '᚜', 'ᚠ', 'ᚢ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚲ'];
+    for (let i = 0; i < runes.length; i++) {
+      const angle = (i / runes.length) * Math.PI * 2;
+      const x = 256 + Math.cos(angle) * 192;
+      const y = 256 + Math.sin(angle) * 192;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle + Math.PI / 2);
+      ctx.fillText(runes[i], 0, 0);
+      ctx.restore();
+    }
+
+    const tex = new THREE.CanvasTexture(canvas);
+    return tex;
+  }
+
   _createStoneTexture() {
     const canvas = document.createElement('canvas');
     canvas.width = 512;
@@ -165,6 +219,20 @@ export class Tower {
       roughness: 0.1,
       metalness: 0.1
     });
+
+    // 0. Antaris Runic Ground Decal & Soft Shadow
+    const groundTex = this._createGroundDecalTexture();
+    const groundMat = new THREE.MeshBasicMaterial({
+      map: groundTex,
+      transparent: true,
+      opacity: 0.92,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    });
+    this.groundDecalMesh = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 7.2), groundMat);
+    this.groundDecalMesh.rotation.x = -Math.PI / 2;
+    this.groundDecalMesh.position.y = 0.01;
+    this.group.add(this.groundDecalMesh);
 
     // 1. Tier 1: Grand Foundation Plinth (Hexagonal Stepped Base)
     this._addPart(new THREE.CylinderGeometry(2.5, 2.9, 0.45, 6), darkStoneMat.clone(), 0, 0.22, 0);
@@ -413,7 +481,12 @@ export class Tower {
       r.mesh.position.y = 6.3 + Math.sin(this.time * 2.2) * 0.18;
     });
 
-    // 4. Hit Shake decay
+    // 4. Ground Decal Gentle Rotation
+    if (this.groundDecalMesh) {
+      this.groundDecalMesh.rotation.z += dt * 0.15;
+    }
+
+    // 5. Hit Shake decay
     if (this.shakeIntensity > 0.008) {
       this.group.position.x = (Math.random() - 0.5) * this.shakeIntensity;
       this.group.position.z = (Math.random() - 0.5) * this.shakeIntensity;

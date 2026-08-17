@@ -2,16 +2,19 @@
  * camera.js — Camera API management for AR background
  */
 
+export let currentFacingMode = 'environment';
+
 /**
  * Initialize the device camera and stream to a <video> element.
- * Prefers the rear-facing (environment) camera for AR.
  * @param {HTMLVideoElement} videoElement
+ * @param {string} [facingMode]
  * @returns {Promise<MediaStream>}
  */
-export async function initCamera(videoElement) {
+export async function initCamera(videoElement, facingMode = currentFacingMode) {
+  currentFacingMode = facingMode;
   const constraints = {
     video: {
-      facingMode: 'environment',
+      facingMode: currentFacingMode,
       width: { ideal: 1920 },
       height: { ideal: 1080 }
     },
@@ -20,6 +23,13 @@ export async function initCamera(videoElement) {
 
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
   videoElement.srcObject = stream;
+
+  // Mirror front camera feed for natural selfie interaction
+  if (currentFacingMode === 'user') {
+    videoElement.style.transform = 'scaleX(-1)';
+  } else {
+    videoElement.style.transform = 'scaleX(1)';
+  }
 
   // Wait for video to actually start playing
   await new Promise((resolve, reject) => {
@@ -31,6 +41,18 @@ export async function initCamera(videoElement) {
   });
 
   return stream;
+}
+
+/**
+ * Toggle between front and rear cameras.
+ * @param {HTMLVideoElement} videoElement
+ * @param {MediaStream} currentStream
+ * @returns {Promise<MediaStream>}
+ */
+export async function toggleCamera(videoElement, currentStream) {
+  stopCamera(currentStream);
+  const nextMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+  return await initCamera(videoElement, nextMode);
 }
 
 /**
