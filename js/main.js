@@ -94,408 +94,408 @@ const HEROES = {
   // ==================== FIGHTER (10 Heroes) ====================
   arthur: {
     id: 'arthur', name: 'ARTHUR', fullName: 'Arthur (อาเธอร์)', classId: 'fighter', role: 'ไฟต์เตอร์ / แทงค์',
-    avatar: '/assets/heroes/arthur.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ดาบแห่งความยุติธรรมจะไม่ปรานีใคร!"',
+    avatar: './assets/heroes/arthur.png', splash: './assets/ui/arthur_card.jpg', quote: '"ดาบแห่งความยุติธรรมจะไม่ปรานีใคร!"',
     skills: [
-      { id: 'arthur_atk', name: 'ดาบแห่งความยุติธรรม', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#ffd700', desc: 'ฟันดาบอัศวินแห่งความยุติธรรม' },
-      { id: 'arthur_s1', name: 'Righteous Fervor', tag: 'ดาบศักดิ์สิทธิ์', icon: '/assets/skills/arthur_s1.png', dmg: 490, color: '#ffb700', desc: 'เร่งความเร็วฟาดดาบศักดิ์สิทธิ์' },
-      { id: 'arthur_s2', name: 'Holy Guard', tag: 'กงจักรดาบ', icon: '/assets/skills/arthur_s2.png', dmg: 430, color: '#ff9900', desc: 'กงจักรดาบหมุนวนรอบตัว' },
-      { id: 'arthur_ult', name: 'Deep Impact', tag: 'ดาบผ่ามิติ', icon: '/assets/skills/arthur_ult.png', dmg: 790, color: '#ff3300', isCrit: true, desc: 'กระโดดฟาดดาบยักษ์ผ่ามิติ' }
+      { id: 'arthur_atk', name: 'ดาบแห่งความยุติธรรม', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#ffd700', desc: 'ฟันดาบอัศวินแห่งความยุติธรรม' },
+      { id: 'arthur_s1', name: 'Righteous Fervor', tag: 'ดาบศักดิ์สิทธิ์', icon: './assets/skills/arthur_s1.png', dmg: 490, color: '#ffb700', desc: 'เร่งความเร็วฟาดดาบศักดิ์สิทธิ์' },
+      { id: 'arthur_s2', name: 'Holy Guard', tag: 'กงจักรดาบ', icon: './assets/skills/arthur_s2.png', dmg: 430, color: '#ff9900', desc: 'กงจักรดาบหมุนวนรอบตัว' },
+      { id: 'arthur_ult', name: 'Deep Impact', tag: 'ดาบผ่ามิติ', icon: './assets/skills/arthur_ult.png', dmg: 790, color: '#ff3300', isCrit: true, desc: 'กระโดดฟาดดาบยักษ์ผ่ามิติ' }
     ]
   },
   lubu: {
     id: 'lubu', name: 'LU BU', fullName: 'Lu Bu (ลิโป้)', classId: 'fighter', role: 'ไฟต์เตอร์ / จอมคน',
-    avatar: '/assets/heroes/lubu.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ใต้หล้านี้ ไม่มีใครกล้าสบตาข้าผู้นี้!"',
+    avatar: './assets/heroes/lubu.png', splash: './assets/ui/arthur_card.jpg', quote: '"ใต้หล้านี้ ไม่มีใครกล้าสบตาข้าผู้นี้!"',
     skills: [
-      { id: 'lubu_atk', name: 'ทวนศึกสะท้านภพ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff5500', desc: 'ฟาดทวนศึกจอมคนสะท้านภพ' },
-      { id: 'lubu_s1', name: 'Red Stallion', tag: 'ทวนสามทิศ', icon: '/assets/skills/red_stallion.png', dmg: 510, color: '#ff4400', desc: 'กระหน่ำแทงทวนศึก 3 จังหวะ' },
-      { id: 'lubu_s2', name: 'Impale', tag: 'หอกผ่าเวหา', icon: '/assets/skills/impale.png', dmg: 470, color: '#ff7700', desc: 'ตวัดหอกคลื่นลมชะลอเป้าหมาย' },
-      { id: 'lubu_ult', name: 'Conqueror', tag: 'เทพสงคราม', icon: '/assets/skills/conqueror.png', dmg: 840, color: '#ff0000', isCrit: true, desc: 'ระเบิดพลังเทพสงครามอมตะฟื้นฟูเลือด' }
+      { id: 'lubu_atk', name: 'ทวนศึกสะท้านภพ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff5500', desc: 'ฟาดทวนศึกจอมคนสะท้านภพ' },
+      { id: 'lubu_s1', name: 'Red Stallion', tag: 'ทวนสามทิศ', icon: './assets/skills/red_stallion.png', dmg: 510, color: '#ff4400', desc: 'กระหน่ำแทงทวนศึก 3 จังหวะ' },
+      { id: 'lubu_s2', name: 'Impale', tag: 'หอกผ่าเวหา', icon: './assets/skills/impale.png', dmg: 470, color: '#ff7700', desc: 'ตวัดหอกคลื่นลมชะลอเป้าหมาย' },
+      { id: 'lubu_ult', name: 'Conqueror', tag: 'เทพสงคราม', icon: './assets/skills/conqueror.png', dmg: 840, color: '#ff0000', isCrit: true, desc: 'ระเบิดพลังเทพสงครามอมตะฟื้นฟูเลือด' }
     ]
   },
   maloch: {
     id: 'maloch', name: 'MALOCH', fullName: 'Maloch (มาลอค)', classId: 'fighter', role: 'ไฟต์เตอร์ / จอมมาร',
-    avatar: '/assets/heroes/maloch.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ขุมนรกจะกลืนกินเจ้าทั้งเป็น!"',
+    avatar: './assets/heroes/maloch.png', splash: './assets/ui/arthur_card.jpg', quote: '"ขุมนรกจะกลืนกินเจ้าทั้งเป็น!"',
     skills: [
-      { id: 'maloch_atk', name: 'ดาบมารโลกันตร์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#ff0033', desc: 'ฟันดาบมารโลกันตร์กวาดศัตรู' },
-      { id: 'maloch_s1', name: 'Cleave', tag: 'ดาบมารฟันกวาด', icon: '/assets/skills/1_cleave.png', dmg: 560, color: '#ff0055', desc: 'ฟันกวาดดาเมจจริงทะลุเกราะ 100%' },
-      { id: 'maloch_s2', name: 'Souleater', tag: 'กรงเล็บดูดวิญญาณ', icon: '/assets/skills/2_souleater.png', dmg: 460, color: '#cc0044', desc: 'กระชากวิญญาณสร้างเกราะหนา' },
-      { id: 'maloch_ult', name: 'Shock', tag: 'กระแทกนรก', icon: '/assets/skills/ult_shock.png', dmg: 860, color: '#cc0033', isCrit: true, desc: 'กระโดดทิ้งดิ่งถล่มป้อม' }
+      { id: 'maloch_atk', name: 'ดาบมารโลกันตร์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 400, color: '#ff0033', desc: 'ฟันดาบมารโลกันตร์กวาดศัตรู' },
+      { id: 'maloch_s1', name: 'Cleave', tag: 'ดาบมารฟันกวาด', icon: './assets/skills/1_cleave.png', dmg: 560, color: '#ff0055', desc: 'ฟันกวาดดาเมจจริงทะลุเกราะ 100%' },
+      { id: 'maloch_s2', name: 'Souleater', tag: 'กรงเล็บดูดวิญญาณ', icon: './assets/skills/2_souleater.png', dmg: 460, color: '#cc0044', desc: 'กระชากวิญญาณสร้างเกราะหนา' },
+      { id: 'maloch_ult', name: 'Shock', tag: 'กระแทกนรก', icon: './assets/skills/ult_shock.png', dmg: 860, color: '#cc0033', isCrit: true, desc: 'กระโดดทิ้งดิ่งถล่มป้อม' }
     ]
   },
   thane: {
     id: 'thane', name: 'THANE', fullName: 'Thane (เธน)', classId: 'fighter', role: 'แทงค์ / ราชาดาบ',
-    avatar: '/assets/heroes/thane.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ดาบเอกซ์คาลิเบอร์จะปกป้องบัลลังก์!"',
+    avatar: './assets/heroes/thane.png', splash: './assets/ui/arthur_card.jpg', quote: '"ดาบเอกซ์คาลิเบอร์จะปกป้องบัลลังก์!"',
     skills: [
-      { id: 'thane_atk', name: 'ดาบเอกซ์คาลิเบอร์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#ffcc00', desc: 'ฟันดาบศักดิ์สิทธิ์เอกซ์คาลิเบอร์' },
-      { id: 'thane_s1', name: 'Valiant Charge', tag: 'พุ่งชนโล่', icon: '/assets/skills/valiant_charge.png', dmg: 480, color: '#ffcc00', desc: 'พุ่งกระแทกโล่อัศวิน' },
-      { id: 'thane_s2', name: 'Avalon', tag: 'ทุบโล่อวาลอน', icon: '/assets/skills/royal_power.png', dmg: 450, color: '#ffee33', desc: 'ทุบพื้นดินยกศัตรูชะลอความเร็ว' },
-      { id: 'thane_ult', name: "King's Glory", tag: 'ดาบยักษ์ผ่าปฐพี', icon: '/assets/skills/king_s_glory.png', dmg: 840, color: '#ffaa00', isCrit: true, desc: 'ฟาดดาบยักษ์เอกซ์คาลิเบอร์สร้างดาเมจจริง' }
+      { id: 'thane_atk', name: 'ดาบเอกซ์คาลิเบอร์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#ffcc00', desc: 'ฟันดาบศักดิ์สิทธิ์เอกซ์คาลิเบอร์' },
+      { id: 'thane_s1', name: 'Valiant Charge', tag: 'พุ่งชนโล่', icon: './assets/skills/valiant_charge.png', dmg: 480, color: '#ffcc00', desc: 'พุ่งกระแทกโล่อัศวิน' },
+      { id: 'thane_s2', name: 'Avalon', tag: 'ทุบโล่อวาลอน', icon: './assets/skills/royal_power.png', dmg: 450, color: '#ffee33', desc: 'ทุบพื้นดินยกศัตรูชะลอความเร็ว' },
+      { id: 'thane_ult', name: "King's Glory", tag: 'ดาบยักษ์ผ่าปฐพี', icon: './assets/skills/king_s_glory.png', dmg: 840, color: '#ffaa00', isCrit: true, desc: 'ฟาดดาบยักษ์เอกซ์คาลิเบอร์สร้างดาเมจจริง' }
     ]
   },
   omen: {
     id: 'omen', name: 'OMEN', fullName: 'Omen (โอเมน)', classId: 'fighter', role: 'ไฟต์เตอร์ / ดาบโซ่สังหาร',
-    avatar: '/assets/heroes/omen.png', splash: '/assets/ui/arthur_card.jpg', quote: '"เสียงโซ่ตรวนคือสัญญาณแห่งความตาย..."',
+    avatar: './assets/heroes/omen.png', splash: './assets/ui/arthur_card.jpg', quote: '"เสียงโซ่ตรวนคือสัญญาณแห่งความตาย..."',
     skills: [
-      { id: 'omen_atk', name: 'ดาบโซ่กระหน่ำฟัน', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff3300', desc: 'ฟันดาบโซ่สะสมแต้มความกระหายเลือด' },
-      { id: 'omen_s1', name: "Death's Beckon", tag: 'กระชากโซ่สังหาร', icon: '/assets/skills/deaths_beckon.png', dmg: 480, color: '#ff5500', desc: 'ตวัดโซ่กระชากเป้าหมายเข้าหาตัว' },
-      { id: 'omen_s2', name: 'Untouchable', tag: 'สะท้อนการโจมตี', icon: '/assets/skills/untouchable.png', dmg: 530, color: '#ff4400', desc: 'เปิดม่านพลังสะท้อนความเสียหาย' },
-      { id: 'omen_ult', name: "Death's Embrace", tag: 'ลานประหาร', icon: '/assets/skills/deaths_embrace.png', dmg: 850, color: '#990022', isCrit: true, desc: 'พุ่งขังตรึงเป้าหมายในลานประหาร' }
+      { id: 'omen_atk', name: 'ดาบโซ่กระหน่ำฟัน', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff3300', desc: 'ฟันดาบโซ่สะสมแต้มความกระหายเลือด' },
+      { id: 'omen_s1', name: "Death's Beckon", tag: 'กระชากโซ่สังหาร', icon: './assets/skills/deaths_beckon.png', dmg: 480, color: '#ff5500', desc: 'ตวัดโซ่กระชากเป้าหมายเข้าหาตัว' },
+      { id: 'omen_s2', name: 'Untouchable', tag: 'สะท้อนการโจมตี', icon: './assets/skills/untouchable.png', dmg: 530, color: '#ff4400', desc: 'เปิดม่านพลังสะท้อนความเสียหาย' },
+      { id: 'omen_ult', name: "Death's Embrace", tag: 'ลานประหาร', icon: './assets/skills/deaths_embrace.png', dmg: 850, color: '#990022', isCrit: true, desc: 'พุ่งขังตรึงเป้าหมายในลานประหาร' }
     ]
   },
   ryoma: {
     id: 'ryoma', name: 'RYOMA', fullName: 'Ryoma (เรียวมะ)', classId: 'fighter', role: 'ไฟต์เตอร์ / ซามูไร',
-    avatar: '/assets/heroes/ryoma.png', splash: '/assets/ui/arthur_card.jpg', quote: '"คมดาบของข้า เร็วกว่าเงา!"',
+    avatar: './assets/heroes/ryoma.png', splash: './assets/ui/arthur_card.jpg', quote: '"คมดาบของข้า เร็วกว่าเงา!"',
     skills: [
-      { id: 'ryoma_atk', name: 'เพลงดาบซามูไร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#00ccff', desc: 'ตวัดดาบซามูไรระยะไกลชะลอเป้าหมาย' },
-      { id: 'ryoma_s1', name: 'Pin Wheel', tag: 'ตวัดดาบม้วนหลัง', icon: '/assets/skills/naginatajutsu.png', dmg: 490, color: '#00ddff', desc: 'กระโดดม้วนตัวตวัดฟันคลื่นลม' },
-      { id: 'ryoma_s2', name: 'Wailing Blade', tag: 'แทงดาบทะลวง', icon: '/assets/skills/wailing_blade.png', dmg: 570, color: '#33ccff', desc: 'แทงดาบคลื่นลมสตั๊นเป้าหมาย' },
-      { id: 'ryoma_ult', name: 'Spectral Spear', tag: 'รัวกระหน่ำคมดาบ', icon: '/assets/skills/naginatajutsu.png', dmg: 850, color: '#0099ff', isCrit: true, desc: 'แทงดาบรัว 4 จังหวะต่อเนื่องฟื้นฟูเลือด' }
+      { id: 'ryoma_atk', name: 'เพลงดาบซามูไร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#00ccff', desc: 'ตวัดดาบซามูไรระยะไกลชะลอเป้าหมาย' },
+      { id: 'ryoma_s1', name: 'Pin Wheel', tag: 'ตวัดดาบม้วนหลัง', icon: './assets/skills/naginatajutsu.png', dmg: 490, color: '#00ddff', desc: 'กระโดดม้วนตัวตวัดฟันคลื่นลม' },
+      { id: 'ryoma_s2', name: 'Wailing Blade', tag: 'แทงดาบทะลวง', icon: './assets/skills/wailing_blade.png', dmg: 570, color: '#33ccff', desc: 'แทงดาบคลื่นลมสตั๊นเป้าหมาย' },
+      { id: 'ryoma_ult', name: 'Spectral Spear', tag: 'รัวกระหน่ำคมดาบ', icon: './assets/skills/naginatajutsu.png', dmg: 850, color: '#0099ff', isCrit: true, desc: 'แทงดาบรัว 4 จังหวะต่อเนื่องฟื้นฟูเลือด' }
     ]
   },
   taara: {
     id: 'taara', name: 'TAARA', fullName: 'Taara (ทาร่า)', classId: 'fighter', role: 'แทงค์ / ค้อนยักษ์',
-    avatar: '/assets/heroes/taara.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ค้อนเหล็กจะบดขยี้ทุกสิ่ง!"',
+    avatar: './assets/heroes/taara.png', splash: './assets/ui/arthur_card.jpg', quote: '"ค้อนเหล็กจะบดขยี้ทุกสิ่ง!"',
     skills: [
-      { id: 'taara_atk', name: 'ค้อนเหล็กทุบพิฆาต', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#ffaa00', desc: 'ฟาดค้อนเหล็กหนักทุบถล่มศัตรู' },
-      { id: 'taara_s1', name: 'Colossal Smash', tag: 'ทุบกระแทกพื้น', icon: '/assets/skills/colossal_smash.png', dmg: 490, color: '#ff8800', desc: 'กระโดดทุบค้อนสะเทือนดิน' },
-      { id: 'taara_s2', name: 'Whirlwind', tag: 'ควงค้อนสว่าน', icon: '/assets/skills/whirlwind.png', dmg: 540, color: '#ff6600', desc: 'ควงค้อนเหล็กหมุนรอบตัว' },
-      { id: 'taara_ult', name: 'Steeled Focus', tag: 'ฟื้นฟูไร้ขีดจำกัด', icon: '/assets/skills/steeled_focus.png', dmg: 800, color: '#ffbb00', desc: 'ฟื้นฟูเลือดและระเบิดพลังวิ่งไว' }
+      { id: 'taara_atk', name: 'ค้อนเหล็กทุบพิฆาต', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#ffaa00', desc: 'ฟาดค้อนเหล็กหนักทุบถล่มศัตรู' },
+      { id: 'taara_s1', name: 'Colossal Smash', tag: 'ทุบกระแทกพื้น', icon: './assets/skills/colossal_smash.png', dmg: 490, color: '#ff8800', desc: 'กระโดดทุบค้อนสะเทือนดิน' },
+      { id: 'taara_s2', name: 'Whirlwind', tag: 'ควงค้อนสว่าน', icon: './assets/skills/whirlwind.png', dmg: 540, color: '#ff6600', desc: 'ควงค้อนเหล็กหมุนรอบตัว' },
+      { id: 'taara_ult', name: 'Steeled Focus', tag: 'ฟื้นฟูไร้ขีดจำกัด', icon: './assets/skills/steeled_focus.png', dmg: 800, color: '#ffbb00', desc: 'ฟื้นฟูเลือดและระเบิดพลังวิ่งไว' }
     ]
   },
   astrid: {
     id: 'astrid', name: 'ASTRID', fullName: 'Astrid (แอสตริด)', classId: 'fighter', role: 'ไฟต์เตอร์ / เพลงดาบเพลิง',
-    avatar: '/assets/heroes/astrid.png', splash: '/assets/ui/arthur_card.jpg', quote: '"เพื่อเกียรติยศแห่งตระกูลโรส!"',
+    avatar: './assets/heroes/astrid.png', splash: './assets/ui/arthur_card.jpg', quote: '"เพื่อเกียรติยศแห่งตระกูลโรส!"',
     skills: [
-      { id: 'astrid_atk', name: 'เพลงดาบแห่งโรส', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff6600', desc: 'ฟันดาบตระกูลโรสรวดเร็ว' },
-      { id: 'astrid_s1', name: 'Spin Slash', tag: 'ฟันดาบหมุนเพลิง', icon: '/assets/skills/spin_slash.png', dmg: 530, color: '#ff5500', desc: 'ตวัดดาบหมุนเพลิงรอบตัว' },
-      { id: 'astrid_s2', name: 'Fearless Charge', tag: 'พุ่งแทงทะลวงเกราะ', icon: '/assets/skills/fearless_charge.png', dmg: 510, color: '#ff7700', desc: 'พุ่งแทงดาบทะลวงลดเกราะเป้าหมาย' },
-      { id: 'astrid_ult', name: 'Dire Blow', tag: 'ดาบอมตะผ่าพิภพ', icon: '/assets/skills/dire_blow.png', dmg: 870, color: '#ff1100', isCrit: true, desc: 'ฟันดาบยักษ์สถานะอมตะดาเมจจริง' }
+      { id: 'astrid_atk', name: 'เพลงดาบแห่งโรส', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff6600', desc: 'ฟันดาบตระกูลโรสรวดเร็ว' },
+      { id: 'astrid_s1', name: 'Spin Slash', tag: 'ฟันดาบหมุนเพลิง', icon: './assets/skills/spin_slash.png', dmg: 530, color: '#ff5500', desc: 'ตวัดดาบหมุนเพลิงรอบตัว' },
+      { id: 'astrid_s2', name: 'Fearless Charge', tag: 'พุ่งแทงทะลวงเกราะ', icon: './assets/skills/fearless_charge.png', dmg: 510, color: '#ff7700', desc: 'พุ่งแทงดาบทะลวงลดเกราะเป้าหมาย' },
+      { id: 'astrid_ult', name: 'Dire Blow', tag: 'ดาบอมตะผ่าพิภพ', icon: './assets/skills/dire_blow.png', dmg: 870, color: '#ff1100', isCrit: true, desc: 'ฟันดาบยักษ์สถานะอมตะดาเมจจริง' }
     ]
   },
   skud: {
     id: 'skud', name: 'SKUD', fullName: 'Skud (สกั๊ด)', classId: 'fighter', role: 'ไฟต์เตอร์ / หมัดเหล็ก',
-    avatar: '/assets/heroes/skud.png', splash: '/assets/ui/arthur_card.jpg', quote: '"หมัดไซบอร์กนี้ ทลายได้แม้แต่ภูผา!"',
+    avatar: './assets/heroes/skud.png', splash: './assets/ui/arthur_card.jpg', quote: '"หมัดไซบอร์กนี้ ทลายได้แม้แต่ภูผา!"',
     skills: [
-      { id: 'skud_atk', name: 'หมัดเหล็กไซบอร์ก', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#ff8800', desc: 'ชกหมัดเหล็กไซบอร์กหนักหน่วง' },
-      { id: 'skud_s1', name: 'Furious Charge', tag: 'หมัดพุ่งชน', icon: '/assets/skills/1_furious_charge.png', dmg: 520, color: '#ff7700', desc: 'พุ่งกระแทกหมัดเหล็กงัดศัตรู' },
-      { id: 'skud_s2', name: 'Power Glove', tag: 'หมัดชาร์จพลังยักษ์', icon: '/assets/skills/2_power_glove.png', dmg: 580, color: '#ff5500', desc: 'ชาร์จหมัดยักษ์ระเบิดพลังถล่มป้อม' },
-      { id: 'skud_ult', name: 'Wild Beast Fury', tag: 'หมัดคลั่งระเบิดปฐพี', icon: '/assets/skills/ult_wild_beast_fury.png', dmg: 860, color: '#ff2200', isCrit: true, desc: 'เหวี่ยงหมัดคลั่งหมุนฟาดกระเด็นรอบทิศ' }
+      { id: 'skud_atk', name: 'หมัดเหล็กไซบอร์ก', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 400, color: '#ff8800', desc: 'ชกหมัดเหล็กไซบอร์กหนักหน่วง' },
+      { id: 'skud_s1', name: 'Furious Charge', tag: 'หมัดพุ่งชน', icon: './assets/skills/1_furious_charge.png', dmg: 520, color: '#ff7700', desc: 'พุ่งกระแทกหมัดเหล็กงัดศัตรู' },
+      { id: 'skud_s2', name: 'Power Glove', tag: 'หมัดชาร์จพลังยักษ์', icon: './assets/skills/2_power_glove.png', dmg: 580, color: '#ff5500', desc: 'ชาร์จหมัดยักษ์ระเบิดพลังถล่มป้อม' },
+      { id: 'skud_ult', name: 'Wild Beast Fury', tag: 'หมัดคลั่งระเบิดปฐพี', icon: './assets/skills/ult_wild_beast_fury.png', dmg: 860, color: '#ff2200', isCrit: true, desc: 'เหวี่ยงหมัดคลั่งหมุนฟาดกระเด็นรอบทิศ' }
     ]
   },
   airi: {
     id: 'airi', name: 'AIRI', fullName: 'Airi (ไอริ)', classId: 'fighter', role: 'ไฟต์เตอร์ / นินจามังกร',
-    avatar: '/assets/heroes/airi.png', splash: '/assets/ui/arthur_card.jpg', quote: '"พลังมังกรสถิตอยู่ในคมดาบ!"',
+    avatar: './assets/heroes/airi.png', splash: './assets/ui/arthur_card.jpg', quote: '"พลังมังกรสถิตอยู่ในคมดาบ!"',
     skills: [
-      { id: 'airi_atk', name: 'ดาบนินจามังกร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#00e5ff', desc: 'ฟันดาบคู่นินจามังกรลดคูลดาวน์' },
-      { id: 'airi_s1', name: 'Spin', tag: 'ดาวกระจายมังกร', icon: '/assets/skills/spin.png', dmg: 490, color: '#00ffcc', desc: 'ขว้างดาวกระจายมังกรสตั๊น' },
-      { id: 'airi_s2', name: 'Shadow', tag: 'พุ่งเงาดาบ 3 จังหวะ', icon: '/assets/skills/shadow.png', dmg: 530, color: '#00e5ff', desc: 'พุ่งตวัดดาบ 3 จังหวะต่อเนื่อง' },
-      { id: 'airi_ult', name: 'Dragon Blade', tag: 'มังกรสะบัดคม', icon: '/assets/skills/dragon.png', dmg: 870, color: '#00ffff', isCrit: true, desc: 'ปลดปล่อยมังกรสร้างดาเมจจริง' }
+      { id: 'airi_atk', name: 'ดาบนินจามังกร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#00e5ff', desc: 'ฟันดาบคู่นินจามังกรลดคูลดาวน์' },
+      { id: 'airi_s1', name: 'Spin', tag: 'ดาวกระจายมังกร', icon: './assets/skills/spin.png', dmg: 490, color: '#00ffcc', desc: 'ขว้างดาวกระจายมังกรสตั๊น' },
+      { id: 'airi_s2', name: 'Shadow', tag: 'พุ่งเงาดาบ 3 จังหวะ', icon: './assets/skills/shadow.png', dmg: 530, color: '#00e5ff', desc: 'พุ่งตวัดดาบ 3 จังหวะต่อเนื่อง' },
+      { id: 'airi_ult', name: 'Dragon Blade', tag: 'มังกรสะบัดคม', icon: './assets/skills/dragon.png', dmg: 870, color: '#00ffff', isCrit: true, desc: 'ปลดปล่อยมังกรสร้างดาเมจจริง' }
     ]
   },
 
   // ==================== MAGE (10 Heroes) ====================
   krixi: {
     id: 'krixi', name: 'KRIXI', fullName: 'Krixi (คริกซี่)', classId: 'mage', role: 'เมจ / พลังเวท',
-    avatar: '/assets/heroes/krixi.png', splash: '/assets/ui/krixi_card.jpg', quote: '"สายลมและผีเสื้อจะปกป้องป่าแห่งนี้!"',
+    avatar: './assets/heroes/krixi.png', splash: './assets/ui/krixi_card.jpg', quote: '"สายลมและผีเสื้อจะปกป้องป่าแห่งนี้!"',
     skills: [
-      { id: 'krixi_atk', name: 'เวทมนตร์ผีเสื้อ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#33ddff', desc: 'ยิงละอองเวทผีเสื้อ' },
-      { id: 'krixi_s1', name: 'Mischief', tag: 'คลื่นผีเสื้อ', icon: '/assets/skills/krixi_s1.png', dmg: 520, color: '#33ccff', desc: 'ปล่อยฝูงผีเสื้อระเบิดใส่ป้อม' },
-      { id: 'krixi_s2', name: "Nature's Wrath", tag: 'พายุดอกไม้', icon: '/assets/skills/krixi_s2.png', dmg: 460, color: '#66ff66', desc: 'พายุบุปผายกเป้าหมาย' },
-      { id: 'krixi_ult', name: 'Moonfall', tag: 'ฝนดาวตกผีเสื้อ', icon: '/assets/skills/krixi_ult.png', dmg: 850, color: '#cc66ff', desc: 'ฝนดาวตกผีเสื้อถล่มป้อม' }
+      { id: 'krixi_atk', name: 'เวทมนตร์ผีเสื้อ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#33ddff', desc: 'ยิงละอองเวทผีเสื้อ' },
+      { id: 'krixi_s1', name: 'Mischief', tag: 'คลื่นผีเสื้อ', icon: './assets/skills/krixi_s1.png', dmg: 520, color: '#33ccff', desc: 'ปล่อยฝูงผีเสื้อระเบิดใส่ป้อม' },
+      { id: 'krixi_s2', name: "Nature's Wrath", tag: 'พายุดอกไม้', icon: './assets/skills/krixi_s2.png', dmg: 460, color: '#66ff66', desc: 'พายุบุปผายกเป้าหมาย' },
+      { id: 'krixi_ult', name: 'Moonfall', tag: 'ฝนดาวตกผีเสื้อ', icon: './assets/skills/krixi_ult.png', dmg: 850, color: '#cc66ff', desc: 'ฝนดาวตกผีเสื้อถล่มป้อม' }
     ]
   },
   veera: {
     id: 'veera', name: 'VEERA', fullName: 'Veera (วีร่า)', classId: 'mage', role: 'เมจ / เจ้าเสน่ห์',
-    avatar: '/assets/heroes/veera.png', splash: '/assets/ui/krixi_card.jpg', quote: '"ยินดีต้อนรับสู่ห้วงนิทราอันมืดมิด..."',
+    avatar: './assets/heroes/veera.png', splash: './assets/ui/krixi_card.jpg', quote: '"ยินดีต้อนรับสู่ห้วงนิทราอันมืดมิด..."',
     skills: [
-      { id: 'veera_atk', name: 'เวทมนตร์ราตรี', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#dd00ff', desc: 'ยิงลูกแก้วมนตราปีศาจราตรี' },
-      { id: 'veera_s1', name: 'Hell Bat', tag: 'ค้างคาวโลกันตร์', icon: '/assets/skills/hell_bat.png', dmg: 540, color: '#cc00ff', desc: 'ปล่อยค้างคาวเพลิงโลกันตร์' },
-      { id: 'veera_s2', name: 'Kisses', tag: 'จุมพิตเสน่ห์', icon: '/assets/skills/come_hither.png', dmg: 490, color: '#ff66cc', desc: 'ส่งจุมพิตหัวใจสตั๊นเป้าหมาย' },
-      { id: 'veera_ult', name: 'Little Bats', tag: 'ฝูงค้างคาวสังหาร', icon: '/assets/skills/come_hither.png', dmg: 870, color: '#ff00aa', isCrit: true, desc: 'กระหน่ำค้างคาวปีศาจ 5 ตัวรวด' }
+      { id: 'veera_atk', name: 'เวทมนตร์ราตรี', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#dd00ff', desc: 'ยิงลูกแก้วมนตราปีศาจราตรี' },
+      { id: 'veera_s1', name: 'Hell Bat', tag: 'ค้างคาวโลกันตร์', icon: './assets/skills/hell_bat.png', dmg: 540, color: '#cc00ff', desc: 'ปล่อยค้างคาวเพลิงโลกันตร์' },
+      { id: 'veera_s2', name: 'Kisses', tag: 'จุมพิตเสน่ห์', icon: './assets/skills/come_hither.png', dmg: 490, color: '#ff66cc', desc: 'ส่งจุมพิตหัวใจสตั๊นเป้าหมาย' },
+      { id: 'veera_ult', name: 'Little Bats', tag: 'ฝูงค้างคาวสังหาร', icon: './assets/skills/come_hither.png', dmg: 870, color: '#ff00aa', isCrit: true, desc: 'กระหน่ำค้างคาวปีศาจ 5 ตัวรวด' }
     ]
   },
   natalya: {
     id: 'natalya', name: 'NATALYA', fullName: 'Natalya (นาตาเลีย)', classId: 'mage', role: 'เมจ / ลำแสงพิษ',
-    avatar: '/assets/heroes/natalya.png', splash: '/assets/ui/krixi_card.jpg', quote: '"วิญญาณของพวกเจ้า จะเป็นอาหารของอสูร!"',
+    avatar: './assets/heroes/natalya.png', splash: './assets/ui/krixi_card.jpg', quote: '"วิญญาณของพวกเจ้า จะเป็นอาหารของอสูร!"',
     skills: [
-      { id: 'nat_atk', name: 'เพลิงมรกตสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#00ff77', desc: 'ยิงลูกไฟเพลิงมรกตสังหาร' },
-      { id: 'nat_s1', name: 'Arcane Spirits', tag: 'ภูติวิญญาณสังหาร', icon: '/assets/skills/1_arcane_spirits.png', dmg: 550, color: '#00ff88', desc: 'ยิงภูติวิญญาณเพลิงมรกต 5 ดวง' },
-      { id: 'nat_s2', name: 'Arcane Nova', tag: 'วงเวทพิษระเบิด', icon: '/assets/skills/2_arcane_nova.png', dmg: 510, color: '#33ffaa', desc: 'ปล่อยลูกบอลเวทระเบิดสตั๊นลดสปีด' },
-      { id: 'nat_ult', name: 'Lethal Rays', tag: 'ลำแสงอสูรทำลายล้าง', icon: '/assets/skills/ult_lethal_rays.png', dmg: 890, color: '#00ffaa', isCrit: true, desc: 'ยิงลำแสงเลเซอร์ทำลายล้างทะลวงป้อม' }
+      { id: 'nat_atk', name: 'เพลิงมรกตสังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#00ff77', desc: 'ยิงลูกไฟเพลิงมรกตสังหาร' },
+      { id: 'nat_s1', name: 'Arcane Spirits', tag: 'ภูติวิญญาณสังหาร', icon: './assets/skills/1_arcane_spirits.png', dmg: 550, color: '#00ff88', desc: 'ยิงภูติวิญญาณเพลิงมรกต 5 ดวง' },
+      { id: 'nat_s2', name: 'Arcane Nova', tag: 'วงเวทพิษระเบิด', icon: './assets/skills/2_arcane_nova.png', dmg: 510, color: '#33ffaa', desc: 'ปล่อยลูกบอลเวทระเบิดสตั๊นลดสปีด' },
+      { id: 'nat_ult', name: 'Lethal Rays', tag: 'ลำแสงอสูรทำลายล้าง', icon: './assets/skills/ult_lethal_rays.png', dmg: 890, color: '#00ffaa', isCrit: true, desc: 'ยิงลำแสงเลเซอร์ทำลายล้างทะลวงป้อม' }
     ]
   },
   liliana: {
     id: 'liliana', name: 'LILIANA', fullName: 'Liliana (ลิเลียน่า)', classId: 'mage', role: 'เมจ / จิ้งจอกเก้าหาง',
-    avatar: '/assets/heroes/liliana.png', splash: '/assets/ui/krixi_card.jpg', quote: '"มนุษย์ช่างน่าสนใจ แต่ก็เปราะบางเหลือเกิน..."',
+    avatar: './assets/heroes/liliana.png', splash: './assets/ui/krixi_card.jpg', quote: '"มนุษย์ช่างน่าสนใจ แต่ก็เปราะบางเหลือเกิน..."',
     skills: [
-      { id: 'lili_atk', name: 'ลูกแก้วเก้าหาง', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#ff66aa', desc: 'ยิงลูกแก้ววิญญาณจิ้งจอก' },
-      { id: 'lili_s1', name: 'Shining Light', tag: 'แสงจิ้งจอกเบ่งบาน', icon: '/assets/skills/shining_light.png', dmg: 530, color: '#ff77bb', desc: 'กางวงเวทแสงจิ้งจอกระเบิด' },
-      { id: 'lili_s2', name: 'Blinding Light', tag: 'ประกายแสงลวงตา', icon: '/assets/skills/blinding_light.png', dmg: 500, color: '#ff99cc', desc: 'ยิงกระสุนแสงจิ้งจอกสตั๊น' },
-      { id: 'lili_ult', name: 'Fox Form', tag: 'แปลงร่างเก้าหาง', icon: '/assets/skills/fox_form.png', dmg: 860, color: '#ff33aa', isCrit: true, desc: 'กลายร่างจิ้งจอกเก้าหางปล่อยบอลวิญญาณ' }
+      { id: 'lili_atk', name: 'ลูกแก้วเก้าหาง', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#ff66aa', desc: 'ยิงลูกแก้ววิญญาณจิ้งจอก' },
+      { id: 'lili_s1', name: 'Shining Light', tag: 'แสงจิ้งจอกเบ่งบาน', icon: './assets/skills/shining_light.png', dmg: 530, color: '#ff77bb', desc: 'กางวงเวทแสงจิ้งจอกระเบิด' },
+      { id: 'lili_s2', name: 'Blinding Light', tag: 'ประกายแสงลวงตา', icon: './assets/skills/blinding_light.png', dmg: 500, color: '#ff99cc', desc: 'ยิงกระสุนแสงจิ้งจอกสตั๊น' },
+      { id: 'lili_ult', name: 'Fox Form', tag: 'แปลงร่างเก้าหาง', icon: './assets/skills/fox_form.png', dmg: 860, color: '#ff33aa', isCrit: true, desc: 'กลายร่างจิ้งจอกเก้าหางปล่อยบอลวิญญาณ' }
     ]
   },
   tulen: {
     id: 'tulen', name: 'TULEN', fullName: 'Tulen (ทูเลน)', classId: 'mage', role: 'เมจ / สายฟ้าเทพ',
-    avatar: '/assets/heroes/tulen.png', splash: '/assets/ui/krixi_card.jpg', quote: '"สายฟ้าของข้า จะพิพากษาพวกเจ้า!"',
+    avatar: './assets/heroes/tulen.png', splash: './assets/ui/krixi_card.jpg', quote: '"สายฟ้าของข้า จะพิพากษาพวกเจ้า!"',
     skills: [
-      { id: 'tulen_atk', name: 'กระสุนสายฟ้าเทวะ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#fff000', desc: 'ยิงกระสุนสายฟ้าเทวะ' },
-      { id: 'tulen_s1', name: 'Ion Blaster', tag: 'กระสุนแสงสายฟ้า', icon: '/assets/skills/lightning_strike.png', dmg: 530, color: '#ffee00', desc: 'ยิงกระสุนแสงสายฟ้า 3 แฉก' },
-      { id: 'tulen_s2', name: 'Lightning Strike', tag: 'วาร์ปสายฟ้า', icon: '/assets/skills/lightning_strike.png', dmg: 510, color: '#ffea00', desc: 'วาร์ปทิ้งรอยสายฟ้าช็อตป้อม' },
-      { id: 'tulen_ult', name: 'Thunderbird', tag: 'วิหคสายฟ้าพิฆาต', icon: '/assets/skills/thunderbird.png', dmg: 900, color: '#ffff00', isCrit: true, desc: 'ยิงวิหคสายฟ้าปิดฉาก' }
+      { id: 'tulen_atk', name: 'กระสุนสายฟ้าเทวะ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#fff000', desc: 'ยิงกระสุนสายฟ้าเทวะ' },
+      { id: 'tulen_s1', name: 'Ion Blaster', tag: 'กระสุนแสงสายฟ้า', icon: './assets/skills/lightning_strike.png', dmg: 530, color: '#ffee00', desc: 'ยิงกระสุนแสงสายฟ้า 3 แฉก' },
+      { id: 'tulen_s2', name: 'Lightning Strike', tag: 'วาร์ปสายฟ้า', icon: './assets/skills/lightning_strike.png', dmg: 510, color: '#ffea00', desc: 'วาร์ปทิ้งรอยสายฟ้าช็อตป้อม' },
+      { id: 'tulen_ult', name: 'Thunderbird', tag: 'วิหคสายฟ้าพิฆาต', icon: './assets/skills/thunderbird.png', dmg: 900, color: '#ffff00', isCrit: true, desc: 'ยิงวิหคสายฟ้าปิดฉาก' }
     ]
   },
   raz: {
     id: 'raz', name: 'RAZ', fullName: 'Raz (ราซ)', classId: 'mage', role: 'เมจ / หมัดมวยเพลิง',
-    avatar: '/assets/heroes/raz.png', splash: '/assets/ui/krixi_card.jpg', quote: '"หมัดเพลิงของข้า ร้อนแรงเกินต้านทาน!"',
+    avatar: './assets/heroes/raz.png', splash: './assets/ui/krixi_card.jpg', quote: '"หมัดเพลิงของข้า ร้อนแรงเกินต้านทาน!"',
     skills: [
-      { id: 'raz_atk', name: 'หมัดมวยเพลิงโลกันตร์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff6600', desc: 'ชกหมัดมวยเพลิงผลักเป้าหมาย' },
-      { id: 'raz_s1', name: 'Rising Uppercut', tag: 'หมัดมวยทะยานฟ้า', icon: '/assets/skills/1_rising_uppercut.png', dmg: 540, color: '#ff7700', desc: 'พุ่งปล่อยหมัดอัปเปอร์คัตเสยลอย' },
-      { id: 'raz_s2', name: 'Power Surge', tag: 'ปล่อยหมัดคลื่นเพลิง', icon: '/assets/skills/2_power_surge.png', dmg: 590, color: '#ff5500', desc: 'ปล่อยหมัดคลื่นเพลิงระยะไกลลดเกราะเวท' },
-      { id: 'raz_ult', name: 'Explosive K.O.', tag: 'หมัดอสูรเพลิงสังหาร', icon: '/assets/skills/ult_explosive_ko.png', dmg: 880, color: '#ff2200', isCrit: true, desc: 'พุ่งกระแทกหมัดเพลิงยักษ์ผลักกระจาย' }
+      { id: 'raz_atk', name: 'หมัดมวยเพลิงโลกันตร์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff6600', desc: 'ชกหมัดมวยเพลิงผลักเป้าหมาย' },
+      { id: 'raz_s1', name: 'Rising Uppercut', tag: 'หมัดมวยทะยานฟ้า', icon: './assets/skills/1_rising_uppercut.png', dmg: 540, color: '#ff7700', desc: 'พุ่งปล่อยหมัดอัปเปอร์คัตเสยลอย' },
+      { id: 'raz_s2', name: 'Power Surge', tag: 'ปล่อยหมัดคลื่นเพลิง', icon: './assets/skills/2_power_surge.png', dmg: 590, color: '#ff5500', desc: 'ปล่อยหมัดคลื่นเพลิงระยะไกลลดเกราะเวท' },
+      { id: 'raz_ult', name: 'Explosive K.O.', tag: 'หมัดอสูรเพลิงสังหาร', icon: './assets/skills/ult_explosive_ko.png', dmg: 880, color: '#ff2200', isCrit: true, desc: 'พุ่งกระแทกหมัดเพลิงยักษ์ผลักกระจาย' }
     ]
   },
   lauriel: {
     id: 'lauriel', name: 'LAURIEL', fullName: 'Lauriel (ลอเรียล)', classId: 'mage', role: 'เมจ / ทูตสวรรค์',
-    avatar: '/assets/heroes/lauriel.png', splash: '/assets/ui/krixi_card.jpg', quote: '"แสงศักดิ์สิทธิ์จะชำระล้างมลทินทั้งปวง"',
+    avatar: './assets/heroes/lauriel.png', splash: './assets/ui/krixi_card.jpg', quote: '"แสงศักดิ์สิทธิ์จะชำระล้างมลทินทั้งปวง"',
     skills: [
-      { id: 'lau_atk', name: 'ประกายแสงสวรรค์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#ffffff', desc: 'ยิงละอองแสงชำระล้างมลทิน' },
-      { id: 'lau_s1', name: 'Holy Light', tag: 'กากบาทศักดิ์สิทธิ์', icon: '/assets/skills/holy_light.png', dmg: 540, color: '#ffffff', desc: 'วาดกากบาทแสงทูตสวรรค์ระเบิด' },
-      { id: 'lau_s2', name: 'Blink', tag: 'ปีกศักดิ์สิทธิ์', icon: '/assets/skills/holy_light.png', dmg: 510, color: '#eef8ff', desc: 'พุ่งวาร์ปปล่อยลูกแก้วแสง 3 ลูก' },
-      { id: 'lau_ult', name: 'Smite', tag: 'วงเวทพิพากษา', icon: '/assets/skills/holy_light.png', dmg: 850, color: '#fff0a0', isCrit: true, desc: 'กางวงเวทศักดิ์สิทธิ์ลดคูลดาวน์สแปมสกิล' }
+      { id: 'lau_atk', name: 'ประกายแสงสวรรค์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#ffffff', desc: 'ยิงละอองแสงชำระล้างมลทิน' },
+      { id: 'lau_s1', name: 'Holy Light', tag: 'กากบาทศักดิ์สิทธิ์', icon: './assets/skills/holy_light.png', dmg: 540, color: '#ffffff', desc: 'วาดกากบาทแสงทูตสวรรค์ระเบิด' },
+      { id: 'lau_s2', name: 'Blink', tag: 'ปีกศักดิ์สิทธิ์', icon: './assets/skills/holy_light.png', dmg: 510, color: '#eef8ff', desc: 'พุ่งวาร์ปปล่อยลูกแก้วแสง 3 ลูก' },
+      { id: 'lau_ult', name: 'Smite', tag: 'วงเวทพิพากษา', icon: './assets/skills/holy_light.png', dmg: 850, color: '#fff0a0', isCrit: true, desc: 'กางวงเวทศักดิ์สิทธิ์ลดคูลดาวน์สแปมสกิล' }
     ]
   },
   kahlii: {
     id: 'kahlii', name: 'KAHLII', fullName: 'Kahlii (กาลี)', classId: 'mage', role: 'เมจ / เทพีกาลี',
-    avatar: '/assets/heroes/kahlii.png', splash: '/assets/ui/krixi_card.jpg', quote: '"วิญญาณแค้นพันเล่ม จะทิ่มแทงพวกเจ้า!"',
+    avatar: './assets/heroes/kahlii.png', splash: './assets/ui/krixi_card.jpg', quote: '"วิญญาณแค้นพันเล่ม จะทิ่มแทงพวกเจ้า!"',
     skills: [
-      { id: 'kah_atk', name: 'วิญญาณแค้นทิ่มแทง', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#aa00ff', desc: 'ยิงลำแสงวิญญาณทะลุเป้าหมาย' },
-      { id: 'kah_s1', name: 'Damnation', tag: 'วงเวทสาปแช่ง', icon: '/assets/skills/damnation.png', dmg: 520, color: '#bb00ff', desc: 'สร้างอาณาเขตเวทสาปดูดเลือด' },
-      { id: 'kah_s2', name: 'Incorporeal', tag: 'ม่านวิญญาณเร่งสปีด', icon: '/assets/skills/incorporeal.png', dmg: 470, color: '#cc33ff', desc: 'เปิดโล่วิญญาณเพิ่มพลังเวทและความเร็ว' },
-      { id: 'kah_ult', name: 'Ethering Ghost', tag: 'วิญญาณพันเล่ม', icon: '/assets/skills/damnation.png', dmg: 880, color: '#9900ff', isCrit: true, desc: 'สาดดาบวิญญาณพันเล่มถล่มป้อม' }
+      { id: 'kah_atk', name: 'วิญญาณแค้นทิ่มแทง', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#aa00ff', desc: 'ยิงลำแสงวิญญาณทะลุเป้าหมาย' },
+      { id: 'kah_s1', name: 'Damnation', tag: 'วงเวทสาปแช่ง', icon: './assets/skills/damnation.png', dmg: 520, color: '#bb00ff', desc: 'สร้างอาณาเขตเวทสาปดูดเลือด' },
+      { id: 'kah_s2', name: 'Incorporeal', tag: 'ม่านวิญญาณเร่งสปีด', icon: './assets/skills/incorporeal.png', dmg: 470, color: '#cc33ff', desc: 'เปิดโล่วิญญาณเพิ่มพลังเวทและความเร็ว' },
+      { id: 'kah_ult', name: 'Ethering Ghost', tag: 'วิญญาณพันเล่ม', icon: './assets/skills/damnation.png', dmg: 880, color: '#9900ff', isCrit: true, desc: 'สาดดาบวิญญาณพันเล่มถล่มป้อม' }
     ]
   },
   ilumia: {
     id: 'ilumia', name: 'ILUMIA', fullName: 'Ilumia (อิลูเมีย)', classId: 'mage', role: 'เมจ / เทพีสูงสุดแห่งวิหาร',
-    avatar: '/assets/heroes/ilumia.png', splash: '/assets/ui/krixi_card.jpg', quote: '"ยอมจำนนต่อแสงแห่งเทพเสียเถิด!"',
+    avatar: './assets/heroes/ilumia.png', splash: './assets/ui/krixi_card.jpg', quote: '"ยอมจำนนต่อแสงแห่งเทพเสียเถิด!"',
     skills: [
-      { id: 'ilu_atk', name: 'ลำแสงเทวะสูงสุด', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#ffea66', desc: 'ยิงลำแสงเทวะแห่งวิหารศักดิ์สิทธิ์' },
-      { id: 'ilu_s1', name: 'Divine Light', tag: 'ประกายแสงศักดิ์สิทธิ์', icon: '/assets/skills/1_divine_light.png', dmg: 530, color: '#fff275', desc: 'ยิงลูกแก้วแสงศักดิ์สิทธิ์ระเบิดสตั๊น' },
-      { id: 'ilu_s2', name: 'Banish', tag: 'คลื่นผลักศักดิ์สิทธิ์', icon: '/assets/skills/2_banish.png', dmg: 510, color: '#ffe600', desc: 'ผลักศัตรูรอบตัวด้วยแสงศักดิ์สิทธิ์' },
-      { id: 'ilu_ult', name: 'Cataclysm', tag: 'สายฟ้าสวรรค์', icon: '/assets/skills/ult_cataclysm.png', dmg: 900, color: '#ffcc00', isCrit: true, desc: 'ทิ้งสายฟ้าสวรรค์ถล่มทั่วแมพสตั๊น' }
+      { id: 'ilu_atk', name: 'ลำแสงเทวะสูงสุด', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#ffea66', desc: 'ยิงลำแสงเทวะแห่งวิหารศักดิ์สิทธิ์' },
+      { id: 'ilu_s1', name: 'Divine Light', tag: 'ประกายแสงศักดิ์สิทธิ์', icon: './assets/skills/1_divine_light.png', dmg: 530, color: '#fff275', desc: 'ยิงลูกแก้วแสงศักดิ์สิทธิ์ระเบิดสตั๊น' },
+      { id: 'ilu_s2', name: 'Banish', tag: 'คลื่นผลักศักดิ์สิทธิ์', icon: './assets/skills/2_banish.png', dmg: 510, color: '#ffe600', desc: 'ผลักศัตรูรอบตัวด้วยแสงศักดิ์สิทธิ์' },
+      { id: 'ilu_ult', name: 'Cataclysm', tag: 'สายฟ้าสวรรค์', icon: './assets/skills/ult_cataclysm.png', dmg: 900, color: '#ffcc00', isCrit: true, desc: 'ทิ้งสายฟ้าสวรรค์ถล่มทั่วแมพสตั๊น' }
     ]
   },
   aleister: {
     id: 'aleister', name: 'ALEISTER', fullName: 'Aleister (อเลสเตอร์)', classId: 'mage', role: 'เมจ / บงการวิญญาณ',
-    avatar: '/assets/heroes/aleister.png', splash: '/assets/ui/krixi_card.jpg', quote: '"เวทมนตร์ของข้า จะทรมานพวกเจ้าช้าๆ..."',
+    avatar: './assets/heroes/aleister.png', splash: './assets/ui/krixi_card.jpg', quote: '"เวทมนตร์ของข้า จะทรมานพวกเจ้าช้าๆ..."',
     skills: [
-      { id: 'ale_atk', name: 'กระแสไฟฟ้าทมิฬ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 370, color: '#00ff88', desc: 'ยิงกระแสไฟฟ้าเวทมนตร์ทมิฬ' },
-      { id: 'ale_s1', name: 'Magic Barrier', tag: 'กำแพงสายฟ้าสตั๊น', icon: '/assets/skills/magic_barrier.png', dmg: 510, color: '#00ff99', desc: 'กางกำแพงสายฟ้าสตั๊นเป้าหมาย' },
-      { id: 'ale_s2', name: 'Matrix of Woe', tag: 'วงเวทสายฟ้าทรมาน', icon: '/assets/skills/matrix_of_woe.png', dmg: 540, color: '#00e676', desc: 'สร้างอาณาเขตเวทสายฟ้าช็อตต่อเนื่อง' },
-      { id: 'ale_ult', name: 'Magic Prison', tag: 'คุกเวทพันธนาการ', icon: '/assets/skills/magic_prison.png', dmg: 850, color: '#00cc77', isCrit: true, desc: 'ร่ายคุกเวทพันธนาการตรึงป้อม' }
+      { id: 'ale_atk', name: 'กระแสไฟฟ้าทมิฬ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 370, color: '#00ff88', desc: 'ยิงกระแสไฟฟ้าเวทมนตร์ทมิฬ' },
+      { id: 'ale_s1', name: 'Magic Barrier', tag: 'กำแพงสายฟ้าสตั๊น', icon: './assets/skills/magic_barrier.png', dmg: 510, color: '#00ff99', desc: 'กางกำแพงสายฟ้าสตั๊นเป้าหมาย' },
+      { id: 'ale_s2', name: 'Matrix of Woe', tag: 'วงเวทสายฟ้าทรมาน', icon: './assets/skills/matrix_of_woe.png', dmg: 540, color: '#00e676', desc: 'สร้างอาณาเขตเวทสายฟ้าช็อตต่อเนื่อง' },
+      { id: 'ale_ult', name: 'Magic Prison', tag: 'คุกเวทพันธนาการ', icon: './assets/skills/magic_prison.png', dmg: 850, color: '#00cc77', isCrit: true, desc: 'ร่ายคุกเวทพันธนาการตรึงป้อม' }
     ]
   },
 
   // ==================== ASSASSIN (10 Heroes) ====================
   butterfly: {
     id: 'butterfly', name: 'BUTTERFLY', fullName: 'Butterfly (บัตเตอร์ฟลาย)', classId: 'assassin', role: 'แอสซาซิน / ล้วง',
-    avatar: '/assets/heroes/butterfly.png', splash: '/assets/ui/arthur_card.jpg', quote: '"งานนี้เสร็จเร็วเหมือนพริบตาเดียว!"',
+    avatar: './assets/heroes/butterfly.png', splash: './assets/ui/arthur_card.jpg', quote: '"งานนี้เสร็จเร็วเหมือนพริบตาเดียว!"',
     skills: [
-      { id: 'bf_atk', name: 'ดาบคู่สังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff2255', desc: 'ฟันดาบคู่สังหารรวดเร็ว' },
-      { id: 'bf_s1', name: 'Whirlwind', tag: 'เพลงดาบหมุน', icon: '/assets/skills/whirlwind.png', dmg: 520, color: '#ff3366', desc: 'เพลงดาบหมุนว่องไวเพิ่มความเร็ว' },
-      { id: 'bf_s2', name: 'Sword Projectile', tag: 'ตวัดดาบสังหาร', icon: '/assets/skills/flying_daggers.png', dmg: 550, color: '#ff1155', desc: 'ตวัดดาบแทงคลื่นลมชะลอเป้าหมาย' },
-      { id: 'bf_ult', name: 'Backstab', tag: 'ลอบสังหารด้านหลัง', icon: '/assets/skills/backstab.png', dmg: 860, color: '#ff0033', isCrit: true, desc: 'พุ่งแทงลอบสังหารคริติคอลรุนแรง' }
+      { id: 'bf_atk', name: 'ดาบคู่สังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff2255', desc: 'ฟันดาบคู่สังหารรวดเร็ว' },
+      { id: 'bf_s1', name: 'Whirlwind', tag: 'เพลงดาบหมุน', icon: './assets/skills/whirlwind.png', dmg: 520, color: '#ff3366', desc: 'เพลงดาบหมุนว่องไวเพิ่มความเร็ว' },
+      { id: 'bf_s2', name: 'Sword Projectile', tag: 'ตวัดดาบสังหาร', icon: './assets/skills/flying_daggers.png', dmg: 550, color: '#ff1155', desc: 'ตวัดดาบแทงคลื่นลมชะลอเป้าหมาย' },
+      { id: 'bf_ult', name: 'Backstab', tag: 'ลอบสังหารด้านหลัง', icon: './assets/skills/backstab.png', dmg: 860, color: '#ff0033', isCrit: true, desc: 'พุ่งแทงลอบสังหารคริติคอลรุนแรง' }
     ]
   },
   nakroth: {
     id: 'nakroth', name: 'NAKROTH', fullName: 'Nakroth (นาครอส)', classId: 'assassin', role: 'แอสซาซิน / ยมทูต',
-    avatar: '/assets/heroes/nakroth.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ยมทูตมาทวงวิญญาณของเจ้าแล้ว!"',
+    avatar: './assets/heroes/nakroth.png', splash: './assets/ui/arthur_card.jpg', quote: '"ยมทูตมาทวงวิญญาณของเจ้าแล้ว!"',
     skills: [
-      { id: 'nak_atk', name: 'เคียวคู่ยมทูต', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ฟันเคียวคู่ยมทูตงัดเป้าหมายลอย' },
-      { id: 'nak_s1', name: 'Dread Judge', tag: 'พุ่งฟาดเคียวลอย', icon: '/assets/skills/dread_judge.png', dmg: 520, color: '#ff9900', desc: 'พุ่งฟาดเคียวคู่งัดเป้าหมายลอย' },
-      { id: 'nak_s2', name: 'Double Whammy', tag: 'ถอยหลังตวัดฟัน', icon: '/assets/skills/double_whammy.png', dmg: 570, color: '#ffaa00', desc: 'พุ่งถอยหลังตวัดฟันเสริมพลัง' },
-      { id: 'nak_ult', name: "Judgement's Blade", tag: 'เพลงเคียวพิพากษา', icon: '/assets/skills/judgement_s_blade.png', dmg: 870, color: '#ff6600', isCrit: true, desc: 'รัวเคียวคู่สถานะต้านสถานะ' }
+      { id: 'nak_atk', name: 'เคียวคู่ยมทูต', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ฟันเคียวคู่ยมทูตงัดเป้าหมายลอย' },
+      { id: 'nak_s1', name: 'Dread Judge', tag: 'พุ่งฟาดเคียวลอย', icon: './assets/skills/dread_judge.png', dmg: 520, color: '#ff9900', desc: 'พุ่งฟาดเคียวคู่งัดเป้าหมายลอย' },
+      { id: 'nak_s2', name: 'Double Whammy', tag: 'ถอยหลังตวัดฟัน', icon: './assets/skills/double_whammy.png', dmg: 570, color: '#ffaa00', desc: 'พุ่งถอยหลังตวัดฟันเสริมพลัง' },
+      { id: 'nak_ult', name: "Judgement's Blade", tag: 'เพลงเคียวพิพากษา', icon: './assets/skills/judgement_s_blade.png', dmg: 870, color: '#ff6600', isCrit: true, desc: 'รัวเคียวคู่สถานะต้านสถานะ' }
     ]
   },
   murad: {
     id: 'murad', name: 'MURAD', fullName: 'Murad (มูราด)', classId: 'assassin', role: 'แอสซาซิน / กาลเวลา',
-    avatar: '/assets/heroes/murad.png', splash: '/assets/ui/arthur_card.jpg', quote: '"กาลเวลาอยู่ในการควบคุมของข้า!"',
+    avatar: './assets/heroes/murad.png', splash: './assets/ui/arthur_card.jpg', quote: '"กาลเวลาอยู่ในการควบคุมของข้า!"',
     skills: [
-      { id: 'mur_atk', name: 'ดาบแห่งทรายกาลเวลา', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ffcc00', desc: 'ฟันดาบทรายสะสมแต้มปลดล็อกอัลติ' },
-      { id: 'mur_s1', name: 'Thorn of Time', tag: 'พุ่งแทงมิติเงา', icon: '/assets/skills/1_thorn_of_time.png', dmg: 530, color: '#ffdd00', desc: 'พุ่งแทงทิ้งเงาย้อนเวลากลับ' },
-      { id: 'mur_s2', name: 'Another Dimension', tag: 'มิติหลบภัยลดเกราะ', icon: '/assets/skills/2_another_dimension.png', dmg: 550, color: '#ffcc00', desc: 'กางอาณาเขตทรายลดเกราะศัตรู' },
-      { id: 'mur_ult', name: 'Temporal Turbulence', tag: 'เพลงดาบไร้เงา', icon: '/assets/skills/ult_temporal_turbulence.png', dmg: 900, color: '#ff9900', isCrit: true, desc: 'ฟันเพลงดาบไร้เงาอมตะ 5 จังหวะ' }
+      { id: 'mur_atk', name: 'ดาบแห่งทรายกาลเวลา', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ffcc00', desc: 'ฟันดาบทรายสะสมแต้มปลดล็อกอัลติ' },
+      { id: 'mur_s1', name: 'Thorn of Time', tag: 'พุ่งแทงมิติเงา', icon: './assets/skills/1_thorn_of_time.png', dmg: 530, color: '#ffdd00', desc: 'พุ่งแทงทิ้งเงาย้อนเวลากลับ' },
+      { id: 'mur_s2', name: 'Another Dimension', tag: 'มิติหลบภัยลดเกราะ', icon: './assets/skills/2_another_dimension.png', dmg: 550, color: '#ffcc00', desc: 'กางอาณาเขตทรายลดเกราะศัตรู' },
+      { id: 'mur_ult', name: 'Temporal Turbulence', tag: 'เพลงดาบไร้เงา', icon: './assets/skills/ult_temporal_turbulence.png', dmg: 900, color: '#ff9900', isCrit: true, desc: 'ฟันเพลงดาบไร้เงาอมตะ 5 จังหวะ' }
     ]
   },
   kriknak: {
     id: 'kriknak', name: 'KRIKNAK', fullName: 'Kriknak (คริกแนก)', classId: 'assassin', role: 'แอสซาซิน / ด้วงมรณะ',
-    avatar: '/assets/heroes/kriknak.png', splash: '/assets/ui/arthur_card.jpg', quote: '"เสียงบินของข้า คือจุดจบของเจ้า!"',
+    avatar: './assets/heroes/kriknak.png', splash: './assets/ui/arthur_card.jpg', quote: '"เสียงบินของข้า คือจุดจบของเจ้า!"',
     skills: [
-      { id: 'krik_atk', name: 'ก้ามด้วงมรณะ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#33ff33', desc: 'ฟาดก้ามด้วงยักษ์เสริมดาเมจพิษ' },
-      { id: 'krik_s1', name: 'Terrifying Plague', tag: 'แมลงพิษกัดกร่อน', icon: '/assets/skills/1_terrifying_plague.png', dmg: 540, color: '#33ff33', desc: 'ปล่อยแมลงพิษแปะเป้าหมาย' },
-      { id: 'krik_s2', name: 'Horn Rush', tag: 'พุ่งเสียบเขากระแทก', icon: '/assets/skills/2_horn_rush.png', dmg: 520, color: '#66ff66', desc: 'พุ่งแทงเขาฟื้นฟูเลือด' },
-      { id: 'krik_ult', name: 'Drone Drop', tag: 'ดิ่งมรณะทลายป้อม', icon: '/assets/skills/ult_drone_drop.png', dmg: 900, color: '#00cc00', isCrit: true, desc: 'บินทะยานทิ้งดิ่งระเบิดดาเมจมหาศาล' }
+      { id: 'krik_atk', name: 'ก้ามด้วงมรณะ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#33ff33', desc: 'ฟาดก้ามด้วงยักษ์เสริมดาเมจพิษ' },
+      { id: 'krik_s1', name: 'Terrifying Plague', tag: 'แมลงพิษกัดกร่อน', icon: './assets/skills/1_terrifying_plague.png', dmg: 540, color: '#33ff33', desc: 'ปล่อยแมลงพิษแปะเป้าหมาย' },
+      { id: 'krik_s2', name: 'Horn Rush', tag: 'พุ่งเสียบเขากระแทก', icon: './assets/skills/2_horn_rush.png', dmg: 520, color: '#66ff66', desc: 'พุ่งแทงเขาฟื้นฟูเลือด' },
+      { id: 'krik_ult', name: 'Drone Drop', tag: 'ดิ่งมรณะทลายป้อม', icon: './assets/skills/ult_drone_drop.png', dmg: 900, color: '#00cc00', isCrit: true, desc: 'บินทะยานทิ้งดิ่งระเบิดดาเมจมหาศาล' }
     ]
   },
   zill: {
     id: 'zill', name: 'ZILL', fullName: 'Zill (ซิล)', classId: 'assassin', role: 'แอสซาซิน / สายลมมรณะ',
-    avatar: '/assets/heroes/zill.png', splash: '/assets/ui/arthur_card.jpg', quote: '"สายลมจะเฉือนร่างเจ้าเป็นชิ้นๆ!"',
+    avatar: './assets/heroes/zill.png', splash: './assets/ui/arthur_card.jpg', quote: '"สายลมจะเฉือนร่างเจ้าเป็นชิ้นๆ!"',
     skills: [
-      { id: 'zill_atk', name: 'เคียวลมกรดสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 380, color: '#00ffff', desc: 'ฟันเคียวลมกรดเวทมนตร์' },
-      { id: 'zill_s1', name: 'Wind Blade', tag: 'มีดสายลมแฝด', icon: '/assets/skills/1_wind_blade.png', dmg: 530, color: '#00ffff', desc: 'ขว้างเคียวลมกรดไป-กลับ' },
-      { id: 'zill_s2', name: 'Wind Shift', tag: 'วาร์ปสายลม', icon: '/assets/skills/2_wind_shift.png', dmg: 510, color: '#33ffff', desc: 'วาร์ปตามทิศทางพร้อมสร้างดาเมจ' },
-      { id: 'zill_ult', name: 'Dust Devil', tag: 'พายุหมุนเชือดเฉือน', icon: '/assets/skills/ult_tornado.png', dmg: 880, color: '#00e5ff', isCrit: true, desc: 'กลายร่างเป็นพายุหมุนเชือดเฉือนอมตะ' }
+      { id: 'zill_atk', name: 'เคียวลมกรดสังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 380, color: '#00ffff', desc: 'ฟันเคียวลมกรดเวทมนตร์' },
+      { id: 'zill_s1', name: 'Wind Blade', tag: 'มีดสายลมแฝด', icon: './assets/skills/1_wind_blade.png', dmg: 530, color: '#00ffff', desc: 'ขว้างเคียวลมกรดไป-กลับ' },
+      { id: 'zill_s2', name: 'Wind Shift', tag: 'วาร์ปสายลม', icon: './assets/skills/2_wind_shift.png', dmg: 510, color: '#33ffff', desc: 'วาร์ปตามทิศทางพร้อมสร้างดาเมจ' },
+      { id: 'zill_ult', name: 'Dust Devil', tag: 'พายุหมุนเชือดเฉือน', icon: './assets/skills/ult_tornado.png', dmg: 880, color: '#00e5ff', isCrit: true, desc: 'กลายร่างเป็นพายุหมุนเชือดเฉือนอมตะ' }
     ]
   },
   wukong: {
     id: 'wukong', name: 'WUKONG', fullName: 'Wukong (วูคอง)', classId: 'assassin', role: 'แอสซาซิน / พญาวานร',
-    avatar: '/assets/heroes/wukong.png', splash: '/assets/ui/arthur_card.jpg', quote: '"กระบองทองของข้า หนักหมื่นกิโล!"',
+    avatar: './assets/heroes/wukong.png', splash: './assets/ui/arthur_card.jpg', quote: '"กระบองทองของข้า หนักหมื่นกิโล!"',
     skills: [
-      { id: 'wu_atk', name: 'ฟาดกระบองทองคำ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 410, color: '#ffaa00', desc: 'ฟาดกระบองทองคำคริติคอลทรงพลัง' },
-      { id: 'wu_s1', name: 'Shadow Clone', tag: 'แยกร่างล่องหน', icon: '/assets/skills/1_shadow_clone.png', dmg: 550, color: '#ffaa00', desc: 'ล่องหนพร้อมทิ้งร่างแยกไว้' },
-      { id: 'wu_s2', name: 'Great Sage', tag: 'กระโดดควงกระบอง', icon: '/assets/skills/2_great_sage.png', dmg: 530, color: '#ffbb00', desc: 'กระโดดเพิ่มเกราะและเสริมดาเมจคริ' },
-      { id: 'wu_ult', name: 'Monkey Business', tag: 'กระบองยักษ์สะท้านฟ้า', icon: '/assets/skills/monkey_business.png', dmg: 920, color: '#ff6600', isCrit: true, desc: 'ฟาดกระบองยักษ์สตั๊นคริติคอลสูงสุด' }
+      { id: 'wu_atk', name: 'ฟาดกระบองทองคำ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 410, color: '#ffaa00', desc: 'ฟาดกระบองทองคำคริติคอลทรงพลัง' },
+      { id: 'wu_s1', name: 'Shadow Clone', tag: 'แยกร่างล่องหน', icon: './assets/skills/1_shadow_clone.png', dmg: 550, color: '#ffaa00', desc: 'ล่องหนพร้อมทิ้งร่างแยกไว้' },
+      { id: 'wu_s2', name: 'Great Sage', tag: 'กระโดดควงกระบอง', icon: './assets/skills/2_great_sage.png', dmg: 530, color: '#ffbb00', desc: 'กระโดดเพิ่มเกราะและเสริมดาเมจคริ' },
+      { id: 'wu_ult', name: 'Monkey Business', tag: 'กระบองยักษ์สะท้านฟ้า', icon: './assets/skills/monkey_business.png', dmg: 920, color: '#ff6600', isCrit: true, desc: 'ฟาดกระบองยักษ์สตั๊นคริติคอลสูงสุด' }
     ]
   },
   kaine: {
     id: 'kaine', name: 'KAINE', fullName: 'Kaine (เคน)', classId: 'assassin', role: 'แอสซาซิน / นักล่าโลหิต',
-    avatar: '/assets/heroes/kaine.png', splash: '/assets/ui/arthur_card.jpg', quote: '"รัตติกาลนี้... จะถูกย้อมด้วยสีเลือด!"',
+    avatar: './assets/heroes/kaine.png', splash: './assets/ui/arthur_card.jpg', quote: '"รัตติกาลนี้... จะถูกย้อมด้วยสีเลือด!"',
     skills: [
-      { id: 'kaine_atk', name: 'กรงเล็บโลหิตสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#cc0022', desc: 'ตวัดกรงเล็บแวมไพร์สังหารรวดเร็ว' },
-      { id: 'kaine_s1', name: 'Whirlwind of Blood', tag: 'กรงเล็บโลหิตฟันกวาด', icon: '/assets/skills/kaine_s1.png', dmg: 550, color: '#dd0033', desc: 'ตวัดกรงเล็บโลหิตสร้างความเสียหายรอบตัว 2 จังหวะ' },
-      { id: 'kaine_s2', name: 'Bloodied Judgment', tag: 'มีดบินผนึกวิญญาณ', icon: '/assets/skills/kaine_s2.png', dmg: 530, color: '#ff0044', desc: 'ขว้างมีดบินผนึกวิญญาณสตั๊นและฟื้นฟูเลือด' },
-      { id: 'kaine_ult', name: 'Sanguinary End', tag: 'พุ่งสังหารปลิดชีพ', icon: '/assets/skills/kaine_ult.png', dmg: 910, color: '#990022', isCrit: true, desc: 'พุ่งทะลวงสังหารในสถานะกายทองไร้เป้าหมาย' }
+      { id: 'kaine_atk', name: 'กรงเล็บโลหิตสังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 400, color: '#cc0022', desc: 'ตวัดกรงเล็บแวมไพร์สังหารรวดเร็ว' },
+      { id: 'kaine_s1', name: 'Whirlwind of Blood', tag: 'กรงเล็บโลหิตฟันกวาด', icon: './assets/skills/kaine_s1.png', dmg: 550, color: '#dd0033', desc: 'ตวัดกรงเล็บโลหิตสร้างความเสียหายรอบตัว 2 จังหวะ' },
+      { id: 'kaine_s2', name: 'Bloodied Judgment', tag: 'มีดบินผนึกวิญญาณ', icon: './assets/skills/kaine_s2.png', dmg: 530, color: '#ff0044', desc: 'ขว้างมีดบินผนึกวิญญาณสตั๊นและฟื้นฟูเลือด' },
+      { id: 'kaine_ult', name: 'Sanguinary End', tag: 'พุ่งสังหารปลิดชีพ', icon: './assets/skills/kaine_ult.png', dmg: 910, color: '#990022', isCrit: true, desc: 'พุ่งทะลวงสังหารในสถานะกายทองไร้เป้าหมาย' }
     ]
   },
   quillen: {
     id: 'quillen', name: 'QUILLEN', fullName: 'Quillen (ควิลเลน)', classId: 'assassin', role: 'แอสซาซิน / ดาบคู่หลังสังหาร',
-    avatar: '/assets/heroes/quillen.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ดาบของข้า เสียบข้างหลังเสมอ!"',
+    avatar: './assets/heroes/quillen.png', splash: './assets/ui/arthur_card.jpg', quote: '"ดาบของข้า เสียบข้างหลังเสมอ!"',
     skills: [
-      { id: 'quil_atk', name: 'มีดสั้นลอบสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#ff0033', desc: 'แทงมีดสั้นคริติคอล 100% จากด้านหลัง' },
-      { id: 'quil_s1', name: 'Decimate', tag: 'มีดคู่แทงหลัง', icon: '/assets/skills/butterfly_s1.png', dmg: 560, color: '#ff0044', desc: 'แทงมีดคู่ด้านหลังคริติคอล 100%' },
-      { id: 'quil_s2', name: 'Mutilate', tag: 'แทงทะลวงจุดตาย', icon: '/assets/skills/whirlwind.png', dmg: 530, color: '#ff2255', desc: 'พุ่งแทงดาบทะลวงลดสปีดศัตรู' },
-      { id: 'quil_ult', name: 'Purification', tag: 'ล่องหนลอบสังหาร', icon: '/assets/skills/butterfly_ult.png', dmg: 900, color: '#cc0033', isCrit: true, desc: 'ล่องหนเร่งความเร็วและฟื้นฟูเลือด' }
+      { id: 'quil_atk', name: 'มีดสั้นลอบสังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 400, color: '#ff0033', desc: 'แทงมีดสั้นคริติคอล 100% จากด้านหลัง' },
+      { id: 'quil_s1', name: 'Decimate', tag: 'มีดคู่แทงหลัง', icon: './assets/skills/butterfly_s1.png', dmg: 560, color: '#ff0044', desc: 'แทงมีดคู่ด้านหลังคริติคอล 100%' },
+      { id: 'quil_s2', name: 'Mutilate', tag: 'แทงทะลวงจุดตาย', icon: './assets/skills/whirlwind.png', dmg: 530, color: '#ff2255', desc: 'พุ่งแทงดาบทะลวงลดสปีดศัตรู' },
+      { id: 'quil_ult', name: 'Purification', tag: 'ล่องหนลอบสังหาร', icon: './assets/skills/butterfly_ult.png', dmg: 900, color: '#cc0033', isCrit: true, desc: 'ล่องหนเร่งความเร็วและฟื้นฟูเลือด' }
     ]
   },
   paine: {
     id: 'paine', name: 'PAINE', fullName: 'Paine (เพน)', classId: 'assassin', role: 'แอสซาซิน / นักดนตรีวิญญาณ',
-    avatar: '/assets/heroes/paine.png', splash: '/assets/ui/krixi_card.jpg', quote: '"บทเพลงนี้ จะบรรเลงในงานศพเจ้า!"',
+    avatar: './assets/heroes/paine.png', splash: './assets/ui/krixi_card.jpg', quote: '"บทเพลงนี้ จะบรรเลงในงานศพเจ้า!"',
     skills: [
-      { id: 'paine_atk', name: 'เคียวโน้ตมรณะ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#cc00ff', desc: 'ตวัดเคียวโน้ตดนตรีเวทมนตร์' },
-      { id: 'paine_s1', name: 'Soul Elegy', tag: 'ถอดจิตวิญญาณ', icon: '/assets/skills/paine_skill_1.png', dmg: 540, color: '#cc00ff', desc: 'ถอดจิตพุ่งทะยานสร้างดาเมจ' },
-      { id: 'paine_s2', name: 'Symphony of Death', tag: 'วงเวทใบ้', icon: '/assets/skills/paine_skill_2.png', dmg: 560, color: '#bb00ee', desc: 'กางวงเวทดนตรีใบ้ศัตรู' },
-      { id: 'paine_ult', name: 'Requiem', tag: 'ทะยานเพลงมรณะ', icon: '/assets/skills/paine_skill_3.png', dmg: 900, color: '#9900cc', isCrit: true, desc: 'พุ่งทะยานข้ามสมรภูมิบรรเลงเพลงมรณะ' }
+      { id: 'paine_atk', name: 'เคียวโน้ตมรณะ', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#cc00ff', desc: 'ตวัดเคียวโน้ตดนตรีเวทมนตร์' },
+      { id: 'paine_s1', name: 'Soul Elegy', tag: 'ถอดจิตวิญญาณ', icon: './assets/skills/paine_skill_1.png', dmg: 540, color: '#cc00ff', desc: 'ถอดจิตพุ่งทะยานสร้างดาเมจ' },
+      { id: 'paine_s2', name: 'Symphony of Death', tag: 'วงเวทใบ้', icon: './assets/skills/paine_skill_2.png', dmg: 560, color: '#bb00ee', desc: 'กางวงเวทดนตรีใบ้ศัตรู' },
+      { id: 'paine_ult', name: 'Requiem', tag: 'ทะยานเพลงมรณะ', icon: './assets/skills/paine_skill_3.png', dmg: 900, color: '#9900cc', isCrit: true, desc: 'พุ่งทะยานข้ามสมรภูมิบรรเลงเพลงมรณะ' }
     ]
   },
   keera: {
     id: 'keera', name: 'KEERA', fullName: 'Keera (คีร่า)', classId: 'assassin', role: 'แอสซาซิน / มนตราแห่งเงา',
-    avatar: '/assets/heroes/keera.png', splash: '/assets/ui/krixi_card.jpg', quote: '"มาเล่นซ่อนแอบในเงามืดกันเถอะ..."',
+    avatar: './assets/heroes/keera.png', splash: './assets/ui/krixi_card.jpg', quote: '"มาเล่นซ่อนแอบในเงามืดกันเถอะ..."',
     skills: [
-      { id: 'keera_atk', name: 'คมมีดมนตราเงา', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff0077', desc: 'ฟันคมมีดมนตราแห่งเงามืด' },
-      { id: 'keera_s1', name: 'Umbral Bloom', tag: 'เงาดูดวิญญาณ', icon: '/assets/skills/ke_s1.png', dmg: 540, color: '#ff33aa', desc: 'ส่งร่างเงาไปเกาะและระเบิดพลัง' },
-      { id: 'keera_s2', name: 'Triangle Maze', tag: 'ค่ายกลสามเหลี่ยม', icon: '/assets/skills/ke_s2.png', dmg: 570, color: '#ff0088', desc: 'สร้างมิติสามเหลี่ยมหลบการโจมตี' },
-      { id: 'keera_ult', name: 'Dark Abyss', tag: 'มนตราทลายกำแพง', icon: '/assets/skills/ke_s3.png', dmg: 880, color: '#ff0066', desc: 'เร่งความเร็วพุ่งทะลุสิ่งกีดขวาง' }
+      { id: 'keera_atk', name: 'คมมีดมนตราเงา', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff0077', desc: 'ฟันคมมีดมนตราแห่งเงามืด' },
+      { id: 'keera_s1', name: 'Umbral Bloom', tag: 'เงาดูดวิญญาณ', icon: './assets/skills/ke_s1.png', dmg: 540, color: '#ff33aa', desc: 'ส่งร่างเงาไปเกาะและระเบิดพลัง' },
+      { id: 'keera_s2', name: 'Triangle Maze', tag: 'ค่ายกลสามเหลี่ยม', icon: './assets/skills/ke_s2.png', dmg: 570, color: '#ff0088', desc: 'สร้างมิติสามเหลี่ยมหลบการโจมตี' },
+      { id: 'keera_ult', name: 'Dark Abyss', tag: 'มนตราทลายกำแพง', icon: './assets/skills/ke_s3.png', dmg: 880, color: '#ff0066', desc: 'เร่งความเร็วพุ่งทะลุสิ่งกีดขวาง' }
     ]
   },
 
   // ==================== MARKSMAN (10 Heroes) ====================
   valhein: {
     id: 'valhein', name: 'VALHEIN', fullName: 'Valhein (แวนเฮล)', classId: 'marksman', role: 'แครี่ / นักล่าปีศาจ',
-    avatar: '/assets/heroes/valhein.png', splash: '/assets/heroes/violet_card.jpg', quote: '"ลูกปืนสีเงินจะชำระล้างความชั่วร้าย!"',
+    avatar: './assets/heroes/valhein.png', splash: './assets/heroes/violet_card.jpg', quote: '"ลูกปืนสีเงินจะชำระล้างความชั่วร้าย!"',
     skills: [
-      { id: 'vh_atk', name: 'กระสุนเวทมนตร์เงิน', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ffd700', desc: 'ยิงกระสุนเงินสุ่มกงจักรพิเศษ' },
-      { id: 'vh_s1', name: 'Bloody Hunt', tag: 'กงจักรเพลิงแดง', icon: '/assets/skills/bloody_hunt.png', dmg: 530, color: '#ff3300', desc: 'ขว้างกงจักรสีแดงระเบิดพลังวิ่งไว' },
-      { id: 'vh_s2', name: 'Curse of Death', tag: 'กงจักรทองสตั๊น', icon: '/assets/skills/curse_of_death.png', dmg: 520, color: '#ffdd33', desc: 'ขว้างกงจักรสีทองสตั๊นเป้าหมาย' },
-      { id: 'vh_ult', name: 'Bullet Storm', tag: 'พายุกระสุนเงิน', icon: '/assets/skills/bullet_storm.png', dmg: 820, color: '#ff8800', desc: 'สาดพายุกระสุนเงิน 6 นัดทะลวงเกราะ' }
+      { id: 'vh_atk', name: 'กระสุนเวทมนตร์เงิน', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ffd700', desc: 'ยิงกระสุนเงินสุ่มกงจักรพิเศษ' },
+      { id: 'vh_s1', name: 'Bloody Hunt', tag: 'กงจักรเพลิงแดง', icon: './assets/skills/bloody_hunt.png', dmg: 530, color: '#ff3300', desc: 'ขว้างกงจักรสีแดงระเบิดพลังวิ่งไว' },
+      { id: 'vh_s2', name: 'Curse of Death', tag: 'กงจักรทองสตั๊น', icon: './assets/skills/curse_of_death.png', dmg: 520, color: '#ffdd33', desc: 'ขว้างกงจักรสีทองสตั๊นเป้าหมาย' },
+      { id: 'vh_ult', name: 'Bullet Storm', tag: 'พายุกระสุนเงิน', icon: './assets/skills/bullet_storm.png', dmg: 820, color: '#ff8800', desc: 'สาดพายุกระสุนเงิน 6 นัดทะลวงเกราะ' }
     ]
   },
   violet: {
     id: 'violet', name: 'VIOLET', fullName: 'Violet (ไวโอเลต)', classId: 'marksman', role: 'แครี่ / มือปืนระห่ำ',
-    avatar: '/assets/heroes/violet.png', splash: '/assets/heroes/violet_card.jpg', quote: '"กระสุนของฉันไม่เคยพลาดเป้า!"',
+    avatar: './assets/heroes/violet.png', splash: './assets/heroes/violet_card.jpg', quote: '"กระสุนของฉันไม่เคยพลาดเป้า!"',
     skills: [
-      { id: 'vio_atk', name: 'ปืนคู่สังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ยิงปืนพกคู่กระสุนสังหาร' },
-      { id: 'vio_s1', name: 'Tactical Fire', tag: 'กลิ้งยิงทรงพลัง', icon: '/assets/skills/violet_s1.png', dmg: 560, color: '#ffaa00', desc: 'กลิ้งยิงเสริมดาเมจระยะไกล' },
-      { id: 'vio_s2', name: 'Fire in the Hole', tag: 'ระเบิดเพลิง', icon: '/assets/skills/violet_s2.png', dmg: 490, color: '#ff4400', desc: 'ขว้างลูกระเบิดเพลิงชะลอศัตรู' },
-      { id: 'vio_ult', name: 'Concussive Rounds', tag: 'ปืนใหญ่สังหาร', icon: '/assets/skills/violet_ult.png', dmg: 850, color: '#ff2200', isCrit: true, desc: 'ยิงปืนใหญ่ระเบิดป้อมรุนแรง' }
+      { id: 'vio_atk', name: 'ปืนคู่สังหาร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ยิงปืนพกคู่กระสุนสังหาร' },
+      { id: 'vio_s1', name: 'Tactical Fire', tag: 'กลิ้งยิงทรงพลัง', icon: './assets/skills/violet_s1.png', dmg: 560, color: '#ffaa00', desc: 'กลิ้งยิงเสริมดาเมจระยะไกล' },
+      { id: 'vio_s2', name: 'Fire in the Hole', tag: 'ระเบิดเพลิง', icon: './assets/skills/violet_s2.png', dmg: 490, color: '#ff4400', desc: 'ขว้างลูกระเบิดเพลิงชะลอศัตรู' },
+      { id: 'vio_ult', name: 'Concussive Rounds', tag: 'ปืนใหญ่สังหาร', icon: './assets/skills/violet_ult.png', dmg: 850, color: '#ff2200', isCrit: true, desc: 'ยิงปืนใหญ่ระเบิดป้อมรุนแรง' }
     ]
   },
   yorn: {
     id: 'yorn', name: 'YORN', fullName: 'Yorn (ยอร์น)', classId: 'marksman', role: 'แครี่ / เทพบุตรธนูสุริยะ',
-    avatar: '/assets/heroes/yorn.png', splash: '/assets/heroes/violet_card.jpg', quote: '"แสงแห่งสุริยัน จะแผดเผาทุกสิ่ง!"',
+    avatar: './assets/heroes/yorn.png', splash: './assets/heroes/violet_card.jpg', quote: '"แสงแห่งสุริยัน จะแผดเผาทุกสิ่ง!"',
     skills: [
-      { id: 'yorn_atk', name: 'ศรสุริยันยิงรัว', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ffee00', desc: 'ยิงศรสุริยันรัวเป็นชุด' },
-      { id: 'yorn_s1', name: 'Explosive Arrow', tag: 'ศรระเบิดสตั๊น', icon: '/assets/skills/explosive_arrow.png', dmg: 530, color: '#ffea00', desc: 'ยิงศรระเบิดสตั๊นป้อม' },
-      { id: 'yorn_s2', name: 'Heavenly Barrage', tag: 'วงเวทศรสุริยัน', icon: '/assets/skills/heavenly_barrage.png', dmg: 550, color: '#ffcc00', desc: 'เรียกวงเวททิ้งฝนศรสุริยะ' },
-      { id: 'yorn_ult', name: 'Heart Shot', tag: 'ศรสุริยันทะลวงมิติ', icon: '/assets/skills/heart_shot.png', dmg: 890, color: '#ff9900', isCrit: true, desc: 'ยิงศรยักษ์ทะลุข้ามสมรภูมิ' }
+      { id: 'yorn_atk', name: 'ศรสุริยันยิงรัว', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ffee00', desc: 'ยิงศรสุริยันรัวเป็นชุด' },
+      { id: 'yorn_s1', name: 'Explosive Arrow', tag: 'ศรระเบิดสตั๊น', icon: './assets/skills/explosive_arrow.png', dmg: 530, color: '#ffea00', desc: 'ยิงศรระเบิดสตั๊นป้อม' },
+      { id: 'yorn_s2', name: 'Heavenly Barrage', tag: 'วงเวทศรสุริยัน', icon: './assets/skills/heavenly_barrage.png', dmg: 550, color: '#ffcc00', desc: 'เรียกวงเวททิ้งฝนศรสุริยะ' },
+      { id: 'yorn_ult', name: 'Heart Shot', tag: 'ศรสุริยันทะลวงมิติ', icon: './assets/skills/heart_shot.png', dmg: 890, color: '#ff9900', isCrit: true, desc: 'ยิงศรยักษ์ทะลุข้ามสมรภูมิ' }
     ]
   },
   slimz: {
     id: 'slimz', name: 'SLIMZ', fullName: 'Slimz (สลิมซ์)', classId: 'marksman', role: 'แครี่ / กระต่ายหอกบิน',
-    avatar: '/assets/heroes/slimz.png', splash: '/assets/heroes/violet_card.jpg', quote: '"ใครว่ากระต่ายทำธุรกิจไม่ได้?!"',
+    avatar: './assets/heroes/slimz.png', splash: './assets/heroes/violet_card.jpg', quote: '"ใครว่ากระต่ายทำธุรกิจไม่ได้?!"',
     skills: [
-      { id: 'slim_atk', name: 'ปาหอกกระต่าย', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff9933', desc: 'ปาหอกกระต่ายสร้างดาเมจกระจาย' },
-      { id: 'slim_s1', name: 'Flying Spear', tag: 'หอกบินสตั๊น', icon: '/assets/skills/flying_spear.png', dmg: 570, color: '#ff7700', desc: 'ขว้างหอกบินสตั๊นตามระยะทาง' },
-      { id: 'slim_s2', name: 'Leap of Vitality', tag: 'กระโดดเสริมพลัง', icon: '/assets/skills/leap_of_vitality.png', dmg: 520, color: '#ffaa33', desc: 'กระโดดเพิ่มพลังโจมตี' },
-      { id: 'slim_ult', name: 'Savage Potion', tag: 'น้ำยาบ้าคลั่ง', icon: '/assets/skills/ult_savage_potion.png', dmg: 860, color: '#ff5500', isCrit: true, desc: 'ดื่มน้ำยาเสริมดาเมจตาม % เลือด' }
+      { id: 'slim_atk', name: 'ปาหอกกระต่าย', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff9933', desc: 'ปาหอกกระต่ายสร้างดาเมจกระจาย' },
+      { id: 'slim_s1', name: 'Flying Spear', tag: 'หอกบินสตั๊น', icon: './assets/skills/flying_spear.png', dmg: 570, color: '#ff7700', desc: 'ขว้างหอกบินสตั๊นตามระยะทาง' },
+      { id: 'slim_s2', name: 'Leap of Vitality', tag: 'กระโดดเสริมพลัง', icon: './assets/skills/leap_of_vitality.png', dmg: 520, color: '#ffaa33', desc: 'กระโดดเพิ่มพลังโจมตี' },
+      { id: 'slim_ult', name: 'Savage Potion', tag: 'น้ำยาบ้าคลั่ง', icon: './assets/skills/ult_savage_potion.png', dmg: 860, color: '#ff5500', isCrit: true, desc: 'ดื่มน้ำยาเสริมดาเมจตาม % เลือด' }
     ]
   },
   thorne: {
     id: 'thorne', name: 'THORNE', fullName: 'Thorne (ธอร์น)', classId: 'marksman', role: 'แครี่ / กระสุนเวท 3 สี',
-    avatar: '/assets/heroes/thorne.png', splash: '/assets/heroes/violet_card.jpg', quote: '"กระสุนสีม่วงนี้ จะปลิดชีพเจ้า"',
+    avatar: './assets/heroes/thorne.png', splash: './assets/heroes/violet_card.jpg', quote: '"กระสุนสีม่วงนี้ จะปลิดชีพเจ้า"',
     skills: [
-      { id: 'thorne_atk', name: 'ยิงปืนเวทมนตร์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#cc44ff', desc: 'ยิงกระสุนปืนเวทมนตร์' },
-      { id: 'thorne_s1', name: 'Magic Bullet', tag: 'บรรจุกระสุนมนตรา', icon: '/assets/skills/violet_s1.png', dmg: 560, color: '#cc33ff', desc: 'โหลดกระสุนเวทมนตร์ 3 สีเสริมพลัง' },
-      { id: 'thorne_s2', name: 'Excite', tag: 'กลิ้งสลับโหมดกระสุน', icon: '/assets/skills/violet_s2.png', dmg: 530, color: '#aa22ee', desc: 'กลิ้งตัวรีโหลดกระสุนพิเศษ' },
-      { id: 'thorne_ult', name: 'Dark Matter', tag: 'ระเบิดอนุภาคทมิฬ', icon: '/assets/skills/violet_ult.png', dmg: 890, color: '#9900cc', isCrit: true, desc: 'ยิงระเบิดวงกว้างทำลายล้าง' }
+      { id: 'thorne_atk', name: 'ยิงปืนเวทมนตร์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#cc44ff', desc: 'ยิงกระสุนปืนเวทมนตร์' },
+      { id: 'thorne_s1', name: 'Magic Bullet', tag: 'บรรจุกระสุนมนตรา', icon: './assets/skills/violet_s1.png', dmg: 560, color: '#cc33ff', desc: 'โหลดกระสุนเวทมนตร์ 3 สีเสริมพลัง' },
+      { id: 'thorne_s2', name: 'Excite', tag: 'กลิ้งสลับโหมดกระสุน', icon: './assets/skills/violet_s2.png', dmg: 530, color: '#aa22ee', desc: 'กลิ้งตัวรีโหลดกระสุนพิเศษ' },
+      { id: 'thorne_ult', name: 'Dark Matter', tag: 'ระเบิดอนุภาคทมิฬ', icon: './assets/skills/violet_ult.png', dmg: 890, color: '#9900cc', isCrit: true, desc: 'ยิงระเบิดวงกว้างทำลายล้าง' }
     ]
   },
   fennik: {
     id: 'fennik', name: 'FENNIK', fullName: 'Fennik (เฟนนิค)', classId: 'marksman', role: 'แครี่ / จิ้งจอกสายฟ้าระเบิด',
-    avatar: '/assets/heroes/fennik.png', splash: '/assets/heroes/violet_card.jpg', quote: '"ไม่มีใครวิ่งเร็วกว่าข้าหรอก!"',
+    avatar: './assets/heroes/fennik.png', splash: './assets/heroes/violet_card.jpg', quote: '"ไม่มีใครวิ่งเร็วกว่าข้าหรอก!"',
     skills: [
-      { id: 'fen_atk', name: 'ดาวกระจายสายฟ้า', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ffcc00', desc: 'ขว้างดาวกระจายสายฟ้ารวดเร็ว' },
-      { id: 'fen_s1', name: "Thief's Mark", tag: 'โซ่วงแหวนระเบิด', icon: '/assets/skills/hidden_weapons.png', dmg: 570, color: '#ffbb00', desc: 'แปะวงแหวนระเบิดป้อม 4 จังหวะ' },
-      { id: 'fen_s2', name: 'Rolling Lightning', tag: 'กลิ้งสายฟ้าผ่าดิน', icon: '/assets/skills/rolling_lightning.png', dmg: 530, color: '#ffee00', desc: 'กลิ้งทิ้งรอยสายฟ้าช็อตศัตรู' },
-      { id: 'fen_ult', name: 'Chain Hammer Cyclone', tag: 'กงจักรพายุสายฟ้า', icon: '/assets/skills/chain_hammer_cyclone.png', dmg: 870, color: '#ff8800', isCrit: true, desc: 'ขว้างกงจักรยักษ์หมุนถล่มป้อม' }
+      { id: 'fen_atk', name: 'ดาวกระจายสายฟ้า', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ffcc00', desc: 'ขว้างดาวกระจายสายฟ้ารวดเร็ว' },
+      { id: 'fen_s1', name: "Thief's Mark", tag: 'โซ่วงแหวนระเบิด', icon: './assets/skills/hidden_weapons.png', dmg: 570, color: '#ffbb00', desc: 'แปะวงแหวนระเบิดป้อม 4 จังหวะ' },
+      { id: 'fen_s2', name: 'Rolling Lightning', tag: 'กลิ้งสายฟ้าผ่าดิน', icon: './assets/skills/rolling_lightning.png', dmg: 530, color: '#ffee00', desc: 'กลิ้งทิ้งรอยสายฟ้าช็อตศัตรู' },
+      { id: 'fen_ult', name: 'Chain Hammer Cyclone', tag: 'กงจักรพายุสายฟ้า', icon: './assets/skills/chain_hammer_cyclone.png', dmg: 870, color: '#ff8800', isCrit: true, desc: 'ขว้างกงจักรยักษ์หมุนถล่มป้อม' }
     ]
   },
   moren: {
     id: 'moren', name: 'MOREN', fullName: 'Moren (มอร์เรน)', classId: 'marksman', role: 'แครี่ / ช่างปืนกลเกราะหนา',
-    avatar: '/assets/heroes/moren.png', splash: '/assets/heroes/violet_card.jpg', quote: '"ปืนลูกซองของข้า พร้อมเผาผลาญ!"',
+    avatar: './assets/heroes/moren.png', splash: './assets/heroes/violet_card.jpg', quote: '"ปืนลูกซองของข้า พร้อมเผาผลาญ!"',
     skills: [
-      { id: 'mor_atk', name: 'ปืนลูกซองยักษ์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#ff6600', desc: 'ยิงปืนลูกซองคู่สะสมเกราะป้องกัน' },
-      { id: 'mor_s1', name: 'Tactical Maneuver', tag: 'กระสุนลูกซองคู่', icon: '/assets/skills/tactical_maneuver.png', dmg: 550, color: '#ff6600', desc: 'ยิงลูกซองแฝดเพิ่มเกราะและสปีด' },
-      { id: 'mor_s2', name: 'Impact Barrage', tag: 'ผลักกระแทกกระสุน', icon: '/assets/skills/impact_barrage.png', dmg: 520, color: '#ff8800', desc: 'ยิงปืนผลักศัตรูกระเด็น' },
-      { id: 'mor_ult', name: 'Magnetic Storm', tag: 'พายุสนามแม่เหล็ก', icon: '/assets/skills/magnetic_storm.png', dmg: 850, color: '#ff3300', isCrit: true, desc: 'ปล่อยพายุแม่เหล็กช็อตป้อมต่อเนื่อง' }
+      { id: 'mor_atk', name: 'ปืนลูกซองยักษ์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 400, color: '#ff6600', desc: 'ยิงปืนลูกซองคู่สะสมเกราะป้องกัน' },
+      { id: 'mor_s1', name: 'Tactical Maneuver', tag: 'กระสุนลูกซองคู่', icon: './assets/skills/tactical_maneuver.png', dmg: 550, color: '#ff6600', desc: 'ยิงลูกซองแฝดเพิ่มเกราะและสปีด' },
+      { id: 'mor_s2', name: 'Impact Barrage', tag: 'ผลักกระแทกกระสุน', icon: './assets/skills/impact_barrage.png', dmg: 520, color: '#ff8800', desc: 'ยิงปืนผลักศัตรูกระเด็น' },
+      { id: 'mor_ult', name: 'Magnetic Storm', tag: 'พายุสนามแม่เหล็ก', icon: './assets/skills/magnetic_storm.png', dmg: 850, color: '#ff3300', isCrit: true, desc: 'ปล่อยพายุแม่เหล็กช็อตป้อมต่อเนื่อง' }
     ]
   },
   lindis: {
     id: 'lindis', name: 'LINDIS', fullName: 'Lindis (ลินดิส)', classId: 'marksman', role: 'แครี่ / เทพีจันทรา',
-    avatar: '/assets/heroes/lindis.png', splash: '/assets/heroes/violet_card.jpg', quote: '"แสงจันทราจะนำทางลูกศรของข้า"',
+    avatar: './assets/heroes/lindis.png', splash: './assets/heroes/violet_card.jpg', quote: '"แสงจันทราจะนำทางลูกศรของข้า"',
     skills: [
-      { id: 'lin_atk', name: 'ศรแสงจันทรา', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#aae8ff', desc: 'ยิงศรแสงจันทราต่อเนื่อง' },
-      { id: 'lin_s1', name: 'Piercing Gaze', tag: 'เนตรจันทราเปิดแมพ', icon: '/assets/skills/piercing_gaze.png', dmg: 540, color: '#e0f7ff', desc: 'เปิดเนตรส่องสว่างมองเห็นทั่วบริเวณ' },
-      { id: 'lin_s2', name: 'Entrapment', tag: 'กับดักจันทรา', icon: '/assets/skills/entrapment.png', dmg: 520, color: '#b3e5fc', desc: 'วางกับดักจันทราชะลอความเร็ว' },
-      { id: 'lin_ult', name: 'Lunar Champion', tag: 'วิญญาณจันทราพิฆาต', icon: '/assets/skills/lunar_champion.png', dmg: 870, color: '#80d8ff', isCrit: true, desc: 'ปล่อยวิญญาณจันทรา 5 ดอกรัวกระหน่ำ' }
+      { id: 'lin_atk', name: 'ศรแสงจันทรา', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#aae8ff', desc: 'ยิงศรแสงจันทราต่อเนื่อง' },
+      { id: 'lin_s1', name: 'Piercing Gaze', tag: 'เนตรจันทราเปิดแมพ', icon: './assets/skills/piercing_gaze.png', dmg: 540, color: '#e0f7ff', desc: 'เปิดเนตรส่องสว่างมองเห็นทั่วบริเวณ' },
+      { id: 'lin_s2', name: 'Entrapment', tag: 'กับดักจันทรา', icon: './assets/skills/entrapment.png', dmg: 520, color: '#b3e5fc', desc: 'วางกับดักจันทราชะลอความเร็ว' },
+      { id: 'lin_ult', name: 'Lunar Champion', tag: 'วิญญาณจันทราพิฆาต', icon: './assets/skills/lunar_champion.png', dmg: 870, color: '#80d8ff', isCrit: true, desc: 'ปล่อยวิญญาณจันทรา 5 ดอกรัวกระหน่ำ' }
     ]
   },
   wisp: {
     id: 'wisp', name: 'WISP', fullName: 'Wisp (วิสป์)', classId: 'marksman', role: 'แครี่ / หุ่นยนต์ปืนกลยักษ์',
-    avatar: '/assets/heroes/wisp.png', splash: '/assets/heroes/violet_card.jpg', quote: '"หุ่นยนต์ของหนู พลังทำลายอันดับหนึ่ง!"',
+    avatar: './assets/heroes/wisp.png', splash: './assets/heroes/violet_card.jpg', quote: '"หุ่นยนต์ของหนู พลังทำลายอันดับหนึ่ง!"',
     skills: [
-      { id: 'wisp_atk', name: 'ปืนกลหุ่นยนต์ยักษ์', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ยิงปืนกลหุ่นยนต์สร้างความเสียหายกระจาย' },
-      { id: 'wisp_s1', name: 'Loose Cannon', tag: 'ปืนกลยิงกระจาย', icon: '/assets/skills/loose_cannon.png', dmg: 550, color: '#ff9900', desc: 'กลิ้งเปลี่ยนโหมดปืนกลยิงกระจาย' },
-      { id: 'wisp_s2', name: 'Barrel Bomb', tag: 'กลิ้งถังระเบิด', icon: '/assets/skills/barrel_bomb.png', dmg: 520, color: '#ff7700', desc: 'กลิ้งถังระเบิดสตั๊นเป้าหมาย' },
-      { id: 'wisp_ult', name: 'Shock and Awe', tag: 'ปูพรมระเบิดถล่มป้อม', icon: '/assets/skills/shock_and_awe.png', dmg: 890, color: '#ff3300', isCrit: true, desc: 'ปูพรมระเบิด 6 ระลอกใส่ป้อม' }
+      { id: 'wisp_atk', name: 'ปืนกลหุ่นยนต์ยักษ์', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#ff9900', desc: 'ยิงปืนกลหุ่นยนต์สร้างความเสียหายกระจาย' },
+      { id: 'wisp_s1', name: 'Loose Cannon', tag: 'ปืนกลยิงกระจาย', icon: './assets/skills/loose_cannon.png', dmg: 550, color: '#ff9900', desc: 'กลิ้งเปลี่ยนโหมดปืนกลยิงกระจาย' },
+      { id: 'wisp_s2', name: 'Barrel Bomb', tag: 'กลิ้งถังระเบิด', icon: './assets/skills/barrel_bomb.png', dmg: 520, color: '#ff7700', desc: 'กลิ้งถังระเบิดสตั๊นเป้าหมาย' },
+      { id: 'wisp_ult', name: 'Shock and Awe', tag: 'ปูพรมระเบิดถล่มป้อม', icon: './assets/skills/shock_and_awe.png', dmg: 890, color: '#ff3300', isCrit: true, desc: 'ปูพรมระเบิด 6 ระลอกใส่ป้อม' }
     ]
   },
   telannas: {
     id: 'telannas', name: 'TEL\'ANNAS', fullName: 'Tel\'Annas (เทลอันนาส)', classId: 'marksman', role: 'แครี่ / ราชินีเอลฟ์แห่งพงไพร',
-    avatar: '/assets/heroes/telannas.png', splash: '/assets/heroes/violet_card.jpg', quote: '"เพื่อปกป้องป่าแห่งมนตรา ข้าจะไม่ยอมถอย!"',
+    avatar: './assets/heroes/telannas.png', splash: './assets/heroes/violet_card.jpg', quote: '"เพื่อปกป้องป่าแห่งมนตรา ข้าจะไม่ยอมถอย!"',
     skills: [
-      { id: 'tel_atk', name: 'ศรเอลฟ์พงไพร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#55ffaa', desc: 'ยิงศรมนตราเอลฟ์แห่งพงไพร' },
-      { id: 'tel_s1', name: 'Eagle Eye', tag: 'เนตรอินทรียิงไกล', icon: '/assets/skills/1_eagle_eye.png', dmg: 570, color: '#66ffcc', desc: 'เพิ่มระยะยิงไกลพิเศษและสร้างเวทผสมกายภาพ' },
-      { id: 'tel_s2', name: 'Penetrating Shot', tag: 'ศรทะลวง 3 ดอก', icon: '/assets/skills/2_penetrating_shot.png', dmg: 530, color: '#33ffaa', desc: 'ยิงศร 3 ดอกชะลอความเร็ว' },
-      { id: 'tel_ult', name: 'Arrow of Chaos', tag: 'ศรมังกรพญายม', icon: '/assets/skills/ult_arrow_of_chaos.png', dmg: 890, color: '#00ffaa', isCrit: true, desc: 'ยิงศรมังกรยักษ์สตั๊นทำลายล้าง' }
+      { id: 'tel_atk', name: 'ศรเอลฟ์พงไพร', tag: 'โจมตีปกติ', icon: './assets/skills/attack.png', dmg: 390, color: '#55ffaa', desc: 'ยิงศรมนตราเอลฟ์แห่งพงไพร' },
+      { id: 'tel_s1', name: 'Eagle Eye', tag: 'เนตรอินทรียิงไกล', icon: './assets/skills/1_eagle_eye.png', dmg: 570, color: '#66ffcc', desc: 'เพิ่มระยะยิงไกลพิเศษและสร้างเวทผสมกายภาพ' },
+      { id: 'tel_s2', name: 'Penetrating Shot', tag: 'ศรทะลวง 3 ดอก', icon: './assets/skills/2_penetrating_shot.png', dmg: 530, color: '#33ffaa', desc: 'ยิงศร 3 ดอกชะลอความเร็ว' },
+      { id: 'tel_ult', name: 'Arrow of Chaos', tag: 'ศรมังกรพญายม', icon: './assets/skills/ult_arrow_of_chaos.png', dmg: 890, color: '#00ffaa', isCrit: true, desc: 'ยิงศรมังกรยักษ์สตั๊นทำลายล้าง' }
     ]
   }
 };
@@ -984,16 +984,16 @@ function initAudio() {
 
 // Authentic Preloaded Audio Clips (RoV / Arena of Valor Real Audio Files)
 const AUDIO_CLIPS = {
-  welcome: new Audio('/assets/audio/welcome.ogg'),
-  victory: new Audio('/assets/audio/victory.ogg'),
-  defeat: new Audio('/assets/audio/defeat.ogg'),
-  first_blood: new Audio('/assets/audio/first_blood.ogg'),
-  double_kill: new Audio('/assets/audio/double_kill.ogg'),
-  triple_kill: new Audio('/assets/audio/triple_kill.ogg'),
-  legendary: new Audio('/assets/audio/legendary.ogg'),
-  turret_destroyed: new Audio('/assets/audio/turret_destroyed.ogg'),
-  summon_charge: new Audio('/assets/audio/summon_charge.ogg'),
-  summon_reveal: new Audio('/assets/audio/summon_reveal.ogg')
+  welcome: new Audio('./assets/audio/welcome.ogg'),
+  victory: new Audio('./assets/audio/victory.ogg'),
+  defeat: new Audio('./assets/audio/defeat.ogg'),
+  first_blood: new Audio('./assets/audio/first_blood.ogg'),
+  double_kill: new Audio('./assets/audio/double_kill.ogg'),
+  triple_kill: new Audio('./assets/audio/triple_kill.ogg'),
+  legendary: new Audio('./assets/audio/legendary.ogg'),
+  turret_destroyed: new Audio('./assets/audio/turret_destroyed.ogg'),
+  summon_charge: new Audio('./assets/audio/summon_charge.ogg'),
+  summon_reveal: new Audio('./assets/audio/summon_reveal.ogg')
 };
 
 Object.values(AUDIO_CLIPS).forEach(a => {
