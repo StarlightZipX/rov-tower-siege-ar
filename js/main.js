@@ -1996,8 +1996,11 @@ async function startGame() {
         performSwingAttack();
       };
     }
-    if (selectedSkill && skillImages[selectedSkill.id]) {
-      handTracker.setWeapon(skillImages[selectedSkill.id]);
+    if (selectedSkill) {
+      if (skillImages[selectedSkill.id]) {
+        handTracker.setWeapon(skillImages[selectedSkill.id]);
+      }
+      handTracker.setTrailColor(selectedSkill.color || '#ffd700');
     }
     handTracker.start();
 

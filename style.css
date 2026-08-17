@@ -250,6 +250,7 @@ body, html {
 #game-screen { display: none; position: relative; width: 100%; height: 100%; }
 #camera-feed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
 #game-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+#hands-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
 
 /* ==========================================================
    AI Status Indicator

@@ -93,6 +93,11 @@ export class HandTracker {
       this.canvasElement.height = h;
     }
 
+    // Synchronize canvas mirroring with video feed
+    if (this.canvasElement.style.transform !== this.videoElement.style.transform) {
+      this.canvasElement.style.transform = this.videoElement.style.transform;
+    }
+
     this.canvasCtx.save();
     this.canvasCtx.clearRect(0, 0, w, h);
 
@@ -101,11 +106,10 @@ export class HandTracker {
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
       
-      // Draw Skeleton lightly
-      window.drawConnectors(this.canvasCtx, landmarks, window.HAND_CONNECTIONS, { color: 'rgba(255,215,0,0.4)', lineWidth: 1.5 });
-      window.drawLandmarks(this.canvasCtx, landmarks, { color: '#ffffff', lineWidth: 1, radius: 2 });
+      // 1. Render AAA Cyber/Magitech Hand Skeleton & Joint Nodes
+      this.renderHandSkeleton(landmarks, w, h);
 
-      // Track index fingertip (landmark 8) for Blade Slash Energy Trail
+      // 2. Track index fingertip (landmark 8) for Blade Slash Energy Trail
       const indexTip = landmarks[8];
       this.trailPoints.push({
         x: indexTip.x * w,
@@ -113,13 +117,13 @@ export class HandTracker {
         time: now
       });
 
-      // Analyze Motion
+      // 3. Analyze Motion for Swing detection
       this.analyzeMotion(landmarks);
 
-      // Render Blade Slash Energy Trail
+      // 4. Render Blade Slash Energy Trail
       this.renderBladeSlashTrail(w, h, now);
 
-      // Render Weapon
+      // 5. Render Weapon if equipped
       if (this.weaponImage) {
         const wrist = landmarks[0];
         const indexBase = landmarks[5];
@@ -150,6 +154,111 @@ export class HandTracker {
     this.trailPoints = this.trailPoints.filter(p => now - p.time < 280);
 
     this.canvasCtx.restore();
+  }
+
+  renderHandSkeleton(landmarks, w, h) {
+    const ctx = this.canvasCtx;
+    ctx.save();
+
+    // 21 Hand Landmark bone connections
+    const connections = [
+      // Thumb
+      [0, 1], [1, 2], [2, 3], [3, 4],
+      // Index
+      [0, 5], [5, 6], [6, 7], [7, 8],
+      // Middle
+      [9, 10], [10, 11], [11, 12],
+      // Ring
+      [13, 14], [14, 15], [15, 16],
+      // Pinky
+      [0, 17], [17, 18], [18, 19], [19, 20],
+      // Palm knuckle bridge
+      [5, 9], [9, 13], [13, 17]
+    ];
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const glowColor = this.trailColor || '#00e5ff';
+
+    // --- Pass 1: Outer Magitech Neon Aura Lines ---
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = 14;
+    ctx.strokeStyle = glowColor;
+    ctx.lineWidth = 4.5;
+    ctx.globalAlpha = 0.85;
+
+    ctx.beginPath();
+    for (let k = 0; k < connections.length; k++) {
+      const [i, j] = connections[k];
+      const p1 = landmarks[i];
+      const p2 = landmarks[j];
+      ctx.moveTo(p1.x * w, p1.y * h);
+      ctx.lineTo(p2.x * w, p2.y * h);
+    }
+    ctx.stroke();
+
+    // --- Pass 2: Inner High-Energy White Core ---
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2.0;
+    ctx.globalAlpha = 0.95;
+
+    ctx.beginPath();
+    for (let k = 0; k < connections.length; k++) {
+      const [i, j] = connections[k];
+      const p1 = landmarks[i];
+      const p2 = landmarks[j];
+      ctx.moveTo(p1.x * w, p1.y * h);
+      ctx.lineTo(p2.x * w, p2.y * h);
+    }
+    ctx.stroke();
+
+    // --- Pass 3: Glowing Joint Nodes (21 Points) ---
+    for (let i = 0; i < landmarks.length; i++) {
+      const lm = landmarks[i];
+      const px = lm.x * w;
+      const py = lm.y * h;
+      const isFingertip = [4, 8, 12, 16, 20].includes(i);
+      const isWrist = i === 0;
+
+      const outerR = isFingertip ? 7.5 : (isWrist ? 8.5 : 5.0);
+      const innerR = isFingertip ? 4.0 : (isWrist ? 4.5 : 2.8);
+
+      // Outer Glow Orb
+      ctx.beginPath();
+      ctx.arc(px, py, outerR, 0, Math.PI * 2);
+      ctx.fillStyle = glowColor;
+      ctx.shadowColor = glowColor;
+      ctx.shadowBlur = 15;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+
+      // Inner White Spark Core
+      ctx.beginPath();
+      ctx.arc(px, py, innerR, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1.0;
+      ctx.fill();
+    }
+
+    // --- Pass 4: Palm Center Arcane Crosshair Marker ---
+    const wrist = landmarks[0];
+    const middleBase = landmarks[9];
+    const palmX = ((wrist.x + middleBase.x) / 2) * w;
+    const palmY = ((wrist.y + middleBase.y) / 2) * h;
+
+    ctx.beginPath();
+    ctx.arc(palmX, palmY, 10, 0, Math.PI * 2);
+    ctx.strokeStyle = glowColor;
+    ctx.shadowColor = glowColor;
+    ctx.shadowBlur = 12;
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.8;
+    ctx.stroke();
+
+    ctx.restore();
   }
 
   renderBladeSlashTrail(w, h, now) {
