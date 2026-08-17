@@ -847,6 +847,22 @@ function speakAnnouncer(text) {
   } catch (e) {}
 }
 
+function getSkillArchetype(hero, skill) {
+  const name = ((skill.name || '') + ' ' + (skill.tag || '') + ' ' + (skill.desc || '')).toLowerCase();
+  const hId = hero.id;
+
+  if (hId === 'tulen' || name.includes('สายฟ้า') || name.includes('lightning') || name.includes('thunder')) return 'lightning';
+  if (hId === 'raz' || name.includes('เพลิง') || name.includes('fire') || name.includes('flame')) return 'fire';
+  if (hId === 'zill' || name.includes('ลม') || name.includes('wind') || name.includes('cyclone') || name.includes('tornado')) return 'wind';
+  if (hId === 'kaine' || hId === 'maloch' || name.includes('โลหิต') || name.includes('blood') || name.includes('วิญญาณ')) return 'blood';
+  if (['violet', 'moren', 'thorne', 'wisp', 'valhein'].includes(hId) || name.includes('ปืน') || name.includes('กระสุน') || name.includes('gun') || name.includes('bullet') || name.includes('ระเบิด')) return 'gun';
+  if (['yorn', 'telannas', 'lindis', 'slimz'].includes(hId) || name.includes('ศร') || name.includes('ธนู') || name.includes('หอก') || name.includes('arrow') || name.includes('spear')) return 'bow';
+  if (['taara', 'skud', 'thane', 'wukong'].includes(hId) || name.includes('ค้อน') || name.includes('หมัด') || name.includes('กระบอง') || name.includes('ทุบ') || name.includes('hammer')) return 'heavy';
+  if (hero.classId === 'mage' || name.includes('เวท') || name.includes('มนตรา') || name.includes('magic') || name.includes('ลำแสง')) return 'magic';
+
+  return 'sword';
+}
+
 function playSound(type, opts = {}) {
   if (!audioCtx) return;
   const now = audioCtx.currentTime;
@@ -854,62 +870,150 @@ function playSound(type, opts = {}) {
   if (type === 'attack') {
     const isCrit = opts.isCrit || false;
     const isMagic = opts.isMagic || false;
+    const sType = opts.soundType || 'sword';
 
-    // 1. Blade Slash / Projectile Noise Transient
-    const bufferSize = Math.floor(audioCtx.sampleRate * 0.08);
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+    if (sType === 'gun') {
+      // High-caliber Gunshot Pop & Shell Ejection
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(35, now + 0.12);
+      gain.gain.setValueAtTime(isCrit ? 0.75 : 0.5, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.12);
+
+      const bufSize = Math.floor(audioCtx.sampleRate * 0.09);
+      const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufSize * 0.2));
+      const n = audioCtx.createBufferSource();
+      n.buffer = buf;
+      const f = audioCtx.createBiquadFilter();
+      f.type = 'lowpass';
+      f.frequency.setValueAtTime(1800, now);
+      const ng = audioCtx.createGain();
+      ng.gain.setValueAtTime(0.4, now);
+      ng.gain.exponentialRampToValueAtTime(0.01, now + 0.09);
+      n.connect(f);
+      f.connect(ng);
+      ng.connect(audioCtx.destination);
+      n.start(now);
+
+    } else if (sType === 'bow') {
+      // Bowstring Release Twang & Piercing Whistle
+      const twang = audioCtx.createOscillator();
+      const tg = audioCtx.createGain();
+      twang.type = 'triangle';
+      twang.frequency.setValueAtTime(520, now);
+      twang.frequency.exponentialRampToValueAtTime(180, now + 0.1);
+      tg.gain.setValueAtTime(isCrit ? 0.6 : 0.35, now);
+      tg.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+      twang.connect(tg);
+      tg.connect(audioCtx.destination);
+      twang.start(now);
+      twang.stop(now + 0.1);
+
+      const whistle = audioCtx.createOscillator();
+      const wg = audioCtx.createGain();
+      whistle.type = 'sine';
+      whistle.frequency.setValueAtTime(1200, now);
+      whistle.frequency.exponentialRampToValueAtTime(800, now + 0.15);
+      wg.gain.setValueAtTime(0.2, now);
+      wg.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      whistle.connect(wg);
+      wg.connect(audioCtx.destination);
+      whistle.start(now);
+      whistle.stop(now + 0.15);
+
+    } else if (sType === 'lightning') {
+      // Thunder Crack & Static Arc
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(900, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.18);
+      gain.gain.setValueAtTime(isCrit ? 0.7 : 0.45, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.18);
+
+    } else if (sType === 'heavy') {
+      // Earth-Shaking Heavy Hammer Slam
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(95, now);
+      osc.frequency.exponentialRampToValueAtTime(25, now + 0.2);
+      gain.gain.setValueAtTime(isCrit ? 0.8 : 0.55, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.2);
+
+    } else {
+      // 1. Blade Slash / Projectile Noise Transient
+      const bufferSize = Math.floor(audioCtx.sampleRate * 0.08);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      const noiseFilter = audioCtx.createBiquadFilter();
+      noiseFilter.type = isMagic ? 'bandpass' : 'highpass';
+      noiseFilter.frequency.setValueAtTime(isMagic ? 1200 : 2500, now);
+      noiseFilter.Q.setValueAtTime(2, now);
+      const noiseGain = audioCtx.createGain();
+      noiseGain.gain.setValueAtTime(isCrit ? 0.45 : 0.28, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(audioCtx.destination);
+      noise.start(now);
+
+      // 2. Heavy Physical/Magic Impact Punch
+      const punchOsc = audioCtx.createOscillator();
+      const punchGain = audioCtx.createGain();
+      punchOsc.type = 'triangle';
+      punchOsc.frequency.setValueAtTime(isCrit ? 140 : 110, now);
+      punchOsc.frequency.exponentialRampToValueAtTime(30, now + 0.14);
+      punchGain.gain.setValueAtTime(isCrit ? 0.65 : 0.4, now);
+      punchGain.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+      punchOsc.connect(punchGain);
+      punchGain.connect(audioCtx.destination);
+      punchOsc.start(now);
+      punchOsc.stop(now + 0.14);
+
+      // 3. Metallic Weapon Resonance / Magic Ring
+      const ringOsc = audioCtx.createOscillator();
+      const ringGain = audioCtx.createGain();
+      ringOsc.type = isMagic ? 'sine' : 'sawtooth';
+      ringOsc.frequency.setValueAtTime(isMagic ? 680 : 380, now);
+      ringOsc.frequency.exponentialRampToValueAtTime(isMagic ? 440 : 180, now + 0.12);
+      ringGain.gain.setValueAtTime(isCrit ? 0.35 : 0.18, now);
+      ringGain.gain.exponentialRampToValueAtTime(0.005, now + 0.12);
+      ringOsc.connect(ringGain);
+      ringGain.connect(audioCtx.destination);
+      ringOsc.start(now);
+      ringOsc.stop(now + 0.12);
     }
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    const noiseFilter = audioCtx.createBiquadFilter();
-    noiseFilter.type = isMagic ? 'bandpass' : 'highpass';
-    noiseFilter.frequency.setValueAtTime(isMagic ? 1200 : 2500, now);
-    noiseFilter.Q.setValueAtTime(2, now);
-    const noiseGain = audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(isCrit ? 0.45 : 0.28, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
-    noise.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(audioCtx.destination);
-    noise.start(now);
 
-    // 2. Heavy Physical/Magic Impact Punch (Low Sub-Bass)
-    const punchOsc = audioCtx.createOscillator();
-    const punchGain = audioCtx.createGain();
-    punchOsc.type = 'triangle';
-    punchOsc.frequency.setValueAtTime(isCrit ? 140 : 110, now);
-    punchOsc.frequency.exponentialRampToValueAtTime(30, now + 0.14);
-    punchGain.gain.setValueAtTime(isCrit ? 0.65 : 0.4, now);
-    punchGain.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
-    punchOsc.connect(punchGain);
-    punchGain.connect(audioCtx.destination);
-    punchOsc.start(now);
-    punchOsc.stop(now + 0.14);
-
-    // 3. Metallic Weapon Resonance / Magic Ring
-    const ringOsc = audioCtx.createOscillator();
-    const ringGain = audioCtx.createGain();
-    ringOsc.type = isMagic ? 'sine' : 'sawtooth';
-    ringOsc.frequency.setValueAtTime(isMagic ? 680 : 380, now);
-    ringOsc.frequency.exponentialRampToValueAtTime(isMagic ? 440 : 180, now + 0.12);
-    ringGain.gain.setValueAtTime(isCrit ? 0.35 : 0.18, now);
-    ringGain.gain.exponentialRampToValueAtTime(0.005, now + 0.12);
-    ringOsc.connect(ringGain);
-    ringGain.connect(audioCtx.destination);
-    ringOsc.start(now);
-    ringOsc.stop(now + 0.12);
-
-    // 4. Critical Hit Shockwave Crack
+    // Critical Hit Shockwave Crack for all archetypes
     if (isCrit) {
       const critOsc = audioCtx.createOscillator();
       const critGain = audioCtx.createGain();
       critOsc.type = 'sawtooth';
-      critOsc.frequency.setValueAtTime(800, now);
-      critOsc.frequency.exponentialRampToValueAtTime(80, now + 0.22);
-      critGain.gain.setValueAtTime(0.4, now);
+      critOsc.frequency.setValueAtTime(850, now);
+      critOsc.frequency.exponentialRampToValueAtTime(75, now + 0.22);
+      critGain.gain.setValueAtTime(0.42, now);
       critGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
       critOsc.connect(critGain);
       critGain.connect(audioCtx.destination);
@@ -1102,12 +1206,15 @@ function performSwingAttack() {
   // Rewards
   currentGold += Math.floor(dmg / 10);
 
+  // Determine RoV 2026 Skill Archetype (Sound + Visual FX)
+  const archetype = getSkillArchetype(activeHero, selectedSkill);
+
   // Visual Effects & Sound
   const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
-  effects.createHitParticles(hitPos, color, isCrit ? 35 : 18, isCrit);
+  effects.createHitParticles(hitPos, color, isCrit ? 36 : 20, isCrit, archetype);
   showFloatingDamage(Math.floor(dmg), dmgClass, color);
 
-  playSound('attack', { isCrit, isMagic });
+  playSound('attack', { isCrit, isMagic, soundType: archetype, color });
 
   if (navigator.vibrate) navigator.vibrate(isCrit ? [80, 40, 80] : 50);
 
