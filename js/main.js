@@ -52,7 +52,7 @@ const HERO_CLASSES = {
     id: 'assassin',
     name: 'ASSASSIN',
     title: 'สายแอสซาซิน / ล้วง',
-    heroes: ['butterfly', 'nakroth', 'murad', 'kriknak', 'zill', 'wukong', 'batman', 'quillen', 'paine', 'keera']
+    heroes: ['butterfly', 'nakroth', 'murad', 'kriknak', 'zill', 'wukong', 'kaine', 'quillen', 'paine', 'keera']
   },
   marksman: {
     id: 'marksman',
@@ -332,19 +332,19 @@ const HEROES = {
       { id: 'wu_ult', name: 'Monkey Business', tag: 'กระบองยักษ์สะท้านฟ้า', icon: '/assets/skills/monkey_business.png', dmg: 920, color: '#ff6600', isCrit: true, desc: 'ฟาดกระบองยักษ์สตั๊นคริติคอลสูงสุด' }
     ]
   },
-  batman: {
-    id: 'batman', name: 'BATMAN', fullName: 'Batman (แบทแมน)', classId: 'assassin', role: 'แอสซาซิน / อัศวินรัตติกาล',
-    avatar: '/assets/heroes/batman.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ข้าคือความยุติธรรม... ข้าคือแบทแมน!"',
+  kaine: {
+    id: 'kaine', name: 'KAINE', fullName: 'Kaine (เคน)', classId: 'assassin', role: 'แอสซาซิน / นักล่าโลหิต',
+    avatar: '/assets/heroes/kaine.png', splash: '/assets/ui/arthur_card.jpg', quote: '"รัตติกาลนี้... จะถูกย้อมด้วยสีเลือด!"',
     skills: [
-      { id: 'bat_atk', name: 'หมัดอัศวินรัตติกาล', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#5555ff', desc: 'ชกหมัดอัศวินรัตติกาลรวดเร็ว' },
-      { id: 'bat_s1', name: 'Forearm Strike', tag: 'กรงเล็บรัตติกาล', icon: '/assets/skills/forearm_strike.png', dmg: 540, color: '#7777ff', desc: 'ฟันกรงเล็บคมคู่สร้างดาเมจรุนแรง' },
-      { id: 'bat_s2', name: 'Batarang', tag: 'ปาแบททาแรง', icon: '/assets/skills/batarang.png', dmg: 530, color: '#5555ff', desc: 'ปาแบททาแรงฝังระเบิดชะลอความเร็ว' },
-      { id: 'bat_ult', name: 'The Dark Knight', tag: 'พุ่งสังหารในเงา', icon: '/assets/skills/the_dark_knight.png', dmg: 890, color: '#3333cc', isCrit: true, desc: 'ล่องหนพุ่งชาร์จสังหารฉับไว' }
+      { id: 'kaine_atk', name: 'กรงเล็บโลหิตสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#cc0022', desc: 'ตวัดกรงเล็บแวมไพร์สังหารรวดเร็ว' },
+      { id: 'kaine_s1', name: 'Whirlwind of Blood', tag: 'กรงเล็บโลหิตฟันกวาด', icon: '/assets/skills/kaine_s1.png', dmg: 550, color: '#dd0033', desc: 'ตวัดกรงเล็บโลหิตสร้างความเสียหายรอบตัว 2 จังหวะ' },
+      { id: 'kaine_s2', name: 'Bloodied Judgment', tag: 'มีดบินผนึกวิญญาณ', icon: '/assets/skills/kaine_s2.png', dmg: 530, color: '#ff0044', desc: 'ขว้างมีดบินผนึกวิญญาณสตั๊นและฟื้นฟูเลือด' },
+      { id: 'kaine_ult', name: 'Sanguinary End', tag: 'พุ่งสังหารปลิดชีพ', icon: '/assets/skills/kaine_ult.png', dmg: 910, color: '#990022', isCrit: true, desc: 'พุ่งทะลวงสังหารในสถานะกายทองไร้เป้าหมาย' }
     ]
   },
   quillen: {
     id: 'quillen', name: 'QUILLEN', fullName: 'Quillen (ควิลเลน)', classId: 'assassin', role: 'แอสซาซิน / ดาบคู่หลังสังหาร',
-    avatar: '/assets/heroes/butterfly.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ดาบของข้า เสียบข้างหลังเสมอ!"',
+    avatar: '/assets/heroes/quillen.png', splash: '/assets/ui/arthur_card.jpg', quote: '"ดาบของข้า เสียบข้างหลังเสมอ!"',
     skills: [
       { id: 'quil_atk', name: 'มีดสั้นลอบสังหาร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 400, color: '#ff0033', desc: 'แทงมีดสั้นคริติคอล 100% จากด้านหลัง' },
       { id: 'quil_s1', name: 'Decimate', tag: 'มีดคู่แทงหลัง', icon: '/assets/skills/butterfly_s1.png', dmg: 560, color: '#ff0044', desc: 'แทงมีดคู่ด้านหลังคริติคอล 100%' },
@@ -354,7 +354,7 @@ const HEROES = {
   },
   paine: {
     id: 'paine', name: 'PAINE', fullName: 'Paine (เพน)', classId: 'assassin', role: 'แอสซาซิน / นักดนตรีวิญญาณ',
-    avatar: '/assets/heroes/veera.png', splash: '/assets/ui/krixi_card.jpg', quote: '"บทเพลงนี้ จะบรรเลงในงานศพเจ้า!"',
+    avatar: '/assets/heroes/paine.png', splash: '/assets/ui/krixi_card.jpg', quote: '"บทเพลงนี้ จะบรรเลงในงานศพเจ้า!"',
     skills: [
       { id: 'paine_atk', name: 'เคียวโน้ตมรณะ', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#cc00ff', desc: 'ตวัดเคียวโน้ตดนตรีเวทมนตร์' },
       { id: 'paine_s1', name: 'Soul Elegy', tag: 'ถอดจิตวิญญาณ', icon: '/assets/skills/paine_skill_1.png', dmg: 540, color: '#cc00ff', desc: 'ถอดจิตพุ่งทะยานสร้างดาเมจ' },
@@ -364,7 +364,7 @@ const HEROES = {
   },
   keera: {
     id: 'keera', name: 'KEERA', fullName: 'Keera (คีร่า)', classId: 'assassin', role: 'แอสซาซิน / มนตราแห่งเงา',
-    avatar: '/assets/heroes/krixi.png', splash: '/assets/ui/krixi_card.jpg', quote: '"มาเล่นซ่อนแอบในเงามืดกันเถอะ..."',
+    avatar: '/assets/heroes/keera.png', splash: '/assets/ui/krixi_card.jpg', quote: '"มาเล่นซ่อนแอบในเงามืดกันเถอะ..."',
     skills: [
       { id: 'keera_atk', name: 'คมมีดมนตราเงา', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#ff0077', desc: 'ฟันคมมีดมนตราแห่งเงามืด' },
       { id: 'keera_s1', name: 'Umbral Bloom', tag: 'เงาดูดวิญญาณ', icon: '/assets/skills/ke_s1.png', dmg: 540, color: '#ff33aa', desc: 'ส่งร่างเงาไปเกาะและระเบิดพลัง' },
@@ -466,7 +466,7 @@ const HEROES = {
   },
   telannas: {
     id: 'telannas', name: 'TEL\'ANNAS', fullName: 'Tel\'Annas (เทลอันนาส)', classId: 'marksman', role: 'แครี่ / ราชินีเอลฟ์แห่งพงไพร',
-    avatar: '/assets/heroes/valhein.png', splash: '/assets/heroes/violet_card.jpg', quote: '"เพื่อปกป้องป่าแห่งมนตรา ข้าจะไม่ยอมถอย!"',
+    avatar: '/assets/heroes/telannas.png', splash: '/assets/heroes/violet_card.jpg', quote: '"เพื่อปกป้องป่าแห่งมนตรา ข้าจะไม่ยอมถอย!"',
     skills: [
       { id: 'tel_atk', name: 'ศรเอลฟ์พงไพร', tag: 'โจมตีปกติ', icon: '/assets/skills/attack.png', dmg: 390, color: '#55ffaa', desc: 'ยิงศรมนตราเอลฟ์แห่งพงไพร' },
       { id: 'tel_s1', name: 'Eagle Eye', tag: 'เนตรอินทรียิงไกล', icon: '/assets/skills/1_eagle_eye.png', dmg: 570, color: '#66ffcc', desc: 'เพิ่มระยะยิงไกลพิเศษและสร้างเวทผสมกายภาพ' },
