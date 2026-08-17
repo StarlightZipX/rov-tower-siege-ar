@@ -33,6 +33,17 @@
       <h1 class="landing-title">ROV TOWER SIEGE</h1>
       <p class="landing-subtitle">BATTLE FOR ANTARIS</p>
       
+      <!-- Tournament Team Name Input -->
+      <div class="team-input-container">
+        <label for="team-name-input" class="team-input-label">
+          <span class="team-label-icon">🏆</span>
+          <span>ชื่อทีมของคุณ (TEAM NAME):</span>
+        </label>
+        <div class="team-input-wrapper">
+          <input type="text" id="team-name-input" class="team-name-input" maxlength="24" placeholder="กรอกชื่อทีม (เช่น ทีมวิทยาลัยเทคนิค A, RoV Slayer)" value="ทีมผู้ท้าชิง #1">
+        </div>
+      </div>
+
       <div class="hero-selection">
         <h3>เลือกสายคลาสที่คุณต้องการเล่น (CHOOSE CLASS)</h3>
         <div class="hero-cards">
@@ -92,9 +103,17 @@
       </div>
 
       <div class="landing-action-group">
-        <button id="start-btn" class="btn-primary rov-gold-btn">
+        <button id="start-btn" class="btn-primary rov-gold-btn pulse-epic">
           <span class="btn-icon">🎲</span>
           <span class="btn-text">สุ่มฮีโร่ในสาย & เข้าสู่สมรภูมิ</span>
+        </button>
+        <button id="landing-leaderboard-btn" class="btn-secondary rov-blue-btn">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-text">ตารางคะแนน 32 ทีม</span>
+        </button>
+        <button id="landing-audio-toggle-btn" class="btn-secondary rov-audio-btn" title="เปิด/ปิดเสียง BGM">
+          <span id="landing-audio-icon">🔊</span>
+          <span id="landing-audio-text">ดนตรี: เปิด</span>
         </button>
         <p class="landing-note">📹 ระบบใช้กล้อง AR ในการตรวจจับการฟาดฟันอาวุธ</p>
       </div>
@@ -262,6 +281,7 @@
               <div class="match-player-rank">👑 TOP #1</div>
             </div>
             <div class="match-hero-details">
+              <div id="match-player-team-tag" class="match-player-team-tag">🏆 TEAM: ทีมผู้ท้าชิง</div>
               <h3 id="match-player-hero-name">ARTHUR</h3>
               <p id="match-player-role">ไฟต์เตอร์ / แทงค์</p>
               <div class="match-player-badge">ผู้ท้าชิงแห่ง Antaris</div>
@@ -382,6 +402,10 @@
           <img src="./assets/ui/gold.png" alt="Gold" class="gold-coin-img">
           <span id="current-gold">500</span>
         </div>
+        <button id="hud-audio-toggle-btn" class="stat-badge audio-switch-btn" title="เปิด/ปิดเสียงดนตรีและเอฟเฟกต์">
+          <span id="hud-audio-icon" class="stat-icon">🔊</span>
+          <span id="hud-audio-text" class="cam-btn-text">เสียง</span>
+        </button>
         <button id="camera-toggle-btn" class="stat-badge cam-switch-btn" title="สลับกล้องหน้า/กล้องหลัง">
           <span class="stat-icon">📷</span>
           <span class="cam-btn-text">สลับกล้อง</span>
@@ -493,8 +517,9 @@
   <!-- ==================== VICTORY SCREEN ==================== -->
   <div id="victory-screen">
     <div class="victory-content">
+      <div class="victory-trophy-emblem">🏆</div>
       <h1 class="victory-title">VICTORY</h1>
-      <p class="victory-subtitle">Your team has destroyed the enemy tower!</p>
+      <p id="victory-team-subtitle" class="victory-subtitle">ทีมผู้ท้าชิง คว้าชัยชนะทำลายป้อมปราการศัตรูสำเร็จ!</p>
       <div class="victory-stats">
         <div class="stat-item">
           <span class="stat-label">Total Damage</span>
@@ -505,9 +530,16 @@
           <span class="stat-value" id="stat-time">0s</span>
         </div>
       </div>
-      <button id="replay-btn" class="btn-primary">
-        <span>เล่นอีกครั้ง</span>
-      </button>
+      <div class="victory-actions-row">
+        <button id="victory-leaderboard-btn" class="btn-secondary rov-blue-btn">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-text">ดูตารางคะแนน 32 ทีม</span>
+        </button>
+        <button id="replay-btn" class="btn-primary rov-gold-btn pulse-epic">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">เล่นอีกครั้ง (PLAY AGAIN)</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -517,7 +549,7 @@
     <div class="defeat-content">
       <div class="defeat-emblem">💀</div>
       <h1 class="defeat-title">DEFEAT</h1>
-      <p class="defeat-subtitle">คุณถูกป้อมปราการมนตรา Antaris สังหาร!</p>
+      <p id="defeat-team-subtitle" class="defeat-subtitle">คุณถูกป้อมปราการมนตรา Antaris สังหาร!</p>
       <div class="defeat-stats">
         <div class="stat-item">
           <span class="stat-label">Total Damage Dealt</span>
@@ -528,12 +560,68 @@
           <span class="stat-value" id="defeat-stat-time">0s</span>
         </div>
       </div>
-      <button id="defeat-retry-btn" class="btn-primary rov-gold-btn pulse-epic">
-        <span>⚔️ ท้าประลองใหม่อีกครั้ง (RETRY)</span>
-      </button>
+      <div class="defeat-actions-row">
+        <button id="defeat-leaderboard-btn" class="btn-secondary rov-blue-btn">
+          <span class="btn-icon">🏆</span>
+          <span class="btn-text">ดูตารางคะแนน</span>
+        </button>
+        <button id="defeat-retry-btn" class="btn-primary rov-gold-btn pulse-epic">
+          <span class="btn-icon">⚔️</span>
+          <span class="btn-text">ท้าประลองใหม่อีกครั้ง (RETRY)</span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <script type="module" src="/js/main.js"></script>
+  <!-- ==================== AAA TOURNAMENT 32-TEAM LEADERBOARD MODAL ==================== -->
+  <div id="leaderboard-modal" class="modal-backdrop" style="display: none;">
+    <div class="leaderboard-modal-content">
+      <div class="modal-header">
+        <div class="modal-badge">🏆 ANTARIS SPEEDRUN LEADERBOARD 🏆</div>
+        <h2 class="modal-title">ตารางจัดอันดับการแข่งขัน (TOP 32 TEAMS)</h2>
+        <p class="modal-subtitle">บันทึกเวลาทำลายป้อมปราการ Antaris เร็วที่สุดประจำทัวร์นาเมนต์</p>
+        <button id="leaderboard-close-btn" class="modal-close-btn" title="ปิดหน้าต่าง">✕</button>
+      </div>
+
+      <div class="leaderboard-stats-summary">
+        <div class="l-summary-item">
+          <span class="l-summary-label">📊 ทีมที่บันทึกคะแนนแล้ว:</span>
+          <strong id="leaderboard-team-count">0 / 32 ทีม</strong>
+        </div>
+        <div class="l-summary-item">
+          <span class="l-summary-label">⚡ สถิติเร็วที่สุด (Best Time):</span>
+          <strong id="leaderboard-best-time">--:--</strong>
+        </div>
+      </div>
+
+      <div class="leaderboard-table-wrap">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th style="width: 12%;">อันดับ</th>
+              <th style="width: 32%;">ชื่อทีม (TEAM NAME)</th>
+              <th style="width: 22%;">ฮีโร่ที่ใช้</th>
+              <th style="width: 18%;">เวลาที่ใช้</th>
+              <th style="width: 16%;">ดาเมจรวม</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-tbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button id="leaderboard-clear-btn" class="btn-danger-outline" title="ล้างข้อมูลตารางคะแนนทั้งหมด">
+          <span>🗑️ ล้างตารางคะแนน (RESET DATA)</span>
+        </button>
+        <button id="leaderboard-modal-close-action" class="btn-primary rov-gold-btn">
+          <span>⚔️ ปิดและกลับสู่สมรภูมิ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>

@@ -61,6 +61,11 @@ let isTowerLockingOn = false;
 let tutorialCountdownInterval = null;
 let tutorialTimeRemaining = 60;
 
+// Tournament Team & Audio Controls & Leaderboard System
+let currentTeamName = 'ทีมผู้ท้าชิง #1';
+let isAudioMuted = false;
+const LEADERBOARD_KEY = 'ROV_AR_TOURNAMENT_LEADERBOARD';
+
 /* ==========================================================
    RoV Hero Classes & Strict 10-Hero Pools (40 Heroes Total)
    ========================================================== */
@@ -642,12 +647,39 @@ function cacheDOM() {
   dom.defeatStatDamage = document.getElementById('defeat-stat-damage');
   dom.defeatStatTime = document.getElementById('defeat-stat-time');
   dom.defeatRetryBtn = document.getElementById('defeat-retry-btn');
+  dom.defeatLeaderboardBtn = document.getElementById('defeat-leaderboard-btn');
+  dom.defeatTeamSubtitle = document.getElementById('defeat-team-subtitle');
+
+  // Victory Screen Elements
+  dom.victoryLeaderboardBtn = document.getElementById('victory-leaderboard-btn');
+  dom.victoryTeamSubtitle = document.getElementById('victory-team-subtitle');
 
   // Pre-Match Tutorial Briefing Screen Elements
   dom.tutorialScreen = document.getElementById('tutorial-screen');
   dom.tutorialSkipBtn = document.getElementById('tutorial-skip-btn');
   dom.tutorialTimerText = document.getElementById('tutorial-timer-text');
   dom.tutorialBarFill = document.getElementById('tutorial-bar-fill');
+
+  // Tournament Team & Audio Controls & Leaderboard Elements
+  dom.teamNameInput = document.getElementById('team-name-input');
+  dom.landingLeaderboardBtn = document.getElementById('landing-leaderboard-btn');
+  dom.landingAudioToggleBtn = document.getElementById('landing-audio-toggle-btn');
+  dom.landingAudioIcon = document.getElementById('landing-audio-icon');
+  dom.landingAudioText = document.getElementById('landing-audio-text');
+
+  dom.hudAudioToggleBtn = document.getElementById('hud-audio-toggle-btn');
+  dom.hudAudioIcon = document.getElementById('hud-audio-icon');
+  dom.hudAudioText = document.getElementById('hud-audio-text');
+
+  dom.matchPlayerTeamTag = document.getElementById('match-player-team-tag');
+
+  dom.leaderboardModal = document.getElementById('leaderboard-modal');
+  dom.leaderboardCloseBtn = document.getElementById('leaderboard-close-btn');
+  dom.leaderboardModalCloseAction = document.getElementById('leaderboard-modal-close-action');
+  dom.leaderboardClearBtn = document.getElementById('leaderboard-clear-btn');
+  dom.leaderboardTbody = document.getElementById('leaderboard-tbody');
+  dom.leaderboardTeamCount = document.getElementById('leaderboard-team-count');
+  dom.leaderboardBestTime = document.getElementById('leaderboard-best-time');
 }
 
 function bindEvents() {
@@ -662,6 +694,60 @@ function bindEvents() {
     });
   });
 
+  // Team Name Input sync
+  if (dom.teamNameInput) {
+    dom.teamNameInput.addEventListener('input', () => {
+      currentTeamName = dom.teamNameInput.value.trim() || 'ทีมผู้ท้าชิง #1';
+    });
+  }
+
+  // Audio Toggle Buttons (Landing Screen & HUD)
+  if (dom.landingAudioToggleBtn) {
+    dom.landingAudioToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      initAudio();
+      toggleAudioMute();
+    });
+  }
+  if (dom.hudAudioToggleBtn) {
+    dom.hudAudioToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleAudioMute();
+    });
+  }
+
+  // Leaderboard Modal Open / Close Events
+  if (dom.landingLeaderboardBtn) {
+    dom.landingLeaderboardBtn.addEventListener('click', () => {
+      openLeaderboardModal();
+    });
+  }
+  if (dom.victoryLeaderboardBtn) {
+    dom.victoryLeaderboardBtn.addEventListener('click', () => {
+      openLeaderboardModal();
+    });
+  }
+  if (dom.defeatLeaderboardBtn) {
+    dom.defeatLeaderboardBtn.addEventListener('click', () => {
+      openLeaderboardModal();
+    });
+  }
+  if (dom.leaderboardCloseBtn) {
+    dom.leaderboardCloseBtn.addEventListener('click', () => {
+      closeLeaderboardModal();
+    });
+  }
+  if (dom.leaderboardModalCloseAction) {
+    dom.leaderboardModalCloseAction.addEventListener('click', () => {
+      closeLeaderboardModal();
+    });
+  }
+  if (dom.leaderboardClearBtn) {
+    dom.leaderboardClearBtn.addEventListener('click', () => {
+      clearLeaderboard();
+    });
+  }
+
   // Class Selection on Landing Screen
   dom.classCards.forEach(card => {
     card.addEventListener('click', () => {
@@ -674,6 +760,9 @@ function bindEvents() {
   // Start Button -> Triggers AAA Summoning Gacha Ritual
   dom.startBtn.addEventListener('click', () => {
     initAudio();
+    if (dom.teamNameInput) {
+      currentTeamName = dom.teamNameInput.value.trim() || 'ทีมผู้ท้าชิง #1';
+    }
     startSummoningRitual(selectedClass);
   });
 
@@ -860,6 +949,9 @@ function startMatchLoadingSequence() {
   dom.matchPlayerAvatar.src = activeHero.avatar;
   dom.matchPlayerHeroName.textContent = activeHero.name;
   dom.matchPlayerRole.textContent = activeHero.role;
+  if (dom.matchPlayerTeamTag) {
+    dom.matchPlayerTeamTag.textContent = '🏆 TEAM: ' + (currentTeamName || 'ทีมผู้ท้าชิง #1');
+  }
 
   playSound('match_start');
 
@@ -1054,13 +1146,180 @@ const AUDIO_CLIPS = {
   tower_charge: new Audio('./assets/audio/tower_charge.wav'),
   tower_fire: new Audio('./assets/audio/tower_fire.wav'),
   player_hit: new Audio('./assets/audio/player_hit.wav'),
-  shield_block: new Audio('./assets/audio/shield_block.wav')
+  shield_block: new Audio('./assets/audio/shield_block.wav'),
+  bgm: new Audio('./assets/audio/bgm_battlefield.wav')
 };
 
 Object.values(AUDIO_CLIPS).forEach(a => {
   a.preload = 'auto';
   a.volume = 0.95;
 });
+
+if (AUDIO_CLIPS.bgm) {
+  AUDIO_CLIPS.bgm.loop = true;
+  AUDIO_CLIPS.bgm.volume = 0.35;
+}
+
+/* ==========================================================
+   RoV Audio Master & BGM Controller
+   ========================================================== */
+function toggleAudioMute() {
+  isAudioMuted = !isAudioMuted;
+  Object.values(AUDIO_CLIPS).forEach(a => {
+    a.muted = isAudioMuted;
+  });
+
+  if (audioCtx) {
+    if (isAudioMuted) {
+      audioCtx.suspend();
+    } else {
+      audioCtx.resume();
+    }
+  }
+
+  updateAudioToggleUI();
+}
+
+function updateAudioToggleUI() {
+  const icon = isAudioMuted ? '🔇' : '🔊';
+  const text = isAudioMuted ? 'ดนตรี: ปิด' : 'ดนตรี: เปิด';
+  const hudText = isAudioMuted ? 'ปิดเสียง' : 'เสียง';
+
+  if (dom.landingAudioIcon) dom.landingAudioIcon.textContent = icon;
+  if (dom.landingAudioText) dom.landingAudioText.textContent = text;
+  if (dom.hudAudioIcon) dom.hudAudioIcon.textContent = icon;
+  if (dom.hudAudioText) dom.hudAudioText.textContent = hudText;
+}
+
+function playBGM() {
+  if (AUDIO_CLIPS.bgm && !isAudioMuted) {
+    AUDIO_CLIPS.bgm.currentTime = 0;
+    AUDIO_CLIPS.bgm.play().catch(() => {});
+  }
+}
+
+function stopBGM() {
+  if (AUDIO_CLIPS.bgm) {
+    AUDIO_CLIPS.bgm.pause();
+  }
+}
+
+/* ==========================================================
+   Tournament 32-Team Leaderboard (LocalStorage)
+   ========================================================== */
+function getLeaderboard() {
+  try {
+    const raw = localStorage.getItem(LEADERBOARD_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveMatchToLeaderboard(timeElapsedSec, damageDealt, isVictory) {
+  const records = getLeaderboard();
+  const heroObj = activeHero || HEROES.arthur;
+  const newRecord = {
+    id: Date.now().toString(),
+    teamName: currentTeamName || 'ทีมผู้ท้าชิง #1',
+    heroId: heroObj.id,
+    heroName: heroObj.name,
+    heroAvatar: heroObj.avatar,
+    timeElapsed: parseFloat(timeElapsedSec),
+    totalDamage: parseInt(damageDealt, 10),
+    isVictory: isVictory,
+    date: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })
+  };
+
+  records.push(newRecord);
+
+  // Sort: Victories first (sorted by fastest time), then defeats (sorted by highest damage)
+  records.sort((a, b) => {
+    if (a.isVictory && !b.isVictory) return -1;
+    if (!a.isVictory && b.isVictory) return 1;
+    if (a.isVictory && b.isVictory) {
+      return a.timeElapsed - b.timeElapsed;
+    }
+    return b.totalDamage - a.totalDamage;
+  });
+
+  const trimmed = records.slice(0, 32);
+  try {
+    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(trimmed));
+  } catch (e) {}
+
+  return trimmed;
+}
+
+function openLeaderboardModal() {
+  renderLeaderboard();
+  if (dom.leaderboardModal) dom.leaderboardModal.style.display = 'flex';
+}
+
+function closeLeaderboardModal() {
+  if (dom.leaderboardModal) dom.leaderboardModal.style.display = 'none';
+}
+
+function renderLeaderboard() {
+  const records = getLeaderboard();
+  if (dom.leaderboardTeamCount) {
+    dom.leaderboardTeamCount.textContent = `${records.length} / 32 ทีม`;
+  }
+
+  const bestWin = records.find(r => r.isVictory);
+  if (dom.leaderboardBestTime) {
+    dom.leaderboardBestTime.textContent = bestWin ? `${bestWin.timeElapsed}s (${bestWin.teamName})` : '--:--';
+  }
+
+  if (!dom.leaderboardTbody) return;
+  dom.leaderboardTbody.innerHTML = '';
+
+  if (records.length === 0) {
+    dom.leaderboardTbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; padding: 28px; color: #8fa8d6; font-size: 0.95rem;">
+          ยังไม่มีข้อมูลการแข่งขัน (จะบันทึกอัตโนมัติเมื่อเล่นจบแมตช์)
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  records.forEach((rec, idx) => {
+    const tr = document.createElement('tr');
+    let rankBadgeClass = 'rank-badge-default';
+    let rankIcon = `#${idx + 1}`;
+
+    if (idx === 0) { rankBadgeClass = 'rank-badge-gold'; rankIcon = '🥇 1'; }
+    else if (idx === 1) { rankBadgeClass = 'rank-badge-silver'; rankIcon = '🥈 2'; }
+    else if (idx === 2) { rankBadgeClass = 'rank-badge-bronze'; rankIcon = '🥉 3'; }
+
+    const statusTag = rec.isVictory 
+      ? `<span class="status-badge-win">🏆 ชนะ</span>`
+      : `<span class="status-badge-loss">💀 พ่ายแพ้</span>`;
+
+    tr.innerHTML = `
+      <td><span class="rank-badge ${rankBadgeClass}">${rankIcon}</span></td>
+      <td><strong>${rec.teamName}</strong></td>
+      <td>
+        <div class="hero-cell-mini">
+          <img src="${rec.heroAvatar}" alt="${rec.heroName}" class="hero-mini-img">
+          <span>${rec.heroName}</span>
+        </div>
+      </td>
+      <td><span class="time-highlight">${rec.timeElapsed}s</span> ${statusTag}</td>
+      <td>${rec.totalDamage.toLocaleString()} DMG</td>
+    `;
+    dom.leaderboardTbody.appendChild(tr);
+  });
+}
+
+function clearLeaderboard() {
+  if (confirm('คุณต้องการล้างข้อมูลตารางคะแนนทั้งหมดสำหรับเริ่มทัวร์นาเมนต์ใหม่ใช่หรือไม่?')) {
+    localStorage.removeItem(LEADERBOARD_KEY);
+    renderLeaderboard();
+  }
+}
 
 let triggeredAnnouncements = {
   firstBlood: false,
@@ -1950,9 +2209,15 @@ function handleTowerProjectileImpact() {
 
 function triggerDefeat() {
   state = GameState.DEFEAT;
+  stopBGM();
   playAnnouncerVoice('defeat');
 
   const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
+  saveMatchToLeaderboard(elapsed, totalDamageDealt, false);
+
+  if (dom.defeatTeamSubtitle) {
+    dom.defeatTeamSubtitle.textContent = `ทีม ${currentTeamName || 'ผู้ท้าชิง'} ถูกป้อมปราการมนตรา Antaris สังหาร!`;
+  }
   if (dom.defeatStatDamage) dom.defeatStatDamage.textContent = totalDamageDealt.toLocaleString();
   if (dom.defeatStatTime) dom.defeatStatTime.textContent = elapsed + 's';
   if (dom.defeatScreen) dom.defeatScreen.style.display = 'flex';
@@ -1970,6 +2235,7 @@ function retryAfterDefeat() {
    ========================================================== */
 async function startGame() {
   initAudio();
+  playBGM();
   dom.landing.style.display = 'none';
   dom.gameScreen.style.display = 'block';
 
@@ -2017,6 +2283,7 @@ async function startGame() {
   bonusDamage = 0;
   totalDamageDealt = 0;
   attackCount = 0;
+  lastSmokeTime = 0;
 
   updateUI();
   requestAnimationFrame(gameLoop);
@@ -2121,9 +2388,15 @@ function triggerExplosion() {
 
 function showVictory() {
   state = GameState.VICTORY;
+  stopBGM();
   playSound('victory');
   const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
-  document.getElementById('stat-damage').textContent = totalDamageDealt;
+  saveMatchToLeaderboard(elapsed, totalDamageDealt, true);
+
+  if (dom.victoryTeamSubtitle) {
+    dom.victoryTeamSubtitle.textContent = `🎉 ทีม ${currentTeamName || 'ผู้ท้าชิง'} คว้าชัยชนะทำลายป้อมปราการศัตรูสำเร็จ!`;
+  }
+  document.getElementById('stat-damage').textContent = totalDamageDealt.toLocaleString();
   document.getElementById('stat-time').textContent = elapsed + 's';
   dom.victory.style.display = 'flex';
 
