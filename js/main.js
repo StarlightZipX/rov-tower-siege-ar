@@ -560,7 +560,7 @@ function cacheDOM() {
   dom.startBtn = document.getElementById('start-btn');
   dom.replayBtn = document.getElementById('replay-btn');
   dom.enterBattleBtn = document.getElementById('enter-battle-btn');
-  dom.rerollHeroBtn = document.getElementById('reroll-hero-btn');
+
   dom.classCards = document.querySelectorAll('.hero-card');
 
   // Top stats and AR Controls
@@ -672,12 +672,7 @@ function bindEvents() {
     startMatchLoadingSequence();
   });
 
-  // Re-roll Hero Button
-  if (dom.rerollHeroBtn) {
-    dom.rerollHeroBtn.addEventListener('click', () => {
-      startSummoningRitual(selectedClass);
-    });
-  }
+
 
   // Camera Toggle (Front / Back AR Camera)
   if (dom.cameraToggleBtn) {
