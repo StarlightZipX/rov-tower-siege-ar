@@ -28,7 +28,7 @@ export class Tower {
     this.time = 0;
 
     this._buildAAATower();
-    this.group.scale.set(0.52, 0.52, 0.52);
+    this.group.scale.set(0.68, 0.68, 0.68);
     this.group.position.set(0, -1.9, 0);
     this.scene.add(this.group);
   }

@@ -123,7 +123,8 @@ export class HandTracker {
       // 4. Render Blade Slash Energy Trail
       this.renderBladeSlashTrail(w, h, now);
 
-      // 5. Render Weapon if equipped
+      // 5. Render Weapon if equipped (DISABLED - User only wants hand skeleton)
+      /*
       if (this.weaponImage) {
         const wrist = landmarks[0];
         const indexBase = landmarks[5];
@@ -146,6 +147,7 @@ export class HandTracker {
         
         this.canvasCtx.drawImage(this.weaponImage, -imgW/2, -imgH, imgW, imgH);
       }
+      */
     } else {
       this.lastWristPos = null;
     }
