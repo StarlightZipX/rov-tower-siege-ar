@@ -14,8 +14,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-  <script type="module" crossorigin src="/assets/index-Bqvugd7q.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-C0BXXzNV.css">
+  <script type="module" crossorigin src="/assets/index-Cpt0A_63.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-QGkRTBJ5.css">
 </head>
 <body>
 
@@ -30,29 +30,194 @@
   <div id="landing-screen">
     <div class="landing-bg"></div>
     <div class="landing-content">
+      <div class="landing-badge">ARENA OF VALOR • AR TOURNAMENT</div>
       <h1 class="landing-title">ROV TOWER SIEGE</h1>
-      <p class="landing-subtitle">AR EXPERIENCE</p>
+      <p class="landing-subtitle">BATTLE FOR ANTARIS</p>
       
       <div class="hero-selection">
-        <h3>เลือกสายฮีโร่ของคุณ</h3>
+        <h3>เลือกสายคลาสที่คุณต้องการเล่น (CHOOSE CLASS)</h3>
         <div class="hero-cards">
-          <div class="hero-card active" data-hero="fighter">
-            <div class="hero-icon">⚔️</div>
-            <h4>ไฟต์เตอร์ / แครี่</h4>
-            <p>โจมตีเร็ว ดาเมจกายภาพ</p>
+          <!-- Fighter Class Card -->
+          <div class="hero-card active" data-class="fighter">
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/arthur.png" alt="Fighter Class">
+              <div class="hero-card-text">
+                <h4>FIGHTER / TANK</h4>
+                <p class="hero-role">สายไฟต์เตอร์ / แทงค์</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Arthur, Lu Bu</span>
+              </div>
+            </div>
           </div>
-          <div class="hero-card" data-hero="mage">
-            <div class="hero-icon">🔮</div>
-            <h4>เมจ</h4>
-            <p>สกิลรุนแรง ดาเมจเวท</p>
+          <!-- Mage Class Card -->
+          <div class="hero-card" data-class="mage">
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/krixi_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/krixi.png" alt="Mage Class">
+              <div class="hero-card-text">
+                <h4>MAGE</h4>
+                <p class="hero-role">สายเมจ / พลังเวท</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Krixi, Veera</span>
+              </div>
+            </div>
+          </div>
+          <!-- Assassin Class Card -->
+          <div class="hero-card" data-class="assassin">
+            <div class="hero-card-banner" style="background-image: url('/assets/ui/arthur_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/butterfly.png" alt="Assassin Class">
+              <div class="hero-card-text">
+                <h4>ASSASSIN</h4>
+                <p class="hero-role">สายแอสซาซิน / ล้วง</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Butterfly, Nakroth</span>
+              </div>
+            </div>
+          </div>
+          <!-- Marksman Class Card -->
+          <div class="hero-card" data-class="marksman">
+            <div class="hero-card-banner" style="background-image: url('/assets/heroes/violet_card.jpg');"></div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <img class="hero-icon-img" src="/assets/heroes/valhein.png" alt="Marksman Class">
+              <div class="hero-card-text">
+                <h4>MARKSMAN</h4>
+                <p class="hero-role">สายแครี่ / ยิงไกล</p>
+                <span class="hero-stat-badge">🎲 สุ่มฮีโร่: Valhein, Violet</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <button id="start-btn" class="btn-primary">
-        <span>เข้าสู่สมรภูมิ</span>
-      </button>
-      <p class="landing-note">* ระบบจะขอเข้าถึงกล้องเพื่อแสดงผล AR</p>
+      <div class="landing-action-group">
+        <button id="start-btn" class="btn-primary rov-gold-btn">
+          <span class="btn-icon">🎲</span>
+          <span class="btn-text">สุ่มฮีโร่ในสาย & เข้าสู่สมรภูมิ</span>
+        </button>
+        <p class="landing-note">📹 ระบบใช้กล้อง AR ในการตรวจจับการฟาดฟันอาวุธ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AAA HERO SUMMONING GACHA SCREEN ==================== -->
+  <div id="summoning-screen" style="display: none;">
+    <div class="summon-bg-overlay"></div>
+    <div class="summon-rune-container">
+      <div class="summon-magic-circle"></div>
+      <div class="summon-magic-circle-inner"></div>
+      <div class="summon-light-pillar"></div>
+    </div>
+
+    <!-- Phase 1 & 2: Shuffling Roulette -->
+    <div id="summon-roulette-phase" class="summon-phase-content">
+      <div class="summon-title-badge">⚡ ANATARIS SUMMONING RITUAL ⚡</div>
+      <h2 id="summon-class-title" class="summon-heading">กำลังอัญเชิญฮีโร่สาย: FIGHTER</h2>
+      <div class="roulette-hero-preview-box">
+        <img id="roulette-hero-img" src="/assets/heroes/arthur.png" alt="Hero Rolling">
+        <div class="roulette-energy-glow"></div>
+      </div>
+      <p class="summon-status-text">กำลังสุ่มเลือกนักรบที่คู่ควรในสาย...</p>
+    </div>
+
+    <!-- Phase 3: AAA Golden Reveal -->
+    <div id="summon-reveal-phase" class="summon-phase-content" style="display: none;">
+      <div class="reveal-flash-effect"></div>
+      <div class="reveal-card-container">
+        <div class="reveal-hero-banner" id="reveal-hero-banner">
+          <div class="reveal-hero-gradient"></div>
+        </div>
+        <div class="reveal-content-box">
+          <div class="reveal-tier-tag">⭐ LEGENDARY HERO ⭐</div>
+          <div class="reveal-hero-header">
+            <img id="reveal-avatar" src="/assets/heroes/arthur.png" alt="Hero Avatar">
+            <div class="reveal-hero-titles">
+              <h2 id="reveal-name">ARTHUR</h2>
+              <span id="reveal-role" class="reveal-role-badge">ไฟต์เตอร์ / แทงค์</span>
+            </div>
+          </div>
+          <blockquote id="reveal-quote" class="reveal-hero-quote">"ดาบแห่งความยุติธรรมจะไม่ปรานีใคร!"</blockquote>
+          
+          <div class="reveal-skills-list" id="reveal-skills-list">
+            <!-- Dynamically populated skills -->
+          </div>
+
+          <button id="enter-battle-btn" class="btn-primary rov-gold-btn pulse-epic">
+            <span class="btn-text">⚔️ เข้าสู่สมรภูมิประจัญบาน! (ENTER BATTLE)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AAA MATCH LOADING SCREEN ==================== -->
+  <div id="match-loading-screen" style="display: none;">
+    <div class="match-loading-bg"></div>
+    <div class="match-loading-content">
+      <div class="match-loading-header">
+        <span class="match-loading-badge">ARENA OF VALOR • AR TOURNAMENT</span>
+        <h2>5V5 ANTARIS TOWER SIEGE</h2>
+      </div>
+
+      <div class="match-vs-container">
+        <!-- Player Hero Card -->
+        <div class="match-hero-card player-match-card">
+          <div class="match-card-frame">
+            <div class="match-card-avatar-box">
+              <img id="match-player-avatar" src="/assets/heroes/arthur.png" alt="Hero">
+              <div class="match-player-rank">👑 TOP #1</div>
+            </div>
+            <div class="match-hero-details">
+              <h3 id="match-player-hero-name">ARTHUR</h3>
+              <p id="match-player-role">ไฟต์เตอร์ / แทงค์</p>
+              <div class="match-player-badge">ผู้ท้าชิงแห่ง Antaris</div>
+            </div>
+            <div class="match-loading-bar-wrap">
+              <div class="match-bar-bg">
+                <div id="match-player-bar" class="match-bar-fill" style="width: 0%;"></div>
+              </div>
+              <span id="match-player-percent" class="match-percent-text">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center VS Emblem -->
+        <div class="match-vs-emblem">
+          <div class="vs-glow-circle"></div>
+          <span class="vs-text">VS</span>
+        </div>
+
+        <!-- Boss Tower Card -->
+        <div class="match-hero-card boss-match-card">
+          <div class="match-card-frame">
+            <div class="match-card-avatar-box">
+              <img src="/assets/ui/gold.png" alt="Tower Boss" class="boss-match-img">
+              <div class="match-boss-rank">💀 LV.15</div>
+            </div>
+            <div class="match-hero-details">
+              <h3>ANTARIS TOWER</h3>
+              <p>ป้อมปราการมนตราโบราณ</p>
+              <div class="match-boss-badge">NIGHTMARE BOSS • 5000 HP</div>
+            </div>
+            <div class="match-loading-bar-wrap">
+              <div class="match-bar-bg">
+                <div id="match-boss-bar" class="match-bar-fill boss-bar" style="width: 0%;"></div>
+              </div>
+              <span id="match-boss-percent" class="match-percent-text">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="match-loading-footer">
+        <p class="match-tip-text">💡 <strong>เคล็ดลับ RoV:</strong> ใช้การเหวี่ยงมือฟาดฟันเพื่อสร้างดาเมจและกดสลับสกิลเพื่อระเบิดพลังสูงสุดใส่ป้อม!</p>
+        <div class="match-status-row">
+          <span class="match-spinner"></span>
+          <span id="match-status-msg">กำลังเชื่อมต่อเข้าสู่สมรภูมิ AR Antaris...</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -72,45 +237,73 @@
       <span class="status-dot"></span> AI: กำลังค้นหามือ...
     </div>
 
-    <!-- HUD Overlay -->
+    <!-- Professional RoV AR HUD Overlay -->
     <div id="hud">
-      <!-- Top Left: Minimap -->
-      <div class="minimap-container">
-        <div class="minimap-map"></div>
+      <!-- Top Left: AR Target Radar Scanner -->
+      <div class="ar-scanner-panel">
+        <div class="scanner-header">
+          <span class="scanner-badge">AR TARGET LOCK</span>
+        </div>
+        <div class="scanner-radar">
+          <div class="radar-grid"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-target-dot"></div>
+          <div class="radar-crosshair"></div>
+        </div>
+        <div class="scanner-info">
+          <div class="scanner-target-name">ANTARIS TOWER CORE</div>
+          <div class="scanner-status"><span class="status-indicator"></span> RANGE: 2.5M | READY</div>
+        </div>
       </div>
 
-      <!-- Top Right: Stats -->
-      <div class="top-stats">
-        <div class="kda-box">
-          <span class="kill">12</span> / <span class="death">0</span> / <span class="assist">5</span>
+      <!-- Top Center: RoV Boss Tower Health Bar -->
+      <div id="hp-container" class="rov-boss-hp-panel">
+        <div class="boss-title-row">
+          <span class="boss-skull-icon">🛡️</span>
+          <span class="boss-name">ป้อมปราการมนตรา • ANTARIS DEFENSE TOWER</span>
+          <span class="boss-level">LV.15</span>
         </div>
-        <div class="timer-box">10:45</div>
-        <div class="gold-box">
-          <span class="gold-icon"></span> <span id="current-gold">500</span>
+        <div id="hp-bar-bg" class="boss-bar-frame">
+          <div id="hp-bar" class="boss-bar-fill"></div>
+          <div class="hp-bar-segments"></div>
+        </div>
+        <div class="hp-text-row">
+          <span id="hp-text">5000 / 5000</span>
         </div>
       </div>
 
-      <!-- Enemy Tower HP (Top Center) -->
-      <div id="hp-container">
-        <div id="hp-bar-bg">
-          <div id="hp-bar"></div>
+      <!-- Top Right: Live Tournament Stats -->
+      <div class="top-stats rov-stats-panel">
+        <div class="stat-badge timer-badge">
+          <span class="stat-icon">⏱️</span>
+          <span class="timer-box">00:00</span>
         </div>
-        <div id="hp-text">5000 / 5000</div>
-      </div>
+        <div class="stat-badge combo-badge">
+          <span class="stat-icon">⚡</span>
+          <span id="combo-display"><span id="hit-count">0</span> HITS</span>
+        </div>
+        <div class="stat-badge dmg-badge">
+          <span class="stat-icon">💥</span>
+          <span id="live-damage-text">0 DMG</span>
+        </div>
+        <div class="stat-badge gold-badge">
+          <img src="/assets/ui/gold.png" alt="Gold" class="gold-coin-img">
+          <span id="current-gold">500</span>
+        </div>
+      </div> <!-- End Top Stats -->
 
-      <!-- Bottom Hotbar -->
+      <!-- Bottom Hero & Skills Arsenal -->
       <div class="bottom-hotbar" id="equipment-bar">
-        <div class="hotbar-slot active" data-weapon="fenrir">
-          <img src="/assets/items/fenrir.png" alt="Fenrir's Tooth">
+        <div class="active-hero-badge" id="hero-badge-box">
+          <img id="hero-badge-avatar" src="/assets/heroes/arthur.png" alt="Hero Avatar">
+          <div class="hero-badge-info">
+            <span id="hero-badge-name">ARTHUR</span>
+            <span class="hero-badge-type">ไฟต์เตอร์</span>
+          </div>
         </div>
-        <div class="hotbar-slot" data-weapon="claves">
-          <img src="/assets/items/claves.png" alt="Claves Sancti">
-        </div>
-        <div class="hotbar-slot" data-weapon="omni">
-          <img src="/assets/items/omni.png" alt="Omni Arms">
-        </div>
-        <div class="hotbar-slot" data-weapon="muramasa">
-          <img src="/assets/items/muramasa.png" alt="Muramasa">
+        <div class="hotbar-divider"></div>
+        <div class="hotbar-slots-container" id="hero-skills-container">
+          <!-- Skills will be dynamically populated according to the active hero -->
         </div>
       </div>
     </div>
