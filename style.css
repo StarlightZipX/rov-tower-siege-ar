@@ -644,19 +644,174 @@ body, html {
   transform: scale(1.18) !important;
 }
 
-/* ==================== FLOATING DAMAGE ==================== */
-#damage-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 20; }
-.dmg-text {
-  position: absolute; font-size: 2rem; font-weight: 900; font-family: 'Kanit';
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-  animation: floatUp 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-  color: white;
+/* ==================== AAA FLOATING DAMAGE SYSTEM ==================== */
+#damage-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 220;
+  overflow: hidden;
 }
-.dmg-crit { color: #ff3333; font-size: 3rem; animation: critPop 1.2s forwards; }
-.dmg-magic { color: #cc66ff; }
-.dmg-ult { color: #ffcc00; font-size: 3.5rem; text-shadow: 0 0 10px #ffcc00, 2px 2px 0 #000; }
-@keyframes floatUp { 0% { transform: translateY(0) scale(0.5); opacity: 1; } 50% { transform: translateY(-50px) scale(1.2); } 100% { transform: translateY(-80px) scale(1); opacity: 0; } }
-@keyframes critPop { 0% { transform: scale(0.1); opacity: 1; } 30% { transform: scale(1.5) rotate(10deg); } 100% { transform: scale(1) translateY(-100px); opacity: 0; } }
+
+.dmg-item {
+  position: absolute;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
+
+/* 1. Physical Damage (RoV Orange-Gold Metallic) */
+.dmg-text, .dmg-physical {
+  font-size: 2.3rem;
+  color: #ffb700;
+  text-shadow: 
+    0 0 10px rgba(255, 120, 0, 0.9),
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 3px 6px rgba(0,0,0,0.9);
+  animation: floatArcNormal 0.85s cubic-bezier(0.15, 0.9, 0.3, 1) forwards;
+}
+
+/* 2. Magic Damage (RoV Vibrant Arcane Purple/Cyan) */
+.dmg-magic {
+  font-size: 2.3rem;
+  color: #d946ef;
+  text-shadow: 
+    0 0 14px rgba(217, 70, 239, 0.95),
+    0 0 25px rgba(168, 85, 247, 0.7),
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  animation: floatArcMagic 0.9s cubic-bezier(0.12, 0.95, 0.3, 1) forwards;
+}
+
+/* 3. True Damage (RoV Pure White/Silver Piercing) */
+.dmg-true {
+  font-size: 2.4rem;
+  color: #ffffff;
+  text-shadow: 
+    0 0 16px rgba(255, 255, 255, 1),
+    0 0 30px rgba(0, 229, 255, 0.8),
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  animation: floatArcTrue 0.9s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+/* 4. Critical Damage (RoV Epic Explosive Red-Gold Flame Burst) */
+.dmg-crit {
+  font-size: 3.4rem;
+  color: #fff066;
+  text-shadow: 
+    0 0 20px #ff2200,
+    0 0 35px #ff8800,
+    3px 3px 0 #660000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+  animation: critExplodePop 1.15s cubic-bezier(0.18, 1.25, 0.3, 1) forwards;
+  z-index: 230;
+}
+
+.dmg-crit .dmg-crit-badge {
+  font-size: 0.95rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff0033 0%, #ff8800 100%);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 10px #ff3300;
+  letter-spacing: 1px;
+  transform: rotate(-8deg);
+  margin-right: 4px;
+  display: inline-block;
+}
+
+/* 5. Ultimate Skill Damage (Full-Screen Shockwave Scale) */
+.dmg-ult {
+  font-size: 4.2rem;
+  color: #ffffff;
+  text-shadow: 
+    0 0 25px #ffaa00,
+    0 0 45px #ff0044,
+    0 0 70px #ffea00,
+    3px 3px 0 #000,
+    -3px -3px 0 #000,
+    3px -3px 0 #000,
+    -3px 3px 0 #000;
+  animation: ultSuperExplode 1.3s cubic-bezier(0.16, 1.3, 0.25, 1) forwards;
+  z-index: 240;
+}
+
+/* 6. Gold / Reward Floating Numbers */
+.dmg-gold {
+  font-size: 1.8rem;
+  color: #ffd700;
+  text-shadow: 
+    0 0 12px rgba(255, 215, 0, 0.9),
+    2px 2px 0 #000,
+    -2px -2px 0 #000;
+  animation: goldFloatUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Animation Keyframes */
+@keyframes floatArcNormal {
+  0% { transform: translate(-50%, -50%) scale(0.4) rotate(var(--rot-deg, 0deg)); opacity: 0; }
+  25% { transform: translate(-50%, calc(-50% - 25px)) scale(1.2) rotate(var(--rot-deg, 0deg)); opacity: 1; }
+  60% { transform: translate(-50%, calc(-50% - 55px)) scale(1.0) rotate(var(--rot-deg, 0deg)); opacity: 1; }
+  100% { transform: translate(-50%, calc(-50% - 85px)) scale(0.85) rotate(var(--rot-deg, 0deg)); opacity: 0; }
+}
+
+@keyframes floatArcMagic {
+  0% { transform: translate(-50%, -50%) scale(0.3) rotate(var(--rot-deg, 0deg)); opacity: 0; }
+  30% { transform: translate(calc(-50% + 15px), calc(-50% - 30px)) scale(1.25); opacity: 1; }
+  65% { transform: translate(calc(-50% + 25px), calc(-50% - 60px)) scale(1.0); opacity: 1; }
+  100% { transform: translate(calc(-50% + 35px), calc(-50% - 90px)) scale(0.8); opacity: 0; }
+}
+
+@keyframes floatArcTrue {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  20% { transform: translate(-50%, calc(-50% - 20px)) scale(1.3); opacity: 1; }
+  70% { transform: translate(-50%, calc(-50% - 50px)) scale(1.05); opacity: 1; }
+  100% { transform: translate(-50%, calc(-50% - 80px)) scale(0.8); opacity: 0; }
+}
+
+@keyframes critExplodePop {
+  0% { transform: translate(-50%, -50%) scale(0.2) rotate(-12deg); opacity: 0; }
+  22% { transform: translate(-50%, calc(-50% - 20px)) scale(1.5) rotate(6deg); opacity: 1; }
+  45% { transform: translate(-50%, calc(-50% - 40px)) scale(1.15) rotate(0deg); opacity: 1; }
+  75% { transform: translate(-50%, calc(-50% - 70px)) scale(1.05); opacity: 0.95; }
+  100% { transform: translate(-50%, calc(-50% - 100px)) scale(0.7); opacity: 0; }
+}
+
+@keyframes ultSuperExplode {
+  0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0; }
+  18% { transform: translate(-50%, calc(-50% - 15px)) scale(1.65); opacity: 1; }
+  35% { transform: translate(-50%, calc(-50% - 30px)) scale(1.3); opacity: 1; }
+  80% { transform: translate(-50%, calc(-50% - 65px)) scale(1.1); opacity: 0.9; }
+  100% { transform: translate(-50%, calc(-50% - 110px)) scale(0.6); opacity: 0; }
+}
+
+@keyframes goldFloatUp {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+  30% { transform: translate(-50%, calc(-50% - 20px)) scale(1.15); opacity: 1; }
+  100% { transform: translate(-50%, calc(-50% - 60px)) scale(0.9); opacity: 0; }
+}
 
 
 
@@ -1835,14 +1990,158 @@ body, html {
   100% { transform: rotate(8deg); }
 }
 
-/* ==================== FULLSCREEN HIT FLASH & SHIELD BARRIER FX ==================== */
+/* ==================== AAA FULLSCREEN HIT FLASH, SCREEN SHAKE & SCREEN FX ==================== */
+/* 1. Dynamic Screen Shakes */
+#game-screen.screen-shake-light {
+  animation: screenShakeLight 0.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+#game-screen.screen-shake-heavy {
+  animation: screenShakeHeavy 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+#game-screen.screen-shake-crit {
+  animation: screenShakeCrit 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes screenShakeLight {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 3px); }
+  40% { transform: translate(4px, -2px); }
+  60% { transform: translate(-3px, -2px); }
+  80% { transform: translate(2px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes screenShakeHeavy {
+  0% { transform: translate(0, 0) scale(1); }
+  15% { transform: translate(-10px, 8px) scale(1.02); }
+  30% { transform: translate(12px, -8px) scale(1.01); }
+  45% { transform: translate(-8px, -6px) scale(1.02); }
+  60% { transform: translate(8px, 6px) scale(1.01); }
+  75% { transform: translate(-4px, 3px) scale(1.005); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes screenShakeCrit {
+  0% { transform: translate(0, 0) scale(1); }
+  10% { transform: translate(-16px, 12px) scale(1.04) rotate(-0.5deg); }
+  25% { transform: translate(18px, -12px) scale(1.03) rotate(0.6deg); }
+  40% { transform: translate(-12px, -10px) scale(1.02) rotate(-0.3deg); }
+  60% { transform: translate(10px, 8px) scale(1.015) rotate(0.2deg); }
+  80% { transform: translate(-5px, 3px) scale(1.005); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+
+/* 2. Fullscreen FX Layer */
+.screen-fx-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 185;
+  overflow: hidden;
+}
+
+/* 3. Screen Slash Blade Streaks */
+.screen-slash-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140vw;
+  height: 8px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.95) 20%, #fff 50%, rgba(255, 255, 255, 0.95) 80%, transparent 100%);
+  transform-origin: center center;
+  transform: translate(-50%, -50%) rotate(var(--slash-angle, -35deg)) scaleX(0);
+  filter: drop-shadow(0 0 12px var(--slash-color, #ffd700)) drop-shadow(0 0 25px var(--slash-color, #ff8800));
+  animation: slashStreak 0.38s cubic-bezier(0.12, 0.95, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+.screen-slash-line::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 30%;
+  width: 40%;
+  height: 32px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, var(--slash-color, #ffd700) 45%, transparent 75%);
+  filter: blur(4px);
+}
+
+@keyframes slashStreak {
+  0% { transform: translate(-50%, -50%) rotate(var(--slash-angle, -35deg)) scaleX(0.1) scaleY(2.5); opacity: 1; }
+  35% { transform: translate(-50%, -50%) rotate(var(--slash-angle, -35deg)) scaleX(1) scaleY(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(var(--slash-angle, -35deg)) scaleX(1.3) scaleY(0.1); opacity: 0; }
+}
+
+/* 4. Screen Blood Splatter FX */
+.screen-blood-splash {
+  position: absolute;
+  top: var(--blood-top, 30%);
+  left: var(--blood-left, 50%);
+  transform: translate(-50%, -50%) scale(0.6) rotate(var(--blood-rot, 0deg));
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 35% 35%, rgba(180, 0, 20, 0.95) 0%, rgba(120, 0, 10, 0.8) 35%, transparent 70%);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 30, 0.8)) blur(0.5px);
+  animation: bloodSplatterFade 1.2s cubic-bezier(0.15, 0.9, 0.25, 1) forwards;
+  pointer-events: none;
+}
+
+.screen-blood-splash::before {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: 20%;
+  width: 140px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(160, 0, 20, 0.9) 0%, transparent 65%);
+  border-radius: 50%;
+  transform: rotate(25deg);
+}
+
+@keyframes bloodSplatterFade {
+  0% { transform: translate(-50%, -50%) scale(0.3) rotate(var(--blood-rot, 0deg)); opacity: 1; }
+  25% { transform: translate(-50%, -50%) scale(1.1) rotate(var(--blood-rot, 0deg)); opacity: 0.95; }
+  60% { transform: translate(-50%, calc(-50% + 15px)) scale(1.05) rotate(var(--blood-rot, 0deg)); opacity: 0.8; }
+  100% { transform: translate(-50%, calc(-50% + 35px)) scale(1.0) rotate(var(--blood-rot, 0deg)); opacity: 0; }
+}
+
+/* 5. AAA Low HP Pulsating Blood Vignette */
+.low-hp-vignette {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 182;
+  pointer-events: none;
+  box-shadow: 
+    inset 0 0 80px rgba(255, 0, 30, 0.7),
+    inset 0 0 160px rgba(180, 0, 20, 0.55),
+    inset 0 0 240px rgba(80, 0, 10, 0.4);
+  animation: lowHpHeartbeat 1.0s ease-in-out infinite;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(200, 0, 20, 0.25) 80%, rgba(120, 0, 10, 0.6) 100%);
+}
+
+@keyframes lowHpHeartbeat {
+  0% { opacity: 0.4; transform: scale(1); }
+  20% { opacity: 0.95; transform: scale(1.02); }
+  40% { opacity: 0.6; transform: scale(1.005); }
+  60% { opacity: 1.0; transform: scale(1.025); }
+  100% { opacity: 0.4; transform: scale(1); }
+}
+
+/* Fullscreen Hit Flash & Shield Barrier FX */
 .player-hit-flash {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 30%, rgba(255, 0, 40, 0.6) 75%, rgba(180, 0, 20, 0.9) 100%);
+  background: radial-gradient(circle at center, transparent 20%, rgba(255, 0, 40, 0.7) 70%, rgba(180, 0, 20, 0.95) 100%);
   z-index: 180;
   pointer-events: none;
-  animation: hitVignette 0.6s ease-out forwards;
+  animation: hitVignette 0.5s ease-out forwards;
 }
 
 @keyframes hitVignette {

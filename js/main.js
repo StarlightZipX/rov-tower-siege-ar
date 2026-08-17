@@ -642,6 +642,8 @@ function cacheDOM() {
   dom.towerWarningBanner = document.getElementById('tower-warning-banner');
   dom.playerHitFlash = document.getElementById('player-hit-flash');
   dom.playerShieldFx = document.getElementById('player-shield-fx');
+  dom.screenFxLayer = document.getElementById('screen-fx-layer');
+  dom.lowHpVignette = document.getElementById('low-hp-vignette');
 
   // Defeat Screen Elements
   dom.defeatScreen = document.getElementById('defeat-screen');
@@ -1942,17 +1944,114 @@ function isSkillAOE(hero, skill) {
   return false;
 }
 
+/* ==========================================================
+   AAA Screen Space Projection & Dynamic Screen FX Engine
+   ========================================================== */
+function project3DToScreen(worldPos) {
+  if (!camera3d || !worldPos) {
+    return { x: window.innerWidth * 0.5, y: window.innerHeight * 0.38 };
+  }
+  const v = worldPos.clone().project(camera3d);
+  const x = (v.x * 0.5 + 0.5) * window.innerWidth;
+  const y = (-(v.y * 0.5) + 0.5) * window.innerHeight;
+  return {
+    x: Math.max(window.innerWidth * 0.08, Math.min(window.innerWidth * 0.92, x)),
+    y: Math.max(window.innerHeight * 0.12, Math.min(window.innerHeight * 0.85, y))
+  };
+}
+
+function triggerScreenShake(intensity = 'light') {
+  if (!dom.gameScreen) return;
+  const className = intensity === 'crit' ? 'screen-shake-crit' : (intensity === 'heavy' ? 'screen-shake-heavy' : 'screen-shake-light');
+  dom.gameScreen.classList.remove('screen-shake-light', 'screen-shake-heavy', 'screen-shake-crit');
+  void dom.gameScreen.offsetWidth; // Reflow
+  dom.gameScreen.classList.add(className);
+  setTimeout(() => {
+    if (dom.gameScreen) dom.gameScreen.classList.remove(className);
+  }, intensity === 'crit' ? 550 : (intensity === 'heavy' ? 450 : 250));
+}
+
+function triggerScreenSlash(archetype, color, isCrit = false) {
+  if (!dom.screenFxLayer) return;
+  const slash = document.createElement('div');
+  slash.className = 'screen-slash-line';
+  const angles = [-42, 38, -25, 45, -15, 30, -50];
+  const angle = angles[Math.floor(Math.random() * angles.length)];
+  slash.style.setProperty('--slash-angle', `${angle}deg`);
+  slash.style.setProperty('--slash-color', color || '#ffd700');
+  dom.screenFxLayer.appendChild(slash);
+  setTimeout(() => slash.remove(), 400);
+
+  triggerScreenShake(isCrit ? 'heavy' : 'light');
+}
+
+function triggerPlayerBloodFX() {
+  if (!dom.screenFxLayer) return;
+  const splash = document.createElement('div');
+  splash.className = 'screen-blood-splash';
+  splash.style.setProperty('--blood-top', `${22 + Math.random() * 56}%`);
+  splash.style.setProperty('--blood-left', `${18 + Math.random() * 64}%`);
+  splash.style.setProperty('--blood-rot', `${Math.random() * 360}deg`);
+  dom.screenFxLayer.appendChild(splash);
+  setTimeout(() => splash.remove(), 1200);
+
+  triggerScreenShake('heavy');
+}
+
+function showFloatingDamage(amount, className = 'dmg-physical', color = null, pos3D = null) {
+  if (!dom.damageCont) return;
+
+  const el = document.createElement('div');
+  el.className = `dmg-item ${className}`;
+  
+  // Calculate screen position from 3D world position
+  let coords;
+  if (pos3D) {
+    coords = project3DToScreen(pos3D);
+    coords.x += (Math.random() - 0.5) * 44;
+    coords.y += (Math.random() - 0.5) * 32;
+  } else {
+    coords = {
+      x: window.innerWidth * (0.45 + (Math.random() - 0.5) * 0.15),
+      y: window.innerHeight * (0.34 + (Math.random() - 0.5) * 0.12)
+    };
+  }
+
+  el.style.left = `${coords.x}px`;
+  el.style.top = `${coords.y}px`;
+  el.style.setProperty('--rot-deg', `${(Math.random() - 0.5) * 16}deg`);
+
+  if (color && className !== 'dmg-crit' && className !== 'dmg-ult') {
+    el.style.color = color;
+  }
+
+  if (className === 'dmg-crit') {
+    el.innerHTML = `<span class="dmg-crit-badge">CRIT!</span><span>-${typeof amount === 'number' ? amount.toLocaleString() : amount}</span>`;
+  } else if (className === 'dmg-ult') {
+    el.innerHTML = `<span class="dmg-crit-badge">ULTIMATE!</span><span>-${typeof amount === 'number' ? amount.toLocaleString() : amount}</span>`;
+  } else if (className === 'dmg-gold') {
+    el.innerHTML = `<span>💰 +${amount}G</span>`;
+  } else if (typeof amount === 'number') {
+    el.textContent = amount > 0 ? `-${amount.toLocaleString()}` : '0';
+  } else {
+    el.textContent = amount;
+  }
+
+  dom.damageCont.appendChild(el);
+  el.addEventListener('animationend', () => el.remove());
+}
+
 function handleMinionDamageToPlayer(damage, type) {
   if (state !== GameState.PLAYING) return;
 
   if (isShieldActive) {
     // Shield Block Success (0 DMG)
-    showFloatingDamage(0, 'dmg-text', '#00e5ff');
+    showFloatingDamage(0, 'dmg-magic', '#00e5ff', new THREE.Vector3(0, 1.0, 7.5));
     playSound('shield_block');
     effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.5), '#00f0ff', 22, true, 'magic');
     if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
   } else {
-    // Minion hits Player
+    // Minion hits Player -> Screen Blood & Heavy Impact Shake
     playerHP = Math.max(0, playerHP - damage);
     playSound('player_hit');
     effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.8), '#ff0033', 28, true, 'fire');
@@ -1967,7 +2066,8 @@ function handleMinionDamageToPlayer(damage, type) {
       }, 500);
     }
 
-    showFloatingDamage(damage, 'dmg-crit', '#ff3333');
+    triggerPlayerBloodFX();
+    showFloatingDamage(damage, 'dmg-crit', '#ff3333', new THREE.Vector3(0, 1.0, 7.8));
     if (navigator.vibrate) navigator.vibrate(120);
 
     updateUI();
@@ -1982,7 +2082,8 @@ function handleMinionKillReward(minion) {
   currentGold += minion.goldReward;
   chargeUltimate(16);
   attackCount++;
-  showFloatingDamage(`+${minion.goldReward}G`, 'dmg-text', '#ffd700');
+  const mPos = minion.getWorldPosition();
+  showFloatingDamage(minion.goldReward, 'dmg-gold', '#ffd700', mPos);
   updateUI();
 }
 
@@ -1993,7 +2094,7 @@ function performSwingAttack() {
   let isCrit = selectedSkill.isCrit || false;
   let color = selectedSkill.color || '#ffd700';
   let isMagic = activeHero.classId === 'mage';
-  let dmgClass = isCrit ? 'dmg-crit' : (isMagic ? 'dmg-magic' : 'dmg-text');
+  let dmgClass = isCrit ? 'dmg-crit' : (isMagic ? 'dmg-magic' : 'dmg-physical');
 
   if (isCrit && Math.random() < 0.6) {
     dmg = Math.floor(dmg * 1.5);
@@ -2002,6 +2103,9 @@ function performSwingAttack() {
   const isAOE = isSkillAOE(activeHero, selectedSkill);
   const archetype = getSkillArchetype(activeHero, selectedSkill);
   const activeMinionsCount = minionManager ? minionManager.getActiveCount() : 0;
+
+  // Trigger AAA Screen Slash Flare & Shake
+  triggerScreenSlash(archetype, color, isCrit);
 
   let hitTower = true;
 
@@ -2014,6 +2118,7 @@ function performSwingAttack() {
         const mPos = m.getWorldPosition();
         mPos.y += 0.8;
         effects.createHitParticles(mPos, color, isCrit ? 30 : 18, isCrit, archetype);
+        showFloatingDamage(Math.floor(dmg), dmgClass, color, mPos);
       });
 
       if (!isAOE) {
@@ -2029,13 +2134,13 @@ function performSwingAttack() {
     totalDamageDealt += dmg;
     const hitPos = new THREE.Vector3(0, -0.4 + Math.random() * 1.6, 0);
     effects.createHitParticles(hitPos, color, isCrit ? 36 : 20, isCrit, archetype);
+    showFloatingDamage(Math.floor(dmg), dmgClass, color, hitPos);
   }
 
   attackCount++;
   currentGold += Math.floor(dmg / 10);
   chargeUltimate(18);
 
-  showFloatingDamage(Math.floor(dmg), dmgClass, color);
   playSound('attack', { isCrit, isMagic, soundType: archetype, color });
 
   // Authentic RoV In-Game Announcer Killstreaks
@@ -2123,8 +2228,10 @@ function castUltimateSkill() {
     }, 1300);
   }
 
-  // 2. Play Ultimate Sounds
+  // 2. Play Ultimate Sounds & Violent Screen Shake
   playSound('ult_cast', { color: ultColor });
+  triggerScreenSlash(getSkillArchetype(activeHero, ultSkill), ultColor, true);
+  triggerScreenShake('crit');
 
   // Web Speech API Voice Shout (RoV Champion Voice simulation)
   try {
@@ -2151,6 +2258,7 @@ function castUltimateSkill() {
       const mPos = m.getWorldPosition();
       mPos.y += 0.8;
       effects.createHitParticles(mPos, ultColor, 32, true, archetype);
+      showFloatingDamage(ultDmg, 'dmg-ult', '#ffea00', mPos);
     });
   }
 
@@ -2159,8 +2267,9 @@ function castUltimateSkill() {
   attackCount += 5;
   currentGold += Math.floor(ultDmg / 8);
 
-  effects.createUltimateImpact(new THREE.Vector3(0, 0.2, 0), ultColor, archetype);
-  showFloatingDamage(ultDmg, 'dmg-ult', '#ffea00');
+  const towerCenter = new THREE.Vector3(0, 0.4, 0);
+  effects.createUltimateImpact(towerCenter, ultColor, archetype);
+  showFloatingDamage(ultDmg, 'dmg-ult', '#ffea00', towerCenter);
 
   if (navigator.vibrate) navigator.vibrate([150, 60, 250, 60, 450]);
 
@@ -2185,17 +2294,6 @@ function castUltimateSkill() {
     playAnnouncerVoice('turret_destroyed', 'TOWER DESTROYED');
     triggerExplosion();
   }
-}
-
-function showFloatingDamage(amount, className, color) {
-  const el = document.createElement('div');
-  el.className = className;
-  el.textContent = typeof amount === 'number' ? `-${amount}` : amount;
-  el.style.color = color;
-  el.style.left = `${45 + Math.random() * 10}%`;
-  el.style.top  = `${30 + Math.random() * 10}%`;
-  if (dom.damageCont) dom.damageCont.appendChild(el);
-  el.addEventListener('animationend', () => el.remove());
 }
 
 /* ==========================================================
@@ -2272,7 +2370,7 @@ function handleTowerProjectileImpact() {
 
   if (isShieldActive) {
     // Shield Block Success (0 DMG)
-    showFloatingDamage(0, 'dmg-text', '#00e5ff');
+    showFloatingDamage(0, 'dmg-magic', '#00e5ff', new THREE.Vector3(0, 1.0, 7.5));
     playSound('shield_block');
     effects.createHitParticles(new THREE.Vector3(0, 1.0, 7.5), '#00f0ff', 30, true, 'magic');
     if (navigator.vibrate) navigator.vibrate([50, 40, 50]);
@@ -2294,7 +2392,9 @@ function handleTowerProjectileImpact() {
       }, 600);
     }
 
-    showFloatingDamage(dmg, 'dmg-crit', '#ff0033');
+    triggerPlayerBloodFX();
+    triggerScreenShake('crit');
+    showFloatingDamage(dmg, 'dmg-crit', '#ff0033', new THREE.Vector3(0, 1.0, 7.8));
 
     if (navigator.vibrate) navigator.vibrate([180, 80, 250]);
 
@@ -2310,6 +2410,8 @@ function triggerDefeat() {
   state = GameState.DEFEAT;
   stopBGM();
   playAnnouncerVoice('defeat');
+
+  if (dom.lowHpVignette) dom.lowHpVignette.style.display = 'none';
 
   const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
   saveMatchToLeaderboard(elapsed, totalDamageDealt, false);
@@ -2348,6 +2450,7 @@ async function startGame() {
   if (dom.towerWarningBanner) dom.towerWarningBanner.style.display = 'none';
   if (dom.playerHitFlash) dom.playerHitFlash.style.display = 'none';
   if (dom.playerShieldFx) dom.playerShieldFx.style.display = 'none';
+  if (dom.lowHpVignette) dom.lowHpVignette.style.display = 'none';
   if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
 
   if (minionManager) minionManager.clearAll();
@@ -2410,6 +2513,15 @@ function updateUI() {
   }
   if (dom.playerHpText) {
     dom.playerHpText.textContent = `${Math.ceil(playerHP)} / ${maxPlayerHP} HP`;
+  }
+
+  // Low HP Pulsating Blood Vignette Warning (when < 35% HP in playing state)
+  if (dom.lowHpVignette) {
+    if (playerPct < 0.35 && playerPct > 0 && state === GameState.PLAYING) {
+      dom.lowHpVignette.style.display = 'block';
+    } else {
+      dom.lowHpVignette.style.display = 'none';
+    }
   }
 }
 
@@ -2497,6 +2609,9 @@ function showVictory() {
   state = GameState.VICTORY;
   stopBGM();
   playSound('victory');
+
+  if (dom.lowHpVignette) dom.lowHpVignette.style.display = 'none';
+
   const elapsed = ((performance.now() - gameStartTime) / 1000).toFixed(1);
   saveMatchToLeaderboard(elapsed, totalDamageDealt, true);
 
@@ -2513,6 +2628,7 @@ function showVictory() {
 function replay() {
   dom.victory.style.display = 'none';
   if (dom.defeatScreen) dom.defeatScreen.style.display = 'none';
+  if (dom.lowHpVignette) dom.lowHpVignette.style.display = 'none';
   triggeredAnnouncements = {
     firstBlood: false,
     doubleKill: false,
