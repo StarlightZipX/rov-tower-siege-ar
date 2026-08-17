@@ -154,6 +154,96 @@
     </div>
   </div>
 
+  <!-- ==================== AAA PRE-MATCH TUTORIAL BRIEFING ==================== -->
+  <div id="tutorial-screen" style="display: none;">
+    <div class="tutorial-bg"></div>
+    <div class="tutorial-overlay"></div>
+    <div class="tutorial-container">
+      <div class="tutorial-header">
+        <div class="tutorial-badge">TACTICAL BRIEFING • ยุทธวิธีสมรภูมิ AR</div>
+        <h2 class="tutorial-title">คู่มือการเล่น ANTARIS TOWER SIEGE</h2>
+        <p class="tutorial-subtitle">โปรดศึกษายุทธวิธี 4 ขั้นตอนก่อนนำทัพประจัญบาน</p>
+      </div>
+
+      <div class="tutorial-grid">
+        <!-- Card 1: AR Motion & Attack -->
+        <div class="tutorial-card">
+          <div class="t-card-glow"></div>
+          <div class="t-card-icon-wrap">
+            <span class="t-card-icon">⚔️</span>
+            <span class="t-card-num">01</span>
+          </div>
+          <div class="t-card-info">
+            <h3>การควบคุม & โจมตีด้วย AR</h3>
+            <p><strong>เหวี่ยงมือ/ฟันดาบผ่านหน้ากล้อง AR</strong> เพื่อสร้างความเสียหายใส่ป้อมปราการอย่างต่อเนื่อง (หรือแตะหน้าจอเพื่อโจมตีฉุกเฉิน)</p>
+            <div class="t-card-tag">📸 MediaPipe 60FPS AI Tracking</div>
+          </div>
+        </div>
+
+        <!-- Card 2: 4-Skills & Ultimate -->
+        <div class="tutorial-card">
+          <div class="t-card-glow"></div>
+          <div class="t-card-icon-wrap">
+            <span class="t-card-icon">⚡</span>
+            <span class="t-card-num">02</span>
+          </div>
+          <div class="t-card-info">
+            <h3>ระบบ 4 สกิล & อัลติเมท</h3>
+            <p>กดเลือกไอคอนสกิล (Skill 1, 2, Normal) เพื่อเปลี่ยนคอมโบ และ<strong>สะสมเกจ Ultimate จนเต็ม 100%</strong> เพื่อปลดปล่อยคัตอินทำลายล้าง!</p>
+            <div class="t-card-tag">💥 100% Critical True Damage</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Challenger Shield Barrier -->
+        <div class="tutorial-card">
+          <div class="t-card-glow"></div>
+          <div class="t-card-icon-wrap">
+            <span class="t-card-icon">🛡️</span>
+            <span class="t-card-num">03</span>
+          </div>
+          <div class="t-card-info">
+            <h3>สกิลชาเลนเจอร์: โล่ป้องกัน</h3>
+            <p>เมื่อป้อมแจ้งเตือนสัญญาณ <strong>RED LOCK-ON</strong> ให้กดปุ่ม <strong>🛡️ โล่ป้องกัน (Shield)</strong> ทันที เพื่อบล็อกกระสุนพลาสมา 100% (0 DMG)</p>
+            <div class="t-card-tag">⏳ คูลดาวน์ 8 วินาที • ป้องกันสมบูรณ์</div>
+          </div>
+        </div>
+
+        <!-- Card 4: Victory Objective -->
+        <div class="tutorial-card">
+          <div class="t-card-glow"></div>
+          <div class="t-card-icon-wrap">
+            <span class="t-card-icon">🏰</span>
+            <span class="t-card-num">04</span>
+          </div>
+          <div class="t-card-info">
+            <h3>เป้าหมายชัยชนะ & ป้อมสวน</h3>
+            <p>ป้อม Antaris มีพลังชีวิต <strong>5,000 HP</strong> และจะยิงสวนกลับอัตโนมัติ จงทำลายป้อมให้แตกพ่ายก่อนที่ค่า HP ของคุณจะหมดลง!</p>
+            <div class="t-card-tag">🏆 ถล่มป้อมคว้าชัยชนะระดับตำนาน</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tutorial-footer">
+        <div class="tutorial-timer-box">
+          <div class="tutorial-timer-label">
+            <span class="t-timer-icon">⏳</span>
+            <span>เริ่มการต่อสู้อัตโนมัติใน:</span>
+            <strong id="tutorial-timer-text">60</strong>
+            <span>วินาที</span>
+          </div>
+          <div class="tutorial-bar-track">
+            <div id="tutorial-bar-fill" class="tutorial-bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <button id="tutorial-skip-btn" class="btn-primary rov-gold-btn pulse-epic">
+          <span class="btn-icon">⚔️</span>
+          <span class="btn-text">ข้ามคู่มือ & เข้าสู่สมรภูมิทันที</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== AAA MATCH LOADING SCREEN ==================== -->
   <div id="match-loading-screen" style="display: none;">
     <div class="match-loading-bg"></div>

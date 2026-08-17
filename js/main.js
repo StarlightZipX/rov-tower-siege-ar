@@ -15,6 +15,7 @@ import { HandTracker }    from './hand-tracking.js';
 const GameState = Object.freeze({
   LANDING:   'landing',
   SUMMONING: 'summoning',
+  TUTORIAL:  'tutorial',
   LOADING:   'loading',
   PLAYING:   'playing',
   EXPLODING: 'exploding',
@@ -55,6 +56,10 @@ const SHIELD_COOLDOWN = 6.0;
 // Tower Retaliation Loop
 let towerAttackTimer = 5.0;
 let isTowerLockingOn = false;
+
+// Pre-Match Tutorial Briefing Countdown
+let tutorialCountdownInterval = null;
+let tutorialTimeRemaining = 60;
 
 /* ==========================================================
    RoV Hero Classes & Strict 10-Hero Pools (40 Heroes Total)
@@ -637,6 +642,12 @@ function cacheDOM() {
   dom.defeatStatDamage = document.getElementById('defeat-stat-damage');
   dom.defeatStatTime = document.getElementById('defeat-stat-time');
   dom.defeatRetryBtn = document.getElementById('defeat-retry-btn');
+
+  // Pre-Match Tutorial Briefing Screen Elements
+  dom.tutorialScreen = document.getElementById('tutorial-screen');
+  dom.tutorialSkipBtn = document.getElementById('tutorial-skip-btn');
+  dom.tutorialTimerText = document.getElementById('tutorial-timer-text');
+  dom.tutorialBarFill = document.getElementById('tutorial-bar-fill');
 }
 
 function bindEvents() {
@@ -666,11 +677,17 @@ function bindEvents() {
     startSummoningRitual(selectedClass);
   });
 
-  // Enter Battle Button from Reveal Screen -> Triggers AAA Match Loading Screen!
+  // Enter Battle Button from Reveal Screen -> Opens Tactical Briefing / Tutorial Screen
   dom.enterBattleBtn.addEventListener('click', () => {
-    dom.summonScreen.style.display = 'none';
-    startMatchLoadingSequence();
+    openTutorialBriefing();
   });
+
+  // Skip Tutorial Button -> Starts Match Loading Immediately
+  if (dom.tutorialSkipBtn) {
+    dom.tutorialSkipBtn.addEventListener('click', () => {
+      closeTutorialAndProceed();
+    });
+  }
 
 
 
@@ -786,6 +803,50 @@ function triggerHeroReveal(hero) {
     `;
     dom.revealSkillsList.appendChild(div);
   });
+}
+
+/* ==========================================================
+   AAA Pre-Match Tactical Briefing / Tutorial System (60s Timer)
+   ========================================================== */
+function openTutorialBriefing() {
+  state = GameState.TUTORIAL;
+  if (dom.summonScreen) dom.summonScreen.style.display = 'none';
+  if (dom.tutorialScreen) dom.tutorialScreen.style.display = 'flex';
+
+  tutorialTimeRemaining = 60;
+  if (dom.tutorialTimerText) dom.tutorialTimerText.textContent = '60';
+  if (dom.tutorialBarFill) dom.tutorialBarFill.style.width = '100%';
+
+  playSound('skill_select');
+
+  if (tutorialCountdownInterval) {
+    clearInterval(tutorialCountdownInterval);
+    tutorialCountdownInterval = null;
+  }
+
+  tutorialCountdownInterval = setInterval(() => {
+    tutorialTimeRemaining--;
+    if (dom.tutorialTimerText) {
+      dom.tutorialTimerText.textContent = Math.max(0, tutorialTimeRemaining);
+    }
+    if (dom.tutorialBarFill) {
+      const pct = (Math.max(0, tutorialTimeRemaining) / 60) * 100;
+      dom.tutorialBarFill.style.width = `${pct}%`;
+    }
+
+    if (tutorialTimeRemaining <= 0) {
+      closeTutorialAndProceed();
+    }
+  }, 1000);
+}
+
+function closeTutorialAndProceed() {
+  if (tutorialCountdownInterval) {
+    clearInterval(tutorialCountdownInterval);
+    tutorialCountdownInterval = null;
+  }
+  if (dom.tutorialScreen) dom.tutorialScreen.style.display = 'none';
+  startMatchLoadingSequence();
 }
 
 /* ==========================================================
@@ -1406,60 +1467,177 @@ function playSound(type, opts = {}) {
     osc.start(now);
     osc.stop(now + 0.3);
   } else if (type === 'shield_block') {
-    // Metallic Shield Deflect Clang
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(1200, now);
-    osc.frequency.exponentialRampToValueAtTime(300, now + 0.25);
-    gain.gain.setValueAtTime(0.6, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.25);
-  } else if (type === 'tower_lock') {
-    // Threat Alarm Siren Beep
-    for (let i = 0; i < 3; i++) {
+    // 1. Crystalline Magic Deflect High Ring
+    const ping = audioCtx.createOscillator();
+    const pg = audioCtx.createGain();
+    ping.type = 'triangle';
+    ping.frequency.setValueAtTime(1950, now);
+    ping.frequency.exponentialRampToValueAtTime(620, now + 0.38);
+    pg.gain.setValueAtTime(0.75, now);
+    pg.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+    ping.connect(pg);
+    pg.connect(audioCtx.destination);
+    ping.start(now);
+    ping.stop(now + 0.38);
+
+    // 2. Harmonic Shimmer Overtones
+    [2600, 3400].forEach((freq, idx) => {
       const o = audioCtx.createOscillator();
+      const og = audioCtx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(freq, now + idx * 0.02);
+      og.gain.setValueAtTime(0.35, now + idx * 0.02);
+      og.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      o.connect(og);
+      og.connect(audioCtx.destination);
+      o.start(now + idx * 0.02);
+      o.stop(now + 0.4);
+    });
+  } else if (type === 'tower_lock') {
+    // AAA Searing Threat Alarm Siren & Resonance Strobe (RoV Red Lock Alert)
+    for (let i = 0; i < 3; i++) {
+      const t = now + i * 0.16;
+      const o1 = audioCtx.createOscillator();
+      const o2 = audioCtx.createOscillator();
       const g = audioCtx.createGain();
-      o.type = 'sawtooth';
-      const t = now + i * 0.15;
-      o.frequency.setValueAtTime(880, t);
-      o.frequency.setValueAtTime(1100, t + 0.07);
-      g.gain.setValueAtTime(0.2, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-      o.connect(g);
+      o1.type = 'sawtooth';
+      o2.type = 'square';
+      o1.frequency.setValueAtTime(980, t);
+      o1.frequency.setValueAtTime(1320, t + 0.08);
+      o2.frequency.setValueAtTime(985, t);
+      o2.frequency.setValueAtTime(1325, t + 0.08);
+
+      const filt = audioCtx.createBiquadFilter();
+      filt.type = 'bandpass';
+      filt.frequency.setValueAtTime(1600, t);
+      filt.Q.setValueAtTime(3.0, t);
+
+      g.gain.setValueAtTime(0.32, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+
+      o1.connect(filt);
+      o2.connect(filt);
+      filt.connect(g);
       g.connect(audioCtx.destination);
-      o.start(t);
-      o.stop(t + 0.12);
+
+      o1.start(t);
+      o2.start(t);
+      o1.stop(t + 0.14);
+      o2.stop(t + 0.14);
     }
-  } else if (type === 'tower_fire') {
-    // Plasma Cannon Shot Release
+  } else if (type === 'tower_charge') {
+    // Arcane Vortex Energy In-rush / Suction Windup
     const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const g = audioCtx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(450, now);
-    osc.frequency.exponentialRampToValueAtTime(60, now + 0.28);
-    gain.gain.setValueAtTime(0.5, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    osc.frequency.setValueAtTime(110, now);
+    osc.frequency.exponentialRampToValueAtTime(1600, now + 0.9);
+
+    const f = audioCtx.createBiquadFilter();
+    f.type = 'lowpass';
+    f.frequency.setValueAtTime(200, now);
+    f.frequency.exponentialRampToValueAtTime(3500, now + 0.9);
+    f.Q.setValueAtTime(5.0, now);
+
+    g.gain.setValueAtTime(0.05, now);
+    g.gain.linearRampToValueAtTime(0.45, now + 0.9);
+
+    osc.connect(f);
+    f.connect(g);
+    g.connect(audioCtx.destination);
     osc.start(now);
-    osc.stop(now + 0.28);
+    osc.stop(now + 0.9);
+  } else if (type === 'tower_fire') {
+    // 1. Heavy 808 Sub-Bass Magitech Plasma Cannon Drop
+    const subOsc = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    subOsc.type = 'sawtooth';
+    subOsc.frequency.setValueAtTime(260, now);
+    subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.55);
+    subGain.gain.setValueAtTime(0.95, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+    subOsc.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.55);
+
+    // 2. Searing Sizzling Electric Plasma Discharge Burst
+    const bufLen = Math.floor(audioCtx.sampleRate * 0.35);
+    const buf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < bufLen; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.25));
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buf;
+    const bp = audioCtx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.setValueAtTime(3800, now);
+    bp.frequency.exponentialRampToValueAtTime(450, now + 0.35);
+    bp.Q.setValueAtTime(4.0, now);
+    const ng = audioCtx.createGain();
+    ng.gain.setValueAtTime(0.7, now);
+    ng.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+    noise.connect(bp);
+    bp.connect(ng);
+    ng.connect(audioCtx.destination);
+    noise.start(now);
+
+    // 3. Descending Projectile Flyby Whistle
+    const flyOsc = audioCtx.createOscillator();
+    const flyGain = audioCtx.createGain();
+    flyOsc.type = 'triangle';
+    flyOsc.frequency.setValueAtTime(850, now);
+    flyOsc.frequency.exponentialRampToValueAtTime(140, now + 0.45);
+    flyGain.gain.setValueAtTime(0.4, now);
+    flyGain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+    flyOsc.connect(flyGain);
+    flyGain.connect(audioCtx.destination);
+    flyOsc.start(now);
+    flyOsc.stop(now + 0.45);
   } else if (type === 'player_hit') {
-    // Heavy Flesh/Armor Hit Impact
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.setValueAtTime(130, now);
-    osc.frequency.exponentialRampToValueAtTime(20, now + 0.35);
-    gain.gain.setValueAtTime(0.8, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.35);
+    // 1. Ground-Shaking Impact Boom
+    const subOsc = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    subOsc.type = 'sawtooth';
+    subOsc.frequency.setValueAtTime(180, now);
+    subOsc.frequency.exponentialRampToValueAtTime(24, now + 0.6);
+    subGain.gain.setValueAtTime(0.9, now);
+    subGain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+    subOsc.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.6);
+
+    // 2. Destructive Shockwave Dispersion Crackle
+    const bLen = Math.floor(audioCtx.sampleRate * 0.3);
+    const b = audioCtx.createBuffer(1, bLen, audioCtx.sampleRate);
+    const bd = b.getChannelData(0);
+    for (let i = 0; i < bLen; i++) bd[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bLen * 0.3));
+    const src = audioCtx.createBufferSource();
+    src.buffer = b;
+    const lp = audioCtx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(1400, now);
+    lp.frequency.exponentialRampToValueAtTime(180, now + 0.3);
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.75, now);
+    g.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+    src.connect(lp);
+    lp.connect(g);
+    g.connect(audioCtx.destination);
+    src.start(now);
+
+    // 3. Metallic Armor Crunch
+    const mOsc = audioCtx.createOscillator();
+    const mGain = audioCtx.createGain();
+    mOsc.type = 'triangle';
+    mOsc.frequency.setValueAtTime(420, now);
+    mOsc.frequency.exponentialRampToValueAtTime(65, now + 0.25);
+    mGain.gain.setValueAtTime(0.55, now);
+    mGain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+    mOsc.connect(mGain);
+    mGain.connect(audioCtx.destination);
+    mOsc.start(now);
+    mOsc.stop(now + 0.25);
   }
 }
 
@@ -1687,6 +1865,12 @@ function startTowerLockOn() {
   }
 
   playSound('tower_lock');
+
+  setTimeout(() => {
+    if (state === GameState.PLAYING && !tower.isDestroyed()) {
+      playSound('tower_charge');
+    }
+  }, 450);
 
   const startPos = tower.getCrystalWorldPosition();
   const targetPos = new THREE.Vector3(0, 1.0, 8.2);

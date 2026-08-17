@@ -1946,6 +1946,320 @@ body, html {
   100% { transform: translateY(-8px) scale(1.1); }
 }
 
+/* ==========================================================
+   AAA Pre-Match Tutorial Briefing Screen
+   ========================================================== */
+#tutorial-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 980;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('./assets/ui/rov_bg.jpg') center/cover no-repeat;
+  animation: tutorialFadeIn 0.4s ease-out;
+  overflow: hidden;
+  user-select: none;
+}
+
+.tutorial-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(10, 20, 45, 0.75) 0%, rgba(3, 7, 18, 0.95) 100%);
+  backdrop-filter: blur(14px);
+}
+
+.tutorial-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 187, 0, 0.08) 100%);
+  pointer-events: none;
+}
+
+.tutorial-container {
+  position: relative;
+  z-index: 2;
+  width: 92%;
+  max-width: 1060px;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 16, 32, 0.92);
+  border: 2px solid rgba(255, 200, 0, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 180, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  padding: 20px 28px;
+  box-sizing: border-box;
+  animation: tutorialSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tutorial-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.tutorial-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  padding: 3px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+}
+
+.tutorial-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffd700;
+  letter-spacing: 1.5px;
+  margin: 0;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.tutorial-subtitle {
+  font-size: 0.85rem;
+  color: #a0b2d6;
+  margin: 3px 0 0 0;
+  font-weight: 500;
+}
+
+.tutorial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 10px 0 14px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tutorial-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(16, 26, 52, 0.9) 0%, rgba(9, 14, 28, 0.95) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.tutorial-card:hover {
+  border-color: rgba(255, 200, 0, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 180, 0, 0.2);
+}
+
+.t-card-glow {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+}
+
+.t-card-icon-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+}
+
+.t-card-icon {
+  font-size: 1.7rem;
+  filter: drop-shadow(0 0 8px rgba(255, 200, 0, 0.6));
+}
+
+.t-card-num {
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #ffb700;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.t-card-info {
+  flex: 1;
+}
+
+.t-card-info h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.t-card-info p {
+  font-size: 0.78rem;
+  color: #b8c8e6;
+  line-height: 1.35;
+  margin: 0 0 6px 0;
+}
+
+.t-card-info strong {
+  color: #ffd700;
+  font-weight: 700;
+}
+
+.t-card-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.tutorial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutorial-timer-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tutorial-timer-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #cbd8f5;
+  font-weight: 600;
+}
+
+.t-timer-icon {
+  font-size: 1rem;
+  animation: timerPulse 1.2s infinite alternate;
+}
+
+.tutorial-timer-label strong {
+  font-size: 1.15rem;
+  color: #ffd700;
+  font-weight: 900;
+  min-width: 24px;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.tutorial-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tutorial-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9900 0%, #ffd700 50%, #00e5ff 100%);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  transition: width 1s linear;
+}
+
+#tutorial-skip-btn {
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@keyframes tutorialFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes tutorialSlideUp {
+  0% { transform: translateY(20px) scale(0.96); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes timerPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+@media (max-height: 480px) {
+  .tutorial-container {
+    padding: 10px 18px;
+    max-height: 98vh;
+  }
+  .tutorial-header {
+    margin-bottom: 6px;
+  }
+  .tutorial-title {
+    font-size: 1.25rem;
+  }
+  .tutorial-subtitle {
+    display: none;
+  }
+  .tutorial-grid {
+    gap: 8px;
+    margin: 4px 0 8px 0;
+  }
+  .tutorial-card {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .t-card-icon {
+    font-size: 1.3rem;
+  }
+  .t-card-info h3 {
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+  }
+  .t-card-info p {
+    font-size: 0.7rem;
+    margin-bottom: 3px;
+  }
+  .t-card-tag {
+    font-size: 0.6rem;
+    padding: 1px 6px;
+  }
+  .tutorial-footer {
+    padding-top: 6px;
+    gap: 12px;
+  }
+  #tutorial-skip-btn {
+    padding: 6px 16px;
+    font-size: 0.82rem;
+  }
+}
+
+
 
 
 
